@@ -30,7 +30,7 @@
                         </ul>
                     </li>
                     <li><a href="#">Extrato</a></li>
-                    <li><a href="#">Gráficos</a></li>
+                    <li><a href="#">Gráfico</a></li>
                     <li><a href="#">Usuário</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -44,11 +44,16 @@
             {% block body %}{% endblock %}
         </div>
 
-        <footer> Sistema de Controle Financeiro</footer>
+        <div class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
+            <div class="container">
 
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <script src="js/bootstrap.min.js"></script>
+                <div class="navbar-text pull-left">
+                    <p > Sistema de Controle Financeiro - 2017</p>
+                </div>
+            </div>
+            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+            <!-- Include all compiled plugins (below), or include individual files as needed -->
+            <script src="js/bootstrap.min.js"></script>
     </body>
 </html>

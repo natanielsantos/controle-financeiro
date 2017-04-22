@@ -17,6 +17,6 @@ class ControleHome {
     
     function ver(){
         
-        return $this->resposta->setContent($this->twig->render('home.tpl', array('titulo'=>'Sistema de Controle Financeiro')));
+        return $this->resposta->setContent($this->twig->render('home.tpl', array('titulo'=>'| Home')));
     }
 }
