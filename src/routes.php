@@ -1,0 +1,22 @@
+<?php
+
+// DESCRIÇÃO: Arquivo que irá gerenciar as rotas (requisições depois do / na URL);
+
+namespace ControleFinanceiro\Routes;
+
+use Symfony\Component\Routing\RouteCollection;
+use Symfony\Component\Routing\Route;
+
+
+// criar o objeto de rotas
+$rotas = new RouteCollection();
+
+// controladores
+$C_HOME = 'ControleFinanceiro\Controller\ControleHome';
+
+// criar as rotas;
+
+$home = new Route('/', array('_controller'=>$C_HOME,'_method'=>'ver'));
+
+// adicionar no objeto de rotas
+$rotas->add('home', $home);
