@@ -15,6 +15,8 @@ class ControleCategorias {
         $this->resposta = $resposta;
         $this->twig = $twig;
     }
+    
+    
 
     function listar() {
         $modelo = new ModeloCategorias();

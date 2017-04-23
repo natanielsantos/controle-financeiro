@@ -11,10 +11,23 @@
         <!-- Bootstrap -->
         <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 
+        <!-- Estilo de Menu -->
+        <style>
+            .navbar {
+                background: #333;
+                border-radius: 0px;
+            }
+
+            .nano {
+                background: #fd402e;
+            }
+        </style>
+        <!-- Estilo de Menu -->
+
     </head>
     <body>
 
-        <nav class="navbar navbar-inverse">
+        <nav class="navbar navbar-inverse ">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="/">CONTROLE FINANCEIRO |</a>
@@ -41,19 +54,19 @@
         </nav>
 
         <div id="content">
-            {% block body %}{% endblock %}
-        </div>
+        {% block body %}{% endblock %}
+    </div>
 
-        <div class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
-            <div class="container">
+    <div class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
+        <div class="container">
 
-                <div class="navbar-text pull-left">
-                    <p> <small>Sistema de Controle Financeiro - 2017</small></p>
-                </div>
+            <div class="navbar-text pull-left">
+                <p> <small>Sistema de Controle Financeiro - 2017</small></p>
             </div>
-            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-            <!-- Include all compiled plugins (below), or include individual files as needed -->
-            <script src="js/bootstrap.min.js"></script>
-    </body>
+        </div>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+</body>
 </html>
