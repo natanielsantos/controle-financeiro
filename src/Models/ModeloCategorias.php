@@ -10,9 +10,9 @@ class ModeloCategorias {
     function __construct() {
         ;
     }
-    
-    public function cadastrar(){
-        try
+
+    public function cadastrar() {
+        ;
     }
 
     public function listaCategorias() {
