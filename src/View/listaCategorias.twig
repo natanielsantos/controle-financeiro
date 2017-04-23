@@ -1,0 +1,59 @@
+{# empty Twig template #}
+
+{% extends 'base.twig' %}
+
+{% block title %}{{titulo}}{% endblock %}
+
+{% block body %}
+<div class="container">
+    <header>
+        <div class="row">
+            <div class="col-sm-6">
+                <h2>Categorias</h2>
+            </div>
+            <div class="col-sm-6 text-right h2">
+                <a class="btn btn-primary" href="add.php"><i class="fa fa-plus"></i> Nova Categoria</a>
+                <a class="btn btn-default" href="/categorias"><i class="fa fa-refresh"></i> Atualizar</a>
+            </div>
+        </div>
+    </header>
+
+    <hr>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th># ID</th>
+                <th width="30%">Nome da Categoria</th>
+                <th>Descrição</th>
+
+                <th class="actions text-right">Opções</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if dados %}
+            {% for dado in dados %}
+            <tr>
+                <td>{{dado.id_categoria}}</td>
+                <td>{{dado.nome_categoria}}</td>
+                <td>{{dado.descricao_categoria}}</td>
+                <td class="actions text-right">
+                    <a href="view.php?id={{dado.id_categoria}}" class="btn btn-sm btn-success"><i class="fa fa-eye"></i> Visualizar</a>
+                    <a href="edit.php?id={{dado.id_categoria}}" class="btn btn-sm btn-warning"><i class="fa fa-pencil"></i> Editar</a>
+                    <a href="#" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete-modal" data-customer="{{dado.id_categoria}}">
+                        <i class="fa fa-trash"></i> Excluir
+                    </a>
+                </td>
+            </tr>
+            {%endfor%}
+            {% else %}
+            <tr>
+                <td colspan="6">Nenhum registro encontrado.</td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+

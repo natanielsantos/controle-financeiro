@@ -7,7 +7,6 @@ namespace ControleFinanceiro\Routes;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\Route;
 
-
 // criar o objeto de rotas
 $rotas = new RouteCollection();
 
@@ -16,8 +15,8 @@ $C_HOME = 'ControleFinanceiro\Controller\ControleHome';
 $C_CATEGORIAS = 'ControleFinanceiro\Controller\ControleCategorias';
 
 // criar as rotas;
-$home = new Route('/', array('_controller'=>$C_HOME,'_method'=>'ver'));
-$categorias = new Route('/categorias', array('_controller'=>$C_CATEGORIAS,'_method'=>'listar'));
+$home = new Route('/', array('_controller' => $C_HOME, '_method' => 'ver'));
+$categorias = new Route('/categorias', array('_controller' => $C_CATEGORIAS, '_method' => 'listar'));
 
 // adicionar no objeto de rotas
 $rotas->add('home', $home);
