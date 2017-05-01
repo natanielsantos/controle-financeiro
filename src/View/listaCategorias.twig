@@ -12,13 +12,18 @@
                     <h2>Categorias</h2>
                 </div>
                 <div class="col-sm-6 text-right h2">
-                                        
+
                     <button class="btn btn-primary" data-toggle="modal" data-target="#modal-cadastro">Nova Categoria</button>
                     <a class="btn btn-default" href="/categorias"><i class="fa fa-refresh"></i> Atualizar</a>
                 </div>
             </div>
         </header>
-
+        {% if cadastrou %}
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Cadastrado!</strong> Atualize a página para visualizar a nova categoria.
+            </div>
+        {% endif%}
         <hr>
 
         <table class="table table-hover">
@@ -39,49 +44,81 @@
                             <td>{{dado.nome_categoria}}</td>
                             <td>{{dado.descricao_categoria}}</td>
                             <td class="actions text-right">
-                                <a href="view.php?id={{dado.id_categoria}}" class="btn btn-sm btn-success"><i class="fa fa-eye"></i> <spam class="glyphicon glyphicon-eye-open"></spam></a>
-                                <a href="edit.php?id={{dado.id_categoria}}" class="btn btn-sm btn-warning"><i class="fa fa-pencil"></i> <spam class="glyphicon glyphicon-edit"></spam></a>
+                                {# <a href="view.php?id={{dado.id_categoria}}" class="btn btn-sm btn-success"><i class="fa fa-eye"></i> <spam class="glyphicon glyphicon-eye-open"></spam></a> #}
+                                <a href="#" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modal-edita"><i class="fa fa-pencil"></i> <spam class="glyphicon glyphicon-edit"></spam></a>
                                 <a href="#" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete-modal" data-customer="{{dado.id_categoria}}">
                                     <i class="fa fa-trash"></i> <spam class="glyphicon glyphicon-trash"></spam>
                                 </a>
                             </td>
                         </tr>
-                    {%endfor%}
-                {% else %}
-                    <tr>
-                        <td colspan="6">Nenhum registro encontrado.</td>
-                    </tr>
-                {% endif %}
+
+                        {# MODAL EDITAR#}
+
+                    <div class="modal fade" id="modal-edita">
+                        <form method="POST" action="/editaCategoria/id={{dado.id_categoria}}">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                                        <h4 class="modal-title">Cadastrar uma nova categoria</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="txt-nome">Nome da Categoria</label>
+                                            <input type="text" name ="nome" class="form-control" placeholder="{{dado.nome_categoria}}" id="nome">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="txt-nome">Descrição</label>
+                                            <textarea class="form-control" name="descricao" rows="5" id="descricao" placeholder="{{dado.descricao_categoria}}"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+                                        <button type="submit" class="btn btn-success">Salvar alteração</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                {%endfor%}
+            {% else %}
+                <tr>
+                    <td colspan="6">Nenhum registro encontrado.</td>
+                </tr>
+            {% endif %}
             </tbody>
         </table>
     </div>
-                
-{# MODAL CADASTRO#}
 
-<div class="modal fade" id="modal-cadastro">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-                <h4 class="modal-title">Cadastrar uma nova categoria</h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="txt-nome">Nome da Categoria</label>
-                    <input type="text" class="form-control" placeholder="Nome da categoria" id="txt-nome">
+    {# MODAL CADASTRO#}
+
+    <div class="modal fade" id="modal-cadastro">
+        <form method="POST" action="/cadastraCategoria">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                        <h4 class="modal-title">Cadastrar uma nova categoria</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="txt-nome">Nome da Categoria</label>
+                            <input type="text" name ="nome" class="form-control" placeholder="Nome da categoria" id="nome">
+                        </div>
+                        <div class="form-group">
+                            <label for="txt-nome">Descrição</label>
+                            <textarea class="form-control" name="descricao" rows="5" id="descricao" placeholder="Opcional"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success">Cadastrar</button>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="txt-nome">Descrição</label>
-                    <textarea class="form-control" rows="5" id="txt-email" placeholder="Opcional"></textarea>
-                </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-success">Cadastrar</button>
-            </div>
-        </div>
+        </form>
     </div>
-</div>
 
 {% endblock %}
 

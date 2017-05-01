@@ -24,7 +24,8 @@ $whoops->register();
 // configurar o http-foundation
 $resposta = new Response();
 $requisitaContexto = new RequestContext();
-$requisitaContexto->fromRequest(Request::createFromGlobals());
+$request = Request::createFromGlobals();
+$requisitaContexto->fromRequest($request);
 $urlMatcher = new UrlMatcher($rotas, $requisitaContexto);
 $atributos = $urlMatcher->match($requisitaContexto->getPathInfo()); //armazena a rota com todos os atributos
 
@@ -33,15 +34,14 @@ $carregar = new \Twig_Loader_Filesystem(__DIR__.'/View');
 $twig = new \Twig_Environment($carregar);
 
 // configura para reconhecer os controladores
-$controlador = new $atributos['_controller']($resposta,$twig); //busca um controlador dentro dos atributos
+$controlador = new $atributos['_controller']($resposta, $request, $twig); //busca um controlador dentro dos atributos
 
-if(isset($atributos['_method'])){
+if (isset($atributos['_method'])) {
     $metodo = $atributos['_method'];
-    if (isset($atributos['_param'])){
+    if(isset($atributos['_param']))
         $controlador->$metodo($atributos['_param']);
-    }else{
+    else
         $controlador->$metodo();
-    }
 }
 
 $resposta->send();

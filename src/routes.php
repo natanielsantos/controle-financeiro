@@ -17,7 +17,9 @@ $C_CATEGORIAS = 'ControleFinanceiro\Controller\ControleCategorias';
 // cria as rotas;
 $home = new Route('/', array('_controller' => $C_HOME, '_method' => 'ver'));
 $categorias = new Route('/categorias', array('_controller' => $C_CATEGORIAS, '_method' => 'listar'));
+$cadastraCategorias = new Route('/cadastraCategoria', array('_controller'=>$C_CATEGORIAS,'_method'=>'cadastrarCategoria'));
 
 // adiciona as rotas na coleção
 $rotas->add('home', $home);
 $rotas->add('categorias', $categorias);
+$rotas->add('cadastraCategoria',$cadastraCategorias);
