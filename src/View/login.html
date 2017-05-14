@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>CF | Login</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <link href="css/estilos.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+
+        <div class="main">
+
+
+            <div class="container">
+                <center>
+                    <div class="middle">
+                        <div id="login">
+
+                            <form action="/validaLogin" method="post">
+
+                                <fieldset class="clearfix">
+
+                                    <p ><span class="fa fa-user"></span><input type="text"  name = "nome" Placeholder="Usuário" required></p> <!-- JS because of IE support; better: placeholder="Username" -->
+                                    <p><span class="fa fa-lock"></span><input type="password" name ="senha"  Placeholder="Senha" required></p> <!-- JS because of IE support; better: placeholder="Password" -->
+
+                                    <div>
+                                        <span style="width:48%; text-align:left;  display: inline-block;"><a class="small-text" href="#">Esqueci a senha</a></span>
+                                        <span style="width:50%; text-align:right;  display: inline-block;"><input type="submit" value="Entrar"></span>
+                                    </div>
+
+                                </fieldset>
+                                <div class="clearfix"></div>
+                            </form>
+
+                            <div class="clearfix"></div>
+
+                        </div> <!-- end login -->
+                        <div class="logo">LOGO
+
+                            <div class="clearfix"></div>
+                        </div>
+
+                    </div>
+                </center>
+            </div>
+
+        </div>
+    </body>
+</html>
