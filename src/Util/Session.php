@@ -24,7 +24,13 @@ class Session {
             return "";
     }
     
+    public function rem($chave){
+        
+        session_unset($_SESSION['cf'][$chave]);
+    }
+    
     public function destroy(){
         session_unset($_SESSION['cf']);
+        session_destroy();
     }
 }

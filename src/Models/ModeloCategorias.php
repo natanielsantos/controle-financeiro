@@ -14,7 +14,7 @@ class ModeloCategorias {
 
     public function listaCategorias() {
         try {
-            $sql = "SELECT * FROM categoria";
+            $sql = "SELECT * FROM categoria where usuario_id_user = 2";
             $p_sql = Conexao::getInstance()->prepare($sql);
             $p_sql->execute();
 

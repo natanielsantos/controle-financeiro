@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use ControleFinanceiro\Models\ModeloCategorias;
 use ControleFinanceiro\Entity\Categoria;
+use ControleFinanceiro\Util\Session;
 
 
 class ControleCategorias {
@@ -16,7 +17,7 @@ class ControleCategorias {
     private $modelo;
     private $dados;
 
-    function __construct(Response $resposta, Request $request ,\Twig_Environment $twig) {
+    function __construct(Response $resposta, Request $request ,\Twig_Environment $twig, Session $session) {
 
         $this->resposta = $resposta;
         $this->twig = $twig;
@@ -25,11 +26,8 @@ class ControleCategorias {
         $this->dados = $this->modelo->listaCategorias();
     }
     
-    
-
     function listar() {
-     
-        return $this->resposta->setContent($this->twig->render('listaCategorias.twig', array('titulo' => '| Categorias', 'dados'=>$this->dados)));
+        return $this->resposta->setContent($this->twig->render('listaCategorias.twig', array('titulo' => 'CF | Categorias', 'dados'=>$this->dados)));
     }
     
     function cadastrarCategoria(){
@@ -41,7 +39,7 @@ class ControleCategorias {
         $modeloCategoria = new ModeloCategorias();
         $cadastrou = $modeloCategoria->cadastrar($categoria);
         
-        return $this->resposta->setContent($this->twig->render('listaCategorias.twig', array('titulo' => '| Categorias', 'dados'=>$this->dados,'cadastrou'=>$cadastrou)));
+        return $this->resposta->setContent($this->twig->render('listaCategorias.twig', array('titulo' => 'CF | Categorias', 'dados'=>$this->dados,'cadastrou'=>$cadastrou)));
     }
 
 }

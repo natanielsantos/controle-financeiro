@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use ControleFinanceiro\Util\Session;
 use ControleFinanceiro\Entity\Usuario;
-use ControleFinanceiro\Models\ModeloUsuario;
+use ControleFinanceiro\Models\ModeloUsuario;    
 
 class ControleUsuario {
 
@@ -15,39 +15,45 @@ class ControleUsuario {
     private $request;
     private $modelo;
     private $dados;
+    private $session;
 
-    function __construct(Response $resposta, Request $request ,\Twig_Environment $twig) {
+    function __construct(Response $resposta, Request $request, \Twig_Environment $twig, Session $session) {
 
         $this->resposta = $resposta;
         $this->twig = $twig;
         $this->request = $request;
         $this->modelo = new ModeloUsuario();
-       // $this->dados = $this->modelo->validaLogin($nome, $senha);
+        $this->session = $session;
+
+        // $this->dados = $this->modelo->validaLogin($nome, $senha);
     }
-    
-    function exibeLogin(){
-        
+
+    function exibeLogin() {
         return $this->resposta->setContent($this->twig->render('login.html'));
     }
-    
-    function validaLogin(){
-        
+
+    function validaLogin() {
+
         $log_nome = $this->request->get('nome');
         $log_senha = $this->request->get('senha');
-        
-        $logado = $this->modelo->validaLogin($log_nome, $log_senha);
-        
-        if($logado){
-            $sessao = new Session();
-                $sessao->add('nome', $log_nome);
-                $sessao->add('senha', $log_senha);
-                
+
+        $existe = $this->modelo->validaLogin($log_nome, $log_senha);
+        if ($existe) {
+            //$existe->senha = "";
+            $this->session->add('nome', $log_nome);
+            $this->session->add('senha', $log_senha);
+
             return $this->resposta->setContent($this->twig->render('home.twig', array('titulo' => 'CF | Home')));
+        
             
-        }else{
+        } else {
             ControleUsuario::exibeLogin();
         }
-        
+    }
+
+    public function redireciona() {
+        $redirect = new RedirectResponse('/formularioCadastro');
+        $redirect->send();
     }
 
 }

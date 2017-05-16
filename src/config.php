@@ -17,8 +17,8 @@ use Symfony\Component\Routing\Matcher\UrlMatcher;
 use ControleFinanceiro\Util\Session;
 
 //criar a sessão
-$sessao = new Session();
-$sessao->start();
+$session = new Session();
+$session->start();
 
 // configura o WHOOPS para mostrar erros amigáveis
 $whoops = new Whoops\Run();
@@ -42,7 +42,7 @@ $whoops->register();
     $twig = new \Twig_Environment($carregar);
 
 // configura para reconhecer os controladores
-    $controlador = new $atributos['_controller']($resposta, $request, $twig); //busca um controlador dentro dos atributos
+    $controlador = new $atributos['_controller']($resposta, $request, $twig, $session); //busca um controlador dentro dos atributos
 
     if (isset($atributos['_method'])) {
         $metodo = $atributos['_method'];
