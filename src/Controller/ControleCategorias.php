@@ -16,6 +16,7 @@ class ControleCategorias {
     private $request;
     private $modelo;
     private $dados;
+    private $session;
 
     function __construct(Response $resposta, Request $request ,\Twig_Environment $twig, Session $session) {
 
@@ -24,10 +25,15 @@ class ControleCategorias {
         $this->request = $request;
         $this->modelo = new ModeloCategorias();
         $this->dados = $this->modelo->listaCategorias();
+        $this->session = $session;
     }
     
     function listar() {
-        return $this->resposta->setContent($this->twig->render('listaCategorias.twig', array('titulo' => 'CF | Categorias', 'dados'=>$this->dados)));
+         
+        $usuario = $this->session->get('nome');
+        
+        if ($usuario != "")
+            return $this->resposta->setContent($this->twig->render('listaCategorias.twig', array('titulo' => 'CF | Categorias', 'dados'=>$this->dados)));
     }
     
     function cadastrarCategoria(){

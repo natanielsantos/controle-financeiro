@@ -30,7 +30,9 @@ class Session {
     }
     
     public function destroy(){
-        session_unset($_SESSION['cf']);
-        session_destroy();
-    }
+        if(isset($_SESSION['cf']))
+            session_unset($_SESSION['cf']);
+        
+         session_destroy();
+}
 }

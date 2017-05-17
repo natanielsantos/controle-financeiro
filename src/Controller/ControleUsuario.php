@@ -4,9 +4,10 @@ namespace ControleFinanceiro\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use ControleFinanceiro\Util\Session;
 use ControleFinanceiro\Entity\Usuario;
-use ControleFinanceiro\Models\ModeloUsuario;    
+use ControleFinanceiro\Models\ModeloUsuario;
 
 class ControleUsuario {
 
@@ -29,6 +30,7 @@ class ControleUsuario {
     }
 
     function exibeLogin() {
+        $this->session->destroy();
         return $this->resposta->setContent($this->twig->render('login.html'));
     }
 
@@ -43,7 +45,8 @@ class ControleUsuario {
             $this->session->add('nome', $log_nome);
             $this->session->add('senha', $log_senha);
 
-            return $this->resposta->setContent($this->twig->render('home.twig', array('titulo' => 'CF | Home')));
+            $destino = "/home";
+            $this->redireciona($destino);
         
             
         } else {
@@ -51,9 +54,13 @@ class ControleUsuario {
         }
     }
 
-    public function redireciona() {
-        $redirect = new RedirectResponse('/formularioCadastro');
+    public function redireciona($destino) {
+        $redirect = new RedirectResponse($destino);
         $redirect->send();
+    }
+    
+    public function destruir(){
+        $session->destruir();
     }
 
 }

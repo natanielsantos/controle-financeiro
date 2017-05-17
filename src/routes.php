@@ -16,10 +16,10 @@ $C_CATEGORIAS = 'ControleFinanceiro\Controller\ControleCategorias';
 $C_USUARIO = 'ControleFinanceiro\Controller\ControleUsuario';
 
 // cria as rotas;
-$home = new Route('/', array('_controller' => $C_HOME, '_method' => 'ver'));
+$home = new Route('/home', array('_controller' => $C_HOME, '_method' => 'ver'));
 $categorias = new Route('/categorias', array('_controller' => $C_CATEGORIAS, '_method' => 'listar'));
 $cadastraCategorias = new Route('/cadastraCategoria', array('_controller'=>$C_CATEGORIAS,'_method'=>'cadastrarCategoria'));
-$sessao = new Route('/login', array('_controller'=>$C_USUARIO,'_method'=>'exibeLogin'));
+$sessao = new Route('/', array('_controller'=>$C_USUARIO,'_method'=>'exibeLogin'));
 $valida_login = new Route('/validaLogin', array('_controller'=>$C_USUARIO,'_method'=>'validaLogin'));
 
 // adiciona as rotas na coleção
