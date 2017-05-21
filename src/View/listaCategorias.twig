@@ -1,5 +1,4 @@
 {# empty Twig template #}
-
 {% extends 'base.twig' %}
 
 {% block title %}{{titulo}}{% endblock %}
@@ -25,27 +24,27 @@
             </div>
         {% endif%}
         <hr>
+        {% if dados %}
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        {#  <th># ID</th> #}
+                        <th width="30%">Nome da Categoria</th>
+                        <th>Descrição</th>
 
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th># ID</th>
-                    <th width="30%">Nome da Categoria</th>
-                    <th>Descrição</th>
+                        <th class="actions text-right">Opções</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-                    <th class="actions text-right">Opções</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% if dados %}
                     {% for dado in dados %}
                         <tr>
-                            <td>{{dado.id_categoria}}</td>
+                            {# <td>{{dado.id_categoria}}</td> #}
                             <td>{{dado.nome_categoria}}</td>
                             <td>{{dado.descricao_categoria}}</td>
                             <td class="actions text-right">
                                 {# <a href="view.php?id={{dado.id_categoria}}" class="btn btn-sm btn-success"><i class="fa fa-eye"></i> <spam class="glyphicon glyphicon-eye-open"></spam></a> #}
-                                <a href="#" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modal-edita" data-whatever="{{dado.id_categoria}}"><i class="fa fa-pencil"></i> <spam class="glyphicon glyphicon-edit"></spam></a>
+                                <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#exampleModal" data-whatever="{{dado.id_categoria}}"><i class="fa fa-pencil"></i> <spam class="glyphicon glyphicon-edit"></spam></button>
                                 <a href="#" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete-modal" data-customer="{{dado.id_categoria}}">
                                     <i class="fa fa-trash"></i> <spam class="glyphicon glyphicon-trash"></spam>
                                 </a>
@@ -55,14 +54,15 @@
                         {# MODAL EDITAR#}
 
                     <div class="modal fade" id="modal-edita">
-                        <form method="POST" action="/editaCategoria/id={{dado.id_categoria}}">
-                            <div class="modal-dialog modal-sm">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-                                        <h4 class="modal-title">Cadastrar uma nova categoria</h4>
-                                    </div>
-                                    <div class="modal-body">
+
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                                    <h4 class="modal-title"></h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="POST" action="/editaCategoria/id={{dado.id_categoria}}">
                                         <div class="form-group">
                                             <label for="txt-nome">Nome da Categoria</label>
                                             <input type="text" name ="nome" class="form-control" placeholder="{{dado.nome_categoria}}" id="nome">
@@ -71,15 +71,17 @@
                                             <label for="txt-nome">Descrição</label>
                                             <textarea class="form-control" name="descricao" rows="5" id="descricao" placeholder="{{dado.descricao_categoria}}"></textarea>
                                         </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
-                                        <button type="submit" class="btn btn-success">Salvar alteração</button>
-                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="btn btn-success">Salvar alteração</button>
                                 </div>
                             </div>
+                        </div>
                         </form>
                     </div>
+
+
 
                 {%endfor%}
             {% else %}
@@ -88,8 +90,13 @@
                 </tr>
             {% endif %}
             </tbody>
+
+       
+
         </table>
     </div>
+
+
 
     {# MODAL CADASTRO#}
 
@@ -119,6 +126,35 @@
             </div>
         </form>
     </div>
+
+    {# MODAL EDITA DE TESTE#}
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="recipient-name" class="control-label">Recipient:</label>
+                            <input type="text" class="form-control" id="id">
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="control-label">Message:</label>
+                            <textarea class="form-control" id="message-text"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Send message</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 {% endblock %}
 

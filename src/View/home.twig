@@ -3,9 +3,31 @@
 {% block title %}{{titulo}}{% endblock %}
 
 {% block body %}
-    <div class="container">
+    <div class="container-fluid">
         <div class="jumbotron">
-             
+            <div class="row">
+                <div class="col-sm-3">.col-sm-3</div>
+                <div class="col-sm-3">.col-sm-3</div>
+                <div class="col-sm-3">.col-sm-3</div>
+                <div class="col-sm-3">
+                    <div class="info-box bg-red">
+                        <span class="info-box-icon"><i class="fa fa-comments-o"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Saldo: </span>
+                            <span class="info-box-number">410</span>
+                            <!-- The progress section is optional -->
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 50%"></div>
+                            </div>
+                            <span class="progress-description">
+                                70% Increase in 30 Days
+                            </span>
+                        </div><!-- /.info-box-content -->
+                    </div><!-- /.info-box -->
+                </div>
+            </div>
+
+
             <a href="/categorias">
                 <button type="button" class="btn btn-primary btn-lg" >
                     <span class="glyphicon glyphicon-tags" aria-hidden="true"></span> <br>Categorias <br>de Custo
@@ -23,10 +45,13 @@
             <button type="button" class="btn btn-default btn-lg">
                 <span class="glyphicon glyphicon-signal" aria-hidden="true"></span> <br>Visualizar <br>Gráfico
             </button>
-            
+
         </div>
-       <div id="area_grafico"></div>
+        <div id="area_grafico"></div>
     </div>
+
+
+
 
 {% endblock %}
 

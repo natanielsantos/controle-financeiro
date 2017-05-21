@@ -29,7 +29,7 @@ class ControleHome {
         $usuario = $this->session->get('nome');
         
          if ($usuario != ""){
-            return $this->resposta->setContent($this->twig->render('home.twig', array('titulo' => 'CF | Home')));
+            return $this->resposta->setContent($this->twig->render('home.twig', array('titulo' => 'CF | Home','usuario'=>$usuario)));
     } else {
               $redirect = new RedirectResponse('/');
                $redirect->send();

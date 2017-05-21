@@ -12,10 +12,11 @@ class ModeloCategorias {
         ;
     }
 
-    public function listaCategorias() {
+    public function listaCategorias($id_usuario) {
         try {
-            $sql = "SELECT * FROM categoria where usuario_id_user = 2";
+            $sql = "SELECT * FROM categoria where usuario_id_user = :usuario";
             $p_sql = Conexao::getInstance()->prepare($sql);
+            $p_sql->bindValue(':usuario', $id_usuario);
             $p_sql->execute();
 
             return $p_sql->fetchAll(PDO::FETCH_ASSOC);
@@ -31,7 +32,7 @@ class ModeloCategorias {
             $psql = Conexao::getInstance()->prepare($sql);
             $psql->bindValue(':nome', $categoria->getNome());
             $psql->bindValue(':descricao',$categoria->getDescricao());
-            $psql->bindValue(':usuario',1);
+            $psql->bindValue(':usuario',$categoria->getUsuario());
             $psql->execute();
             
             return true;

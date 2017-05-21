@@ -17,6 +17,7 @@ class ControleUsuario {
     private $modelo;
     private $dados;
     private $session;
+    private $usuario;
 
     function __construct(Response $resposta, Request $request, \Twig_Environment $twig, Session $session) {
 
@@ -38,12 +39,14 @@ class ControleUsuario {
 
         $log_nome = $this->request->get('nome');
         $log_senha = $this->request->get('senha');
-
+        
         $existe = $this->modelo->validaLogin($log_nome, $log_senha);
+        
         if ($existe) {
-            //$existe->senha = "";
+            
             $this->session->add('nome', $log_nome);
             $this->session->add('senha', $log_senha);
+            $this->session->add('id_user', $existe->id_user);
 
             $destino = "/home";
             $this->redireciona($destino);
@@ -60,7 +63,7 @@ class ControleUsuario {
     }
     
     public function destruir(){
-        $session->destruir();
+        $this->session->destruir();
     }
 
 }

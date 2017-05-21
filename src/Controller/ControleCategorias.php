@@ -8,7 +8,6 @@ use ControleFinanceiro\Models\ModeloCategorias;
 use ControleFinanceiro\Entity\Categoria;
 use ControleFinanceiro\Util\Session;
 
-
 class ControleCategorias {
 
     private $resposta;
@@ -18,34 +17,37 @@ class ControleCategorias {
     private $dados;
     private $session;
 
-    function __construct(Response $resposta, Request $request ,\Twig_Environment $twig, Session $session) {
+    function __construct(Response $resposta, Request $request, \Twig_Environment $twig, Session $session) {
 
         $this->resposta = $resposta;
         $this->twig = $twig;
         $this->request = $request;
         $this->modelo = new ModeloCategorias();
-        $this->dados = $this->modelo->listaCategorias();
         $this->session = $session;
-    }
-    
-    function listar() {
-         
-        $usuario = $this->session->get('nome');
-        
-        if ($usuario != "")
-            return $this->resposta->setContent($this->twig->render('listaCategorias.twig', array('titulo' => 'CF | Categorias', 'dados'=>$this->dados)));
-    }
-    
-    function cadastrarCategoria(){
-        
-        $categoria = new Categoria(
-                           $this->request->request->get('nome'),
-                           $this->request->request->get('descricao'),
-                           $this->request->request->get('usuario'));
-        $modeloCategoria = new ModeloCategorias();
-        $cadastrou = $modeloCategoria->cadastrar($categoria);
-        
-        return $this->resposta->setContent($this->twig->render('listaCategorias.twig', array('titulo' => 'CF | Categorias', 'dados'=>$this->dados,'cadastrou'=>$cadastrou)));
+        $this->dados = $this->modelo->listaCategorias($session->get('id_user'));
     }
 
-}
+    function listar() {
+        $usuario = $this->session->get('nome');
+
+        if ($usuario != "") {
+            return $this->resposta->setContent($this->twig->render('listaCategorias.twig', array('titulo' => 'CF | Categorias',
+                                'dados' => $this->dados,
+                                'usuario' => $usuario)));
+        }
+    }
+
+    function cadastrarCategoria(){
+
+            $categoria = new Categoria(
+                    $this->request->request->get('nome'), $this->request->request->get('descricao'), $this->session->get('id_user'));
+            $modeloCategoria = new ModeloCategorias();
+            $cadastrou = $modeloCategoria->cadastrar($categoria);
+
+            return $this->resposta->setContent($this->twig->render('listaCategorias.twig', array('titulo' => 'CF | Categorias',
+                                'dados' => $this->dados,
+                                'cadastrou' => $cadastrou)));
+        }
+
+    }
+

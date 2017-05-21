@@ -27,31 +27,31 @@ $whoops->register();
 
 
 //if ($logado != null) { // colocar != de null para ativar login
-  //  require_once 'login.html';
+//  require_once 'login.html';
 //} else {
-
 // configurar o http-foundation
-    $resposta = new Response();
-    $requisitaContexto = new RequestContext();
-    $request = Request::createFromGlobals();
-    $requisitaContexto->fromRequest($request);
-    $urlMatcher = new UrlMatcher($rotas, $requisitaContexto);
-    $atributos = $urlMatcher->match($requisitaContexto->getPathInfo()); //armazena a rota com todos os atributos
+$resposta = new Response();
+$requisitaContexto = new RequestContext();
+$request = Request::createFromGlobals();
+$requisitaContexto->fromRequest($request);
+$urlMatcher = new UrlMatcher($rotas, $requisitaContexto);
+$atributos = $urlMatcher->match($requisitaContexto->getPathInfo()); //armazena a rota com todos os atributos
 //configura o twig para utilização de templates
-    $carregar = new \Twig_Loader_Filesystem(__DIR__ . '/View');
-    $twig = new \Twig_Environment($carregar);
+$carregar = new \Twig_Loader_Filesystem(__DIR__ . '/View');
+$twig = new \Twig_Environment($carregar);
 
 // configura para reconhecer os controladores
-    $controlador = new $atributos['_controller']($resposta, $request, $twig, $session); //busca um controlador dentro dos atributos
+$controlador = new $atributos['_controller']($resposta, $request, $twig, $session); //busca um controlador dentro dos atributos
 
-    if (isset($atributos['_method'])) {
-        $metodo = $atributos['_method'];
-        if (isset($atributos['_param']))
-            $controlador->$metodo($atributos['_param']);
-        else
-            $controlador->$metodo();
+if (isset($atributos['_method'])) {
+    $metodo = $atributos['_method'];
+    if (isset($atributos['_param'])) {
+        $controlador->$metodo($atributos['_param']);
+    } else {
+        $controlador->$metodo();
     }
+}
 
-    $resposta->send();
+$resposta->send();
 //}
 

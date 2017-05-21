@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -14,56 +12,69 @@
         <!-- Estilo de Menu -->
         <style>
             .navbar {
-                background: #333;
+                background: #0B3861;
                 border-radius: 0px;
             }
 
             .nano {
-                background: #fd402e;
+                background: #444;
             }
+
+            .bg-4 { 
+                background-color: #2f2f2f;
+                color: #ffffff;
+            }
+
+            .container-fluid {
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
+
         </style>
         <!-- Estilo de Menu -->
 
-         <!-- Carregar a API do google -->
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <!-- Carregar a API do google -->
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
-    <!-- Preparar a geracao do grafico -->
-    <script type="text/javascript">
+        <!-- Preparar a geracao do grafico -->
+        <script type="text/javascript">
 
-      // Carregar a API de visualizacao e os pacotes necessarios.
-      google.load('visualization', '1.0', {'packages':['corechart']});
+            // Carregar a API de visualizacao e os pacotes necessarios.
+            google.load('visualization', '1.0', {'packages': ['corechart']});
 
-      // Especificar um callback para ser executado quando a API for carregada.
-      google.setOnLoadCallback(desenharGrafico);
+            // Especificar um callback para ser executado quando a API for carregada.
+            google.setOnLoadCallback(desenharGrafico);
 
-      /**
-       * Funcao que preenche os dados do grafico
-       */
-      function desenharGrafico() {
-        // Montar os dados usados pelo grafico
-        var dados = new google.visualization.DataTable();
-        dados.addColumn('string', 'Gênero');
-        dados.addColumn('number', 'Quantidades');
-        dados.addRows([
-          ['Receitas', 2500],
-          ['Despesas', 2180]
-        ]);
+            /**
+             * Funcao que preenche os dados do grafico
+             */
+            function desenharGrafico() {
+                // Montar os dados usados pelo grafico
+                var dados = new google.visualization.DataTable();
+                dados.addColumn('string', 'Gênero');
+                dados.addColumn('number', 'Quantidades');
+                dados.addRows([
+                    ['Receitas', 2500],
+                    ['Despesas', 2180]
+                ]);
 
-        // Configuracoes do grafico
-        var config = {
-            'title':'Receitas x Despesas',
-            'width':350,
-            'height':200
-        };
+                // Configuracoes do grafico
+                var config = {
+                    'title': 'Receitas x Despesas',
+                    'width': 450,
+                    'height': 300
+                };
 
-        // Instanciar o objeto de geracao de graficos de pizza,
-        // informando o elemento HTML onde o grafico sera desenhado.
-        var chart = new google.visualization.PieChart(document.getElementById('area_grafico'));
+                // Instanciar o objeto de geracao de graficos de pizza,
+                // informando o elemento HTML onde o grafico sera desenhado.
+                var chart = new google.visualization.PieChart(document.getElementById('area_grafico'));
 
-        // Desenhar o grafico (usando os dados e as configuracoes criadas)
-        chart.draw(dados, config);
-      }
-    </script>
+                // Desenhar o grafico (usando os dados e as configuracoes criadas)
+                chart.draw(dados, config);
+            }
+
+
+        </script>
 
     </head>
     <body>
@@ -74,7 +85,15 @@
                     <a class="navbar-brand" href="/">CONTROLE FINANCEIRO |</a>
                 </div>
                 <ul class="nav navbar-nav">
-                    <li><a href="/categorias">Categorias de Custo</a></li>
+                    <li><a href="/home">Painel</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Cadastrar
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/categorias">Categorias</a></li>
+                            <li><a href="#">Formas de Pagamento</a></li>
+                        </ul>
+                    </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Lançamentos
                             <span class="caret"></span></a>
@@ -83,31 +102,41 @@
                             <li><a href="#">Despesas</a></li>
                         </ul>
                     </li>
-                    <li><a href="#">Extrato</a></li>
-                    <li><a href="#">Gráfico</a></li>
-                    <li><a href="#">Usuário</a></li>
+                    <li><a href="#">Balanço Patrimonial</a></li>
+                    <li><a href="#">Ajuda</a></li>
+
+
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#"><span class="glyphicon glyphicon-user"></span> Registrar</a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-log-in"></span>Sair</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-user"></span> Saudações {{usuario | title}}</a></li>
+                    <li><a href="/"><span class="glyphicon glyphicon-log-in"></span>Sair</a></li>
                 </ul>
             </div>
         </nav>
 
         <div id="content">
-        {% block body %} {% endblock %}
-    </div>
-
-    <div class="navbar navbar-inverse" role="navigation">
-        <div class="container">
-
-            <div class="navbar-text pull-left">
-                <p> <small>Sistema de Controle Financeiro - 2017</small></p>
-            </div>
+            {% block body %} {% endblock %}
         </div>
+
+        <footer class="container-fluid bg-4 text-center">
+            <div class="container">
+
+                <div>
+                    <p> <small>Sistema de Controle Financeiro - 2017</small></p>
+                </div>
+        </footer>
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <!-- Include all compiled plugins (below), or include individual files as needed -->
         <script src="js/bootstrap.min.js"></script>
-</body>
+        <script type="text/javascript">
+            $('#exempleModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); // Button that triggered the modal
+                var id = button.data('whatever'); // Extract info from data-* attributes
+                var modal = $(this);
+                modal.find('.modal-title').text('New message to ' + id);
+                modal.find('.modal-body input').val(id);
+            });
+        </script>
+    </body>
 </html>
