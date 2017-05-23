@@ -42,5 +42,20 @@ class ModeloCategorias {
         }
             
     }
+    
+    public function excluir($id){
+        try {
+            
+            $sql = "DELETE FROM categoria WHERE id_categoria = :id_categoria";
+            $psql = Conexao::getInstance()->prepare($sql);
+            $psql->bindValue(':id_categoria',$id);
+            $psql->execute();
+            
+            return true;
+            
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        }
 
 }

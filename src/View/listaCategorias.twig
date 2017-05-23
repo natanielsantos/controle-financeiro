@@ -23,6 +23,13 @@
                 <strong>Cadastrado!</strong> Atualize a página para visualizar a nova categoria.
             </div>
         {% endif%}
+        
+        {% if excluiu %}
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Categoria Excluída!</strong> Atualize a página.
+            </div>
+        {% endif%}
         <hr>
         {% if dados %}
             <table class="table table-hover">
@@ -44,10 +51,15 @@
                             <td>{{dado.descricao_categoria}}</td>
                             <td class="actions text-right">
                                 {# <a href="view.php?id={{dado.id_categoria}}" class="btn btn-sm btn-success"><i class="fa fa-eye"></i> <spam class="glyphicon glyphicon-eye-open"></spam></a> #}
-                                <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modal-edita" data-whatever2="{{dado.descricao_categoria}}" data-whatever="{{dado.nome_categoria}}"><i class="fa fa-pencil"></i> <spam class="glyphicon glyphicon-edit"></spam></button>
-                                <a href="teste.php/id={{dado.id_categoria}}" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete-modal" data-customer="{{dado.id_categoria}}">
-                                    <i class="fa fa-trash"></i> <spam class="glyphicon glyphicon-trash"></spam>
-                                </a>
+                                <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modal-edita" data-whatever2="{{dado.descricao_categoria}}" data-whatever="{{dado.nome_categoria}}">
+                                    <i class="fa fa-pencil"></i> 
+                                    <spam class="glyphicon glyphicon-edit"></spam>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal-exclui" data-whatever2="{{dado.descricao_categoria}}" data-whatever="{{dado.nome_categoria}}">
+                                    <i class="fa fa-trash"></i> 
+                                    <spam class="glyphicon glyphicon-trash"></spam>
+                                </button>
+                       
                             </td>
                         </tr>
 
@@ -80,10 +92,40 @@
                         </div>
                         </form>
                     </div>
+                    
+                    {# MODAL EXCLUIR#}
+
+                    <div class="modal fade" id="modal-exclui">
+
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                                    <h4 class="modal-title"></h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="POST" action="/excluiCategoria/{{dado.id_categoria}}">
+                                        <div class="form-group">
+                                            <label for="txt-nome">Nome</label>
+                                            <input type="text" name ="nome" class="form-control"  id="nome">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="txt-nome">Descrição</label>
+                                            <textarea class="form-control" name="descricao" rows="5" id="descricao"></textarea>
+                                        </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="btn btn-success">Excluir</button>
+                                </div>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
                 {%endfor%}
             {% else %}
                 <tr>
-                    <td colspan="6">Nenhum registro encontrado.</td>
+                    <td colspan="6"><div class="alert alert-danger">Nenhum registro encontrado.</td></div> 
                 </tr>
             {% endif %}
             </tbody>

@@ -4,6 +4,7 @@ namespace ControleFinanceiro\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use ControleFinanceiro\Models\ModeloCategorias;
 use ControleFinanceiro\Entity\Categoria;
 use ControleFinanceiro\Util\Session;
@@ -51,6 +52,18 @@ class ControleCategorias {
     
     function editarCategoria($id){
         ;
+    }
+    
+    function excluirCategoria($id){
+        
+        $modeloCategoria = new ModeloCategorias();
+        $excluiu = $modeloCategoria->excluir($id);
+        
+        $redirect = new RedirectResponse('/categorias');
+        $redirect->send();
+        
+        return true;
+        
     }
 
 }
