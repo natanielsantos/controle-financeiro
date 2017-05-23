@@ -37,17 +37,20 @@ class ControleCategorias {
         }
     }
 
-    function cadastrarCategoria(){
+    function cadastrarCategoria() {
 
-            $categoria = new Categoria(
-                    $this->request->request->get('nome'), $this->request->request->get('descricao'), $this->session->get('id_user'));
-            $modeloCategoria = new ModeloCategorias();
-            $cadastrou = $modeloCategoria->cadastrar($categoria);
+        $categoria = new Categoria(
+                $this->request->request->get('nome'), $this->request->request->get('descricao'), $this->session->get('id_user'));
+        $modeloCategoria = new ModeloCategorias();
+        $cadastrou = $modeloCategoria->cadastrar($categoria);
 
-            return $this->resposta->setContent($this->twig->render('listaCategorias.twig', array('titulo' => 'CF | Categorias',
-                                'dados' => $this->dados,
-                                'cadastrou' => $cadastrou)));
-        }
-
+        return $this->resposta->setContent($this->twig->render('listaCategorias.twig', array('titulo' => 'CF | Categorias',
+                            'dados' => $this->dados,
+                            'cadastrou' => $cadastrou)));
+    }
+    
+    function editarCategoria($id){
+        ;
     }
 
+}

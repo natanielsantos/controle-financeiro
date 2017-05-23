@@ -6,45 +6,41 @@
     <div class="container-fluid">
         <div class="jumbotron">
             <div class="row">
-                <div class="col-sm-3">.col-sm-3</div>
-                <div class="col-sm-3">.col-sm-3</div>
-                <div class="col-sm-3">.col-sm-3</div>
-                <div class="col-sm-3">
-                    <div class="info-box bg-red">
-                        <span class="info-box-icon"><i class="fa fa-comments-o"></i></span>
-                        <div class="info-box-content">
-                            <span class="info-box-text">Saldo: </span>
-                            <span class="info-box-number">410</span>
-                            <!-- The progress section is optional -->
-                            <div class="progress">
-                                <div class="progress-bar" style="width: 50%"></div>
-                            </div>
-                            <span class="progress-description">
-                                70% Increase in 30 Days
-                            </span>
-                        </div><!-- /.info-box-content -->
-                    </div><!-- /.info-box -->
+                <div class="col-sm-2">      <a href="/categorias">
+                        <button type="button" class="btn btn-primary btn-lg" >
+                            <span class="glyphicon glyphicon-tags" aria-hidden="true"></span> <br>Categorias <br>de Custo
+                        </button>
+                    </a></div>
+                <div class="col-sm-2"> 
+                    <button type="button" class="btn btn-success btn-lg">
+                        <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> <br>Cadastrar <br>Receitas
+                    </button>
                 </div>
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-danger btn-lg">
+                        <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span> <br>Cadastrar <br>despesas
+                    </button>
+                </div>
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-info btn-lg">
+                        <span class="glyphicon glyphicon-usd" aria-hidden="true"></span> <br>Visualizar <br>Extrato
+                    </button>
+                </div>
+                <div class="col-sm-4">
+                    <button type="button" class="btn btn-default btn-lg">
+                        <span class="glyphicon glyphicon-signal" aria-hidden="true"></span> <br>Balanço <br>Patrimonial
+                    </button>
+                </div>
+                
             </div>
 
 
-            <a href="/categorias">
-                <button type="button" class="btn btn-primary btn-lg" >
-                    <span class="glyphicon glyphicon-tags" aria-hidden="true"></span> <br>Categorias <br>de Custo
-                </button>
-            </a>
-            <button type="button" class="btn btn-success btn-lg">
-                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> <br>Cadastrar <br>Receitas
-            </button>
-            <button type="button" class="btn btn-danger btn-lg">
-                <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span> <br>Cadastrar <br>despesas
-            </button>
-            <button type="button" class="btn btn-info btn-lg">
-                <span class="glyphicon glyphicon-usd" aria-hidden="true"></span> <br>Visualizar <br>Extrato
-            </button>
-            <button type="button" class="btn btn-default btn-lg">
-                <span class="glyphicon glyphicon-signal" aria-hidden="true"></span> <br>Visualizar <br>Gráfico
-            </button>
+
+
+
+
+
+
 
         </div>
         <div id="area_grafico"></div>
