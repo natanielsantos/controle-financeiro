@@ -35,5 +35,18 @@ class ControleHome {
                $redirect->send();
          }
     }
+    
+        function verAjuda() {
+        
+        $usuario = $this->session->get('nome');
+        
+         if ($usuario != ""){
+            return $this->resposta->setContent($this->twig->render('ajuda.twig', array('titulo' => 'CF | Ajuda','usuario'=>$usuario)));
+    } else {
+              $redirect = new RedirectResponse('/');
+               $redirect->send();
+         }
+    }
+
 
 }

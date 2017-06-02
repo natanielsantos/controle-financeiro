@@ -57,11 +57,11 @@ class ControleCategorias {
     function excluirCategoria($id){
         
         $modeloCategoria = new ModeloCategorias();
-        $excluiu = $modeloCategoria->excluir($id);
+        $modeloCategoria->excluir($id);
         
-        $redirect = new RedirectResponse('/categorias');
-        $redirect->send();
-        
+        //$redirect = new RedirectResponse('/categorias');
+        //$redirect->send();
+        echo $id;
         return true;
         
     }
