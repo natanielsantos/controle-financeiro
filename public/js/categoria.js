@@ -1,34 +1,34 @@
 //JS DO MODAL PARA EDITAR CATEGORIA
 $('#modal-edita').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget);// Button that triggered the modal
-    var idEdita = button.data('editid');
-    var editaDescricao = button.data('editdescricao');
-    var editaNome = button.data('editnome');// Extract info from data-* attributes
-    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-    var modal = $(this);
+    var button = $(event.relatedTarget);// Pega o evento do botao no modal
+    var idEdita = button.data('editid'); // Pega o id da categoria
+    var editaDescricao = button.data('editdescricao'); //  Pega a descrição
+    var editaNome = button.data('editnome');// Pega o nome
 
-    $("#formEdita").attr("action", '/editaCategoria/id=' + idEdita);
+    var modal = $(this);
 
     modal.find('.modal-title').text('Categoria: ' + editaNome);
     modal.find('.modal-body input').val(editaNome);
     modal.find('.modal-body textarea').val(editaDescricao);
 
+    $("#formEdita").attr("action", '/editaCategoria/id=' + idEdita);
+
 });
 
 //JS DO MODAL PARA EXCLUIR CATEGORIA
 $('#modal-exclui').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget);// Button that triggered the modal
+    var button = $(event.relatedTarget);
     var idexclui = button.data('excidcategoria');
     var excluiDescricao = button.data('excdescricao');
-    var excluiNome = button.data('excnome');// Extract info from data-* attributes
-    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+    var excluiNome = button.data('excnome');
+
     var modal = $(this);
+
     modal.find('.modal-title').text('Categoria : ' + excluiNome);
     modal.find('.modal-body input').val(excluiNome);
     modal.find('.modal-body textarea').val(excluiDescricao);
-    
+
     $("#formExclui").attr("action", '/excluiCategoria/id=' + idexclui);
+
 });
 

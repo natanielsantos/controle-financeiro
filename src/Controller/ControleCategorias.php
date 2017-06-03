@@ -51,17 +51,26 @@ class ControleCategorias {
     }
     
     function editarCategoria($id){
-        ;
+        
+       // $categoria = $modeloCategoria->getCategoria($id);
+       
+        $novaCategoria = new Categoria($this->request->request->get('nome'), $this->request->request->get('descricao'), $this->session->get('id_user'));
+        
+        ModeloCategorias::editar($novaCategoria, $id);
+
+        $redirect = new RedirectResponse('/categorias');
+        $redirect->send();
+        
+        return true;
     }
     
     function excluirCategoria($id){
         
-        $modeloCategoria = new ModeloCategorias();
-        $modeloCategoria->excluir($id);
+        ModeloCategorias::excluir($id);
         
-        //$redirect = new RedirectResponse('/categorias');
-        //$redirect->send();
-        echo $id;
+        $redirect = new RedirectResponse('/categorias');
+        $redirect->send();
+        //echo $id;
         return true;
         
     }
