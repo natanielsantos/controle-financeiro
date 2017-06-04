@@ -31,7 +31,13 @@
             </div>
         {% endif%}
         <hr>
+
+    
+
         {% if dados %}
+
+
+
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -113,12 +119,12 @@
                                 <div class="modal-body">
                                     <form method="POST" id="formExclui" nome="formExclui" action="">
                                         <div class="form-group">
-                                           
-                                            <input type="text" name ="nome" class="form-control"  id="nome">
+
+                                            <input type="text" name ="nome" class="form-control"  id="nome" disabled>
                                         </div>
                                         <div class="form-group">
                                             <label for="txt-nome">Descrição</label>
-                                            <textarea class="form-control" name="descricao" rows="5" id="descricao"></textarea>
+                                            <textarea class="form-control" name="descricao" rows="5" id="descricao" disabled></textarea>
                                         </div>
                                 </div>
                                 <div class="modal-footer">
@@ -132,7 +138,8 @@
                 {%endfor%}
             {% else %}
                 <tr>
-                    <td colspan="6"><div class="alert alert-danger">Nenhum registro encontrado.</td></div> 
+                    <td colspan="6"><div class="alert alert-danger">Você não definiu nenhuma categoria</td></div> 
+                    <td colspan="6"><div class="alert alert-info">Você pode adicionar novas categorias clicando no botão "Nova Categoria" ou se preferir pode <a href="/cadastraCategoriasPadrao">INSTALAR CATEGORIAS BÁSICAS</a></td></div> 
                 </tr>
             {% endif %}
             </tbody>

@@ -74,5 +74,17 @@ class ControleCategorias {
         return true;
         
     }
+    
+    function cadastraPadrao() {
+
+        $usuario = $this->session->get('id_user');
+        $modeloCategoria = new ModeloCategorias();
+        $modeloCategoria->cadastraPadrao($usuario);
+
+        $redirect = new RedirectResponse('/categorias');
+        $redirect->send();
+        
+        return true;
+    }
 
 }

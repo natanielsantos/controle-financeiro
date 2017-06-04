@@ -94,5 +94,42 @@ class ModeloCategorias {
             echo $exc->getTraceAsString();
         }
         }
+        
+         public function cadastraPadrao($usuario){
+        
+        try {
+            $sql = "INSERT INTO categoria(nome_categoria, descricao_categoria,usuario_id_user)"
+                    . " values (:nome, :descricao, :usuario),"
+                    . "(:nome2, :descricao2, :usuario),"
+                    . "(:nome3, :descricao3, :usuario),"
+                    . "(:nome4, :descricao4, :usuario),"
+                    . "(:nome5, :descricao5, :usuario)";
+            $psql = Conexao::getInstance()->prepare($sql);
+            $psql->bindValue(':usuario',$usuario);
+            
+            $psql->bindValue(':nome', "Alimentação");
+            $psql->bindValue(':descricao',"Lanches, supermercado, feiras, restaurantes...");
+            
+            $psql->bindValue(':nome2', "Moradia");
+            $psql->bindValue(':descricao2',"Luz, água, telefone, aluguel, manutenção...");
+            
+            $psql->bindValue(':nome3', "Saúde");
+            $psql->bindValue(':descricao3',"Remédios, consultas, checkup...");
+            
+            $psql->bindValue(':nome4', "Lazer");
+            $psql->bindValue(':descricao4',"Cinema, viagens, academia...");
+            
+            $psql->bindValue(':nome5', "Transporte");
+            $psql->bindValue(':descricao5',"Combustível, manutenção, viagens, revisões...");
+            
+            $psql->execute();
+            
+            return true;
+            
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+            
+    }
 
 }

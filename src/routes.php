@@ -19,6 +19,7 @@ $C_USUARIO = 'ControleFinanceiro\Controller\ControleUsuario';
 $home = new Route('/home', array('_controller' => $C_HOME, '_method' => 'ver'));
 $ajuda = new Route('/ajuda', array('_controller' => $C_HOME, '_method' => 'verAjuda'));
 $categorias = new Route('/categorias', array('_controller' => $C_CATEGORIAS, '_method' => 'listar'));
+$cadastraPadrao = new Route('/cadastraCategoriasPadrao', array('_controller'=>$C_CATEGORIAS,'_method'=>'cadastraPadrao'));
 $cadastraCategorias = new Route('/cadastraCategoria', array('_controller'=>$C_CATEGORIAS,'_method'=>'cadastrarCategoria'));
 $editaCategorias = new Route('/editaCategoria/id={_param}', array('_controller'=>$C_CATEGORIAS,'_method'=>'editarCategoria'));
 $excluiCategorias = new Route('/excluiCategoria/id={_param}', array('_controller'=>$C_CATEGORIAS,'_method'=>'excluirCategoria'));
@@ -29,6 +30,7 @@ $valida_login = new Route('/validaLogin', array('_controller'=>$C_USUARIO,'_meth
 $rotas->add('home', $home);
 $rotas->add('ajuda', $ajuda);
 $rotas->add('categorias', $categorias);
+$rotas->add('cadastraPadrao',$cadastraPadrao);
 $rotas->add('cadastraCategoria',$cadastraCategorias);
 $rotas->add('editaCategoria',$editaCategorias);
 $rotas->add('excluiCategoria',$excluiCategorias);
