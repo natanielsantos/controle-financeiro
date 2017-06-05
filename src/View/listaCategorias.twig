@@ -4,7 +4,7 @@
 {% block title %}{{titulo}}{% endblock %}
 
 {% block body %}
-    <div class="container">
+    
         <header>
             <div class="row">
                 <div class="col-sm-6">
@@ -31,7 +31,15 @@
             </div>
         {% endif%}
         <hr>
-
+        
+        {# BARRA DE PROGRESSO
+        <div class="container">
+        <div class ="progress">
+            <div class ="progress-bar progress-bar-success progress-bar-striped" role="progress" style="width:1%; min-width: 10%">
+                Completando...
+            </div>
+        </div>
+        </div> #}
     
 
         {% if dados %}
@@ -144,7 +152,7 @@
             {% endif %}
             </tbody>
         </table>
-    </div>
+    
 
 
 

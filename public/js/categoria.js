@@ -34,9 +34,10 @@ $('#modal-exclui').on('show.bs.modal', function (event) {
 
 var progressBar = $(".progress-bar");
 
-setInterval(addProgress, 1000);
+setInterval(addProgress, 100);
 
 function addProgress() {
-  var width = progressBar.width() + 15;
+  var width = progressBar.width() + 10;
   progressBar.width(width);
+  
 }
