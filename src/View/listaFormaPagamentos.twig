@@ -1,0 +1,187 @@
+{# empty Twig template #}
+{% extends 'base.twig' %}
+
+{% block title %}{{titulo}}{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <header>
+            <div class="row">
+                <div class="col-sm-6">
+                    <h2>Formas de Pagamento</h2>
+                </div>
+                <div class="col-sm-6 text-right h2">
+
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#modal-cadastro">Nova Forma de Pagamento</button>
+                    <a class="btn btn-default" href="/pagamentos"><i class="fa fa-refresh"></i> Atualizar</a>
+                </div>
+            </div>
+        </header>
+        {% if cadastrou %}
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Cadastrado!</strong> Atualize a página para visualizar a nova forma de pagamento.
+            </div>
+        {% endif%}
+
+        {% if excluiu %}
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Forma de Pagamento Excluída!</strong> Atualize a página.
+            </div>
+        {% endif%}
+    </div>
+
+    {# BARRA DE PROGRESSO
+    <div class="container">
+    <div class ="progress">
+        <div class ="progress-bar progress-bar-success progress-bar-striped" role="progress" style="width:1%; min-width: 10%">
+            Completando...
+        </div>
+    </div>
+    </div> #}
+
+
+    {% if dados %}
+
+        <div class="container-fluid">
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        {#  <th># ID</th> #}
+                        <th width="30%">Forma de Pagamento</th>
+                        <th>Descrição</th>
+
+                        <th class="actions text-right">Opções</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for dado in dados %}
+                        <tr>
+                            {# <td>{{dado.id_categoria}}</td> #}
+                            <td>{{dado.nome_form_pag | title}}</td>
+                            <td>{{dado.descricao_form_pag}}</td>
+                            <td class="actions text-right">
+                                {# <a href="view.php?id={{dado.id_categoria}}" class="btn btn-sm btn-success"><i class="fa fa-eye"></i> <spam class="glyphicon glyphicon-eye-open"></spam></a> #}
+                                <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modal-edita-form" 
+                                        data-editid="{{dado.id_form_pag}}"
+                                        data-editdescricao="{{dado.descricao_form_pag}}" 
+                                        data-editnome="{{dado.nome_form_pag}}">
+                                    <i class="fa fa-pencil"></i> 
+                                    <spam class="glyphicon glyphicon-edit"></spam>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal-exclui-form" 
+                                        data-excidcategoria="{{dado.id_form_pag}}" 
+                                        data-excdescricao="{{dado.descricao_form_pag}}" 
+                                        data-excnome="{{dado.nome_form_pag}}">
+                                    <i class="fa fa-trash"></i> 
+                                    <spam class="glyphicon glyphicon-trash"></spam>
+                                </button>
+
+                            </td>
+                        </tr>
+                    {%endfor%}
+                {% else %}
+                    <div class ="container">
+                        <td colspan="6"><div class="alert alert-danger">Você não definiu nenhuma forma de pagamento</td></div> 
+                        <td colspan="6"><div class="alert alert-info">Você pode adicionar novas categorias clicando no botão "Nova Forma de Pagamento" ou se preferir pode <a href="/cadastraPagamentosPadrao">INSTALAR FORMAS DE PAGAMENTOS BÁSICAS</a></td></div> 
+    </div>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+
+
+    {# MODAL CADASTRO#}
+
+    <div class="modal fade" id="modal-cadastro">
+        <form method="POST" action="/cadastraPagamento">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                        <h4 class="modal-title">Cadastrar uma nova forma de pagamento</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="txt-nome">Forma de Pagamento</label>
+                            <input type="text" name ="nome" class="form-control" placeholder="Nome da categoria" id="nome">
+                        </div>
+                        <div class="form-group">
+                            <label for="txt-nome">Descrição</label>
+                            <textarea class="form-control" name="descricao" rows="5" id="descricao" placeholder="Opcional"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success">Cadastrar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    {# MODAL EDITAR#}
+
+    <div class="modal fade" id="modal-edita-form">
+
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" id="formEdita" action="">
+
+                        <div class="form-group">
+                            <label for="txt-nome">Nome</label>
+                            <input type="text" name ="nome" class="form-control"  id="nome">
+                        </div>
+                        <div class="form-group">
+                            <label for="txt-nome">Descrição</label>
+                            <textarea class="form-control" name="descricao" rows="5" id="descricao"></textarea>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Salvar alteração</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+{# MODAL EXCLUIR#}
+
+<div class="modal fade" id="modal-exclui-form">
+
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <form method="POST" id="formExclui" nome="formExclui" action="">
+                    <div class="form-group">
+
+                        <input type="text" name ="nome" class="form-control"  id="nome" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="txt-nome">Descrição</label>
+                        <textarea class="form-control" name="descricao" rows="5" id="descricao" disabled></textarea>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-success">Excluir</button>
+            </div>
+        </div>
+    </div>
+</form>
+</div>
+{% endblock %}
