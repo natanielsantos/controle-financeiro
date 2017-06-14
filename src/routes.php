@@ -34,6 +34,7 @@ $pagamentos = new Route('/pagamentos', array('_controller' => $C_PAGAMENTOS, '_m
 $cadastraPagamentos = new Route('/cadastraPagamento', array('_controller'=>$C_PAGAMENTOS,'_method'=>'cadastraItem'));
 $editaPagamentos = new Route('/editaPagamento/id={_param}', array('_controller'=>$C_PAGAMENTOS,'_method'=>'editaItem'));
 $excluiPagamentos = new Route('/excluiPagamento/id={_param}', array('_controller'=>$C_PAGAMENTOS,'_method'=>'excluiItem'));
+$cadastraPagamentoPadrao = new Route('/cadastraPagamentosPadrao', array('_controller'=>$C_PAGAMENTOS,'_method'=>'cadastraPadraoItem'));
 
 // ADICIONA AS ROTAS 
 $rotas->add('home', $home);
@@ -51,3 +52,4 @@ $rotas->add('pagamentos', $pagamentos);
 $rotas->add('cadastraPagamentos',$cadastraPagamentos);
 $rotas->add('editaPagamentos',$editaPagamentos);
 $rotas->add('excluiPagamentos',$excluiPagamentos);
+$rotas->add('cadastraPadraoItem',$cadastraPagamentoPadrao);

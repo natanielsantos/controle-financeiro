@@ -40,7 +40,7 @@ class ControleUsuario {
 
         $log_nome = $this->request->get('nome');
         $log_senha = $this->request->get('senha');
-        
+
         $existe = $this->modelo->validaLogin($log_nome, $log_senha);
 
         if ($existe) {

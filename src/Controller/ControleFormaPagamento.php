@@ -77,8 +77,8 @@ class ControleFormaPagamento {
     function cadastraPadraoItem() {
 
         $usuario = $this->session->get('id_user');
-        $modeloFormaPagamento = new ModeloCategorias();
-        $modeloFormaPagamento->cadastraPadrao($usuario);
+        $modeloFormaPagamento = new ModeloFormaPagamento();
+        $modeloFormaPagamento->cadastraPadraoItem($usuario);
 
         $redirect = new RedirectResponse('/pagamentos');
         $redirect->send();
