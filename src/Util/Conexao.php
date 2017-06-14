@@ -14,7 +14,7 @@ class Conexao {
 
     public static function getInstance() {
         if (!isset(self::$instance)) {
-            self::$instance = new PDO('mysql:host=localhost;dbname=controle_financeiro', 'root', '', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+            self::$instance = new PDO('mysql:host=localhost;dbname=controle_financeiro', 'root', '2039327', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
         }
 
         return self::$instance;

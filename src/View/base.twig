@@ -8,7 +8,7 @@
 
         <!-- Bootstrap -->
         <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-
+        
         <!-- Estilo de Menu -->
         <style>
             .navbar {
@@ -35,7 +35,7 @@
         <!-- Estilo de Menu -->
 
         <!-- Carregar a API do google -->
-        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+       <!-- <script type="text/javascript" src="https://www.google.com/jsapi"></script> -->
 
         <!-- Preparar a geracao do grafico -->
         <script type="text/javascript">
@@ -49,31 +49,31 @@
             /**
              * Funcao que preenche os dados do grafico
              */
-            function desenharGrafico() {
-                // Montar os dados usados pelo grafico
-                var dados = new google.visualization.DataTable();
-                dados.addColumn('string', 'Gênero');
-                dados.addColumn('number', 'Quantidades');
-                dados.addRows([
-                    ['Receitas', 2500],
-                    ['Despesas', 2180]
-                ]);
-
-                // Configuracoes do grafico
-                var config = {
-                    'title': 'Receitas x Despesas',
-                    'width': 450,
-                    'height': 300
-                };
-
-                // Instanciar o objeto de geracao de graficos de pizza,
-                // informando o elemento HTML onde o grafico sera desenhado.
-                var chart = new google.visualization.PieChart(document.getElementById('area_grafico'));
-
-                // Desenhar o grafico (usando os dados e as configuracoes criadas)
-                chart.draw(dados, config);
-            }
-
+            /*  function desenharGrafico() {
+             // Montar os dados usados pelo grafico
+             var dados = new google.visualization.DataTable();
+             dados.addColumn('string', 'Gênero');
+             dados.addColumn('number', 'Quantidades');
+             dados.addRows([
+             ['Receitas', 2500],
+             ['Despesas', 2180]
+             ]);
+             
+             // Configuracoes do grafico
+             var config = {
+             'title': 'Receitas x Despesas',
+             'width': 450,
+             'height': 300
+             };
+             
+             // Instanciar o objeto de geracao de graficos de pizza,
+             // informando o elemento HTML onde o grafico sera desenhado.
+             var chart = new google.visualization.PieChart(document.getElementById('area_grafico'));
+             
+             // Desenhar o grafico (usando os dados e as configuracoes criadas)
+             chart.draw(dados, config);
+             }
+             */
 
         </script>
 
@@ -92,7 +92,7 @@
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="/categorias">Categorias</a></li>
-                            <li><a href="#">Formas de Pagamento</a></li>
+                            <li><a href="/pagamentos">Formas de Pagamento</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -125,20 +125,22 @@
         </nav>
 
         <div id="content">
-            {% block body %} {% endblock %}
+            {% block body %} 
+
+            {% endblock %}
         </div>
 
         <footer class="container-fluid bg-4 text-center">
             <div class="container">
 
                 <div>
+                       <p> <small>Termos de Uso :: Sobre :: Contato</small></p>
                     <p> <small>Sistema de Controle Financeiro - 2017</small></p>
                 </div>
         </footer>
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> 
         <script src="js/bootstrap.min.js"></script>
         <script src="js/categoria.js"></script>
 
     </body>
-</html>
+</html> 

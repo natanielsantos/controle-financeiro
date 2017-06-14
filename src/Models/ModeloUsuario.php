@@ -14,7 +14,7 @@ class ModeloUsuario {
 
     public function validaLogin($nome, $senha) {
         try {
-            $sql = "SELECT * FROM usuario where nome = :nome and senha = binary :senha";
+            $sql = "SELECT * FROM usuario WHERE usuario = :nome and senha = binary :senha";
             $p_sql = Conexao::getInstance()->prepare($sql);
             $p_sql->bindValue(':nome',$nome);
             $p_sql->bindValue(':senha',$senha);

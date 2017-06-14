@@ -4,17 +4,17 @@ namespace ControleFinanceiro\Models;
 
 use ControleFinanceiro\Util\Conexao;
 use PDO;
-use ControleFinanceiro\Entity\Categoria;
+use ControleFinanceiro\Entity\FormaPagamento;
 
-class ModeloCategorias {
+class ModeloFormaPagamento {
 
     function __construct() {
         ;
     }
 
-    public function getCategoria($id) {
+    public function getItem($id) {
         try {
-            $sql = "SELECT * FROM categoria where id_categoria = :id";
+            $sql = "SELECT * FROM forma_pagamento where id_form_pag = :id";
             $p_sql = Conexao::getInstance()->prepare($sql);
             $p_sql->bindValue(':usuario', $id);
             $p_sql->execute();
@@ -25,9 +25,9 @@ class ModeloCategorias {
         }
     }
 
-    public function listaCategorias($id_usuario) {
+    public function listaItem($id_usuario) {
         try {
-            $sql = "SELECT * FROM categoria where usuario_id_user = :usuario";
+            $sql = "SELECT * FROM forma_pagamento where usuario_id_user = :usuario";
             $p_sql = Conexao::getInstance()->prepare($sql);
             $p_sql->bindValue(':usuario', $id_usuario);
             $p_sql->execute();
@@ -38,15 +38,16 @@ class ModeloCategorias {
         }
     }
 
-    public function cadastrar(Categoria $categoria) {
+    public function cadastraItem(FormaPagamento $item) {
 
         try {
-            $sql = "INSERT INTO categoria(nome_categoria, descricao_categoria,usuario_id_user) values (:nome, :descricao, :usuario)";
+            $sql = "INSERT INTO forma_pagamento(nome_form_pag, descricao_form_pag,usuario_id_user) values (:nome, :descricao, :usuario)";
             $psql = Conexao::getInstance()->prepare($sql);
-            $psql->bindValue(':nome', $categoria->getNome());
-            $psql->bindValue(':descricao', $categoria->getDescricao());
-            $psql->bindValue(':usuario', $categoria->getUsuario());
+            $psql->bindValue(':nome', $item->getNome());
+            $psql->bindValue(':descricao', $item->getDescricao());
+            $psql->bindValue(':usuario', $item->getUsuario());
             $psql->execute();
+
 
             return true;
         } catch (Exception $exc) {
@@ -54,17 +55,17 @@ class ModeloCategorias {
         }
     }
 
-    public function editar(Categoria $categoria, $id) {
+    public function editaItem(FormaPagamento $item, $id) {
 
         // print_r($categoria);
         // print_r($id);
 
         try {
-            $sql = "UPDATE categoria SET nome_categoria=:nome, descricao_categoria = :descricao WHERE id_categoria = :id";
+            $sql = "UPDATE forma_pagamento SET nome_form_pag=:nome, descricao_form_pag = :descricao WHERE id_form_pag = :id";
             $psql = Conexao::getInstance()->prepare($sql);
             $psql->bindValue(':id', $id);
-            $psql->bindValue(':nome', $categoria->getNome());
-            $psql->bindValue(':descricao', $categoria->getDescricao());
+            $psql->bindValue(':nome', $item->getNome());
+            $psql->bindValue(':descricao', $item->getDescricao());
 
             $psql->execute();
 
@@ -74,12 +75,12 @@ class ModeloCategorias {
         }
     }
 
-    public function excluir($id) {
+    public function excluiItem($id) {
         try {
 
-            $sql = "DELETE FROM categoria WHERE id_categoria = :id_categoria";
+            $sql = "DELETE FROM forma_pagamento WHERE id_form_pag = :id_form_pag";
             $psql = Conexao::getInstance()->prepare($sql);
-            $psql->bindValue(':id_categoria', $id);
+            $psql->bindValue(':id_form_pag', $id);
             $psql->execute();
 
             return true;
@@ -88,10 +89,10 @@ class ModeloCategorias {
         }
     }
 
-    public function cadastraPadrao($usuario) {
+    public function cadastraPadraoItem($usuario) {
 
         try {
-            $sql = "INSERT INTO categoria(nome_categoria, descricao_categoria,usuario_id_user)"
+            $sql = "INSERT INTO forma_pagamento(nome_form_pag, descricao_form_pag,usuario_id_user)"
                     . " values (:nome, :descricao, :usuario),"
                     . "(:nome2, :descricao2, :usuario),"
                     . "(:nome3, :descricao3, :usuario),"
@@ -99,16 +100,16 @@ class ModeloCategorias {
                     . "(:nome5, :descricao5, :usuario)";
             $psql = Conexao::getInstance()->prepare($sql);
             $psql->bindValue(':usuario', $usuario);
-            $psql->bindValue(':nome', "Alimentação");
-            $psql->bindValue(':descricao', "Lanches, supermercado, feiras, restaurantes...");
-            $psql->bindValue(':nome2', "Moradia");
-            $psql->bindValue(':descricao2', "Luz, água, telefone, aluguel, manutenção...");
-            $psql->bindValue(':nome3', "Saúde");
-            $psql->bindValue(':descricao3', "Remédios, consultas, checkup...");
-            $psql->bindValue(':nome4', "Lazer");
-            $psql->bindValue(':descricao4', "Cinema, viagens, academia...");
-            $psql->bindValue(':nome5', "Transporte");
-            $psql->bindValue(':descricao5', "Combustível, manutenção, viagens, revisões...");
+            $psql->bindValue(':nome', "Dinheiro");
+            $psql->bindValue(':descricao', "Moedas, notas...");
+            $psql->bindValue(':nome2', "Cheque");
+            $psql->bindValue(':descricao2', "...");
+            $psql->bindValue(':nome3', "Cartão de Crédito");
+            $psql->bindValue(':descricao3', "...");
+            $psql->bindValue(':nome4', "Débito em Conta");
+            $psql->bindValue(':descricao4', "...");
+            $psql->bindValue(':nome5', "Boleto");
+            $psql->bindValue(':descricao5', "...");
             $psql->execute();
 
             return true;

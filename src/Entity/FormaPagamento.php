@@ -2,7 +2,7 @@
 
 namespace ControleFinanceiro\Entity;
 
-class Categoria {
+class FormaPagamento {
 
     private $id = null;
     private $nome;

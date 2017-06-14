@@ -37,21 +37,20 @@ class ControleUsuario {
 
     function validaLogin() {
 
+
         $log_nome = $this->request->get('nome');
         $log_senha = $this->request->get('senha');
         
         $existe = $this->modelo->validaLogin($log_nome, $log_senha);
-        
+
         if ($existe) {
-            
+
             $this->session->add('nome', $log_nome);
             $this->session->add('senha', $log_senha);
             $this->session->add('id_user', $existe->id_user);
 
             $destino = "/home";
             $this->redireciona($destino);
-        
-            
         } else {
             ControleUsuario::exibeLogin();
         }
@@ -61,8 +60,8 @@ class ControleUsuario {
         $redirect = new RedirectResponse($destino);
         $redirect->send();
     }
-    
-    public function destruir(){
+
+    public function destruir() {
         $this->session->destruir();
     }
 
