@@ -84,75 +84,75 @@
                         </tr>
                     {%endfor%}
                 {% else %}
-                <div class ="container">
-                    <td colspan="6"><div class="alert alert-danger">Você não definiu nenhuma Forma de Pagamento</td></div> 
-                <td colspan="6"><div class="alert alert-info">Você pode adicionar novas categorias clicando no botão "Nova Forma de Pagamento" ou se preferir pode <a href="/cadastraPagamentosPadrao">INSTALAR FORMAS DE PAGAMENTOS BÁSICAS</a></td></div> 
+                    <div class ="container">
+                        <td colspan="6"><div class="alert alert-danger">Você não definiu nenhuma forma de pagamento</td></div> 
+                        <td colspan="6"><div class="alert alert-info">Você pode adicionar novas categorias clicando no botão "Nova Forma de Pagamento" ou se preferir pode <a href="/cadastraPagamentosPadrao">INSTALAR FORMAS DE PAGAMENTOS BÁSICAS</a></td></div> 
     </div>
-{% endif %}
-</tbody>
-</table>
-</div>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
 
 
 
-{# MODAL CADASTRO#}
+    {# MODAL CADASTRO#}
 
-<div class="modal fade" id="modal-cadastro">
-    <form method="POST" action="/cadastraPagamento">
+    <div class="modal fade" id="modal-cadastro">
+        <form method="POST" action="/cadastraPagamento">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                        <h4 class="modal-title">Cadastrar uma nova forma de pagamento</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="txt-nome">Forma de Pagamento</label>
+                            <input type="text" name ="nome" class="form-control" placeholder="Nome da categoria" id="nome">
+                        </div>
+                        <div class="form-group">
+                            <label for="txt-nome">Descrição</label>
+                            <textarea class="form-control" name="descricao" rows="5" id="descricao" placeholder="Opcional"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success">Cadastrar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    {# MODAL EDITAR#}
+
+    <div class="modal fade" id="modal-edita-form">
+
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-                    <h4 class="modal-title">Cadastrar uma nova forma de pagamento</h4>
+                    <h4 class="modal-title"></h4>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label for="txt-nome">Forma de Pagamento</label>
-                        <input type="text" name ="nome" class="form-control" placeholder="Nome da categoria" id="nome">
-                    </div>
-                    <div class="form-group">
-                        <label for="txt-nome">Descrição</label>
-                        <textarea class="form-control" name="descricao" rows="5" id="descricao" placeholder="Opcional"></textarea>
-                    </div>
+                    <form method="POST" id="formEdita" action="">
+
+                        <div class="form-group">
+                            <label for="txt-nome">Nome</label>
+                            <input type="text" name ="nome" class="form-control"  id="nome">
+                        </div>
+                        <div class="form-group">
+                            <label for="txt-nome">Descrição</label>
+                            <textarea class="form-control" name="descricao" rows="5" id="descricao"></textarea>
+                        </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-success">Cadastrar</button>
+                    <button type="submit" class="btn btn-success">Salvar alteração</button>
                 </div>
             </div>
         </div>
     </form>
-</div>
-
-{# MODAL EDITAR#}
-
-<div class="modal fade" id="modal-edita-form">
-
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-                <h4 class="modal-title"></h4>
-            </div>
-            <div class="modal-body">
-                <form method="POST" id="formEdita" action="">
-
-                    <div class="form-group">
-                        <label for="txt-nome">Nome</label>
-                        <input type="text" name ="nome" class="form-control"  id="nome">
-                    </div>
-                    <div class="form-group">
-                        <label for="txt-nome">Descrição</label>
-                        <textarea class="form-control" name="descricao" rows="5" id="descricao"></textarea>
-                    </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-success">Salvar alteração</button>
-            </div>
-        </div>
-    </div>
-</form>
 </div>
 
 {# MODAL EXCLUIR#}

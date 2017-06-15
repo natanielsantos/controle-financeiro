@@ -37,9 +37,6 @@ $editaPagamentos = new Route('/editaPagamento/id={_param}', array('_controller'=
 $excluiPagamentos = new Route('/excluiPagamento/id={_param}', array('_controller'=>$C_PAGAMENTOS,'_method'=>'excluiItem'));
 $cadastraPagamentoPadrao = new Route('/cadastraPagamentosPadrao', array('_controller'=>$C_PAGAMENTOS,'_method'=>'cadastraPadraoItem'));
 
-//ROTAS DE RECEITAS
-$receitas = new Route('/receitas', array('_controller' => $C_RECEITAS, '_method' => 'listaItens'));
-
 // ADICIONA AS ROTAS 
 $rotas->add('home', $home);
 $rotas->add('ajuda', $ajuda);
