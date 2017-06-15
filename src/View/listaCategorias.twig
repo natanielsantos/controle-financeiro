@@ -25,9 +25,11 @@
         {% endif%}
 
         {% if excluiu %}
-            <div class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Categoria Excluída!</strong> Atualize a página.
+            <div class ="container">
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Categoria Excluída!</strong> Atualize a página.
+                </div>
             </div>
         {% endif%}
     </div>
@@ -82,108 +84,110 @@
 
                             </td>
                         </tr>
-                        
+
 
                     {%endfor%}
                 {% else %}
+                <div class ="container">
                     <tr>
                         <td colspan="6"><div class="alert alert-danger">Você não definiu nenhuma categoria</td></div> 
-                        <td colspan="6"><div class="alert alert-info">Você pode adicionar novas categorias clicando no botão "Nova Categoria" ou se preferir pode <a href="/cadastraCategoriasPadrao">INSTALAR CATEGORIAS BÁSICAS</a></td></div> 
-                    </tr>
-                {% endif %}
-            </tbody>
-        </table>
+                <td colspan="6"><div class="alert alert-info">Você pode adicionar novas categorias clicando no botão "Nova Categoria" ou se preferir pode <a href="/cadastraCategoriasPadrao">INSTALAR CATEGORIAS BÁSICAS</a></td></div> 
+    </tr>
+</div>
+{% endif %}
+</tbody>
+</table>
 </div>
 
 
 
-        {# MODAL CADASTRO#}
+{# MODAL CADASTRO#}
 
-        <div class="modal fade" id="modal-cadastro">
-            <form method="POST" action="/cadastraCategoria">
-                <div class="modal-dialog modal-sm">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-                            <h4 class="modal-title">Cadastrar uma nova categoria</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label for="txt-nome">Nome da Categoria</label>
-                                <input type="text" name ="nome" class="form-control" placeholder="Nome da categoria" id="nome">
-                            </div>
-                            <div class="form-group">
-                                <label for="txt-nome">Descrição</label>
-                                <textarea class="form-control" name="descricao" rows="5" id="descricao" placeholder="Opcional"></textarea>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-success">Cadastrar</button>
-                        </div>
+<div class="modal fade" id="modal-cadastro">
+    <form method="POST" action="/cadastraCategoria">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                    <h4 class="modal-title">Cadastrar uma nova categoria</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="txt-nome">Nome da Categoria</label>
+                        <input type="text" name ="nome" class="form-control" placeholder="Nome da categoria" id="nome">
+                    </div>
+                    <div class="form-group">
+                        <label for="txt-nome">Descrição</label>
+                        <textarea class="form-control" name="descricao" rows="5" id="descricao" placeholder="Opcional"></textarea>
                     </div>
                 </div>
-            </form>
-        </div>
-
-        {# MODAL EDITAR#}
-
-        <div class="modal fade" id="modal-edita">
-
-            <div class="modal-dialog modal-sm">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-                        <h4 class="modal-title"></h4>
-                    </div>
-                    <div class="modal-body">
-                        <form method="POST" id="formEdita" action="">
-
-                            <div class="form-group">
-                                <label for="txt-nome">Nome</label>
-                                <input type="text" name ="nome" class="form-control"  id="nome">
-                            </div>
-                            <div class="form-group">
-                                <label for="txt-nome">Descrição</label>
-                                <textarea class="form-control" name="descricao" rows="5" id="descricao"></textarea>
-                            </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-success">Salvar alteração</button>
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Cadastrar</button>
                 </div>
             </div>
-            </form>
         </div>
+    </form>
+</div>
 
-        {# MODAL EXCLUIR#}
+{# MODAL EDITAR#}
 
-        <div class="modal fade" id="modal-exclui">
+<div class="modal fade" id="modal-edita">
 
-            <div class="modal-dialog modal-sm">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-                        <h4 class="modal-title"></h4>
-                    </div>
-                    <div class="modal-body">
-                        <form method="POST" id="formExclui" nome="formExclui" action="">
-                            <div class="form-group">
-
-                                <input type="text" name ="nome" class="form-control"  id="nome" disabled>
-                            </div>
-                            <div class="form-group">
-                                <label for="txt-nome">Descrição</label>
-                                <textarea class="form-control" name="descricao" rows="5" id="descricao" disabled></textarea>
-                            </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-success">Excluir</button>
-                    </div>
-                </div>
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                <h4 class="modal-title"></h4>
             </div>
-            </form>
+            <div class="modal-body">
+                <form method="POST" id="formEdita" action="">
+
+                    <div class="form-group">
+                        <label for="txt-nome">Nome</label>
+                        <input type="text" name ="nome" class="form-control"  id="nome">
+                    </div>
+                    <div class="form-group">
+                        <label for="txt-nome">Descrição</label>
+                        <textarea class="form-control" name="descricao" rows="5" id="descricao"></textarea>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-success">Salvar alteração</button>
+            </div>
         </div>
-    {% endblock %}
+    </div>
+</form>
+</div>
+
+{# MODAL EXCLUIR#}
+
+<div class="modal fade" id="modal-exclui">
+
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <form method="POST" id="formExclui" nome="formExclui" action="">
+                    <div class="form-group">
+
+                        <input type="text" name ="nome" class="form-control"  id="nome" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="txt-nome">Descrição</label>
+                        <textarea class="form-control" name="descricao" rows="5" id="descricao" disabled></textarea>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-success">Excluir</button>
+            </div>
+        </div>
+    </div>
+</form>
+</div>
+{% endblock %}
