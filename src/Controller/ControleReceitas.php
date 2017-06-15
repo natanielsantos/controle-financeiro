@@ -30,56 +30,53 @@ class ControleReceitas {
 
     function listaItens() {
         $usuario = $this->session->get('nome');
+        $soma = ControleReceitas::calculaTotal();
 
         if ($usuario != "") {
             return $this->resposta->setContent($this->twig->render('listaReceitas.twig', array('titulo' => 'CF | Receitas',
                                 'dados' => $this->dados,
+                                'soma' => $soma,
                                 'usuario' => $usuario)));
         }
     }
 
-    function cadastraItem(){
+    function cadastraItem() {
 
-        $receita = new Receitas($this->request->request->get('tipo'), 
-                            $this->request->request->get('valor'), 
-                            $this->request->request->get('data'),
-                            $this->request->request->get('status'),
-                            $this->session->get('id_user'));
+        $receita = new Receitas($this->request->request->get('tipo'), $this->request->request->get('valor'), $this->request->request->get('data'), $this->request->request->get('status'), $this->session->get('id_user'));
 
-        
+
         $modelo = new ModeloReceitas();
         $cadastrou = $modelo->cadastraItem($receita);
-       
+
         return $this->resposta->setContent($this->twig->render('listaReceitas.twig', array('titulo' => 'CF | Receitas',
                             'dados' => $this->dados,
                             'cadastrou' => $cadastrou)));
     }
-    
-    function editaItem($id){
-        
-       // $categoria = $modeloCategoria->getCategoria($id);
-       
+
+    function editaItem($id) {
+
+        // $categoria = $modeloCategoria->getCategoria($id);
+
         $novoItem = new Receitas($this->request->request->get('nome'), $this->request->request->get('descricao'), $this->session->get('id_user'));
-        
+
         ModeloFormaPagamento::editaItem($novoItem, $id);
 
         $redirect = new RedirectResponse('/pagamentos');
         $redirect->send();
-        
+
         return true;
     }
-    
-    function excluiItem($id){
-        
+
+    function excluiItem($id) {
+
         ModeloFormaPagamento::excluiItem($id);
-        
+
         $redirect = new RedirectResponse('/pagamentos');
         $redirect->send();
         //echo $id;
         return true;
-        
     }
-    
+
     function cadastraPadraoItem() {
 
         $usuario = $this->session->get('id_user');
@@ -88,8 +85,19 @@ class ControleReceitas {
 
         $redirect = new RedirectResponse('/pagamentos');
         $redirect->send();
-        
+
         return true;
+    }
+
+    function calculaTotal() {
+
+        $total = 0;
+
+        foreach ($this->dados as $v) {
+            $total = $v['valor_rec'] + $total;
+        }
+
+        return $total;
     }
 
 }

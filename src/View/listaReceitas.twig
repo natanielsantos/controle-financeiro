@@ -8,7 +8,8 @@
         <header>
             <div class="row">
                 <div class="col-sm-6">
-                    <h2>Receitas</h2>
+                    <h2> Receitas  <span class="badge">Total: R$ {{soma | number_format(2, ',', '.')}}</span></h2>
+                    <span class="glyphicon glyphicon-thumbs-up"></span><small> Cadastre aqui as suas fontes de renda (previstas ou já recebidas). </small>
                 </div>
                 <div class="col-sm-6 text-right h2">
 
@@ -22,14 +23,14 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Cadastrado!</strong> Atualize a página para visualizar a nova receita.
             </div>
-        {% endif%}
+        {% endif %}
 
         {% if excluiu %}
             <div class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Receita Excluída!</strong> Atualize a página.
             </div>
-        {% endif%}
+        {% endif %}
     </div>
 
     {# BARRA DE PROGRESSO
@@ -67,8 +68,12 @@
                             <td>{{dado.data_lanc_rec | date("d/m/Y")}}</td>
                             <td>{{dado.tipo_rec | title}}</td>
                             <td>R$ {{dado.valor_rec}}</td>
-
-                            <td>{{dado.status_rec}}</td>
+                           
+                            {% if dado.status_rec == 1 %}
+                                <td><span class="glyphicon glyphicon-ok" style="color:green" ></span></td>
+                            {%else%}
+                                <td><span class="glyphicon glyphicon-remove" style="color:red;"></span></td>
+                            {% endif %}
                             <td class="actions text-right">
                                 {# <a href="view.php?id={{dado.id_categoria}}" class="btn btn-sm btn-success"><i class="fa fa-eye"></i> <spam class="glyphicon glyphicon-eye-open"></spam></a> #}
                                 <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modal-edita-form" 
@@ -109,7 +114,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-                    <h4 class="modal-title">Cadastrar uma nova forma de pagamento</h4>
+                    <h4 class="modal-title">Cadastrar uma nova receita</h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
