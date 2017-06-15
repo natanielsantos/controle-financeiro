@@ -15,6 +15,7 @@ $C_HOME = 'ControleFinanceiro\Controller\ControleHome';
 $C_CATEGORIAS = 'ControleFinanceiro\Controller\ControleCategorias';
 $C_PAGAMENTOS = 'ControleFinanceiro\Controller\ControleFormaPagamento';
 $C_USUARIO = 'ControleFinanceiro\Controller\ControleUsuario';
+$C_RECEITAS = 'ControleFinanceiro\Controller\ControleReceitas';
 
 // ROTAS GERAIS;
 $home = new Route('/home', array('_controller' => $C_HOME, '_method' => 'ver'));
@@ -36,6 +37,9 @@ $editaPagamentos = new Route('/editaPagamento/id={_param}', array('_controller'=
 $excluiPagamentos = new Route('/excluiPagamento/id={_param}', array('_controller'=>$C_PAGAMENTOS,'_method'=>'excluiItem'));
 $cadastraPagamentoPadrao = new Route('/cadastraPagamentosPadrao', array('_controller'=>$C_PAGAMENTOS,'_method'=>'cadastraPadraoItem'));
 
+//ROTAS DE RECEITAS
+$receitas = new Route('/receitas', array('_controller' => $C_RECEITAS, '_method' => 'listaItens'));
+
 // ADICIONA AS ROTAS 
 $rotas->add('home', $home);
 $rotas->add('ajuda', $ajuda);
@@ -53,3 +57,5 @@ $rotas->add('cadastraPagamentos',$cadastraPagamentos);
 $rotas->add('editaPagamentos',$editaPagamentos);
 $rotas->add('excluiPagamentos',$excluiPagamentos);
 $rotas->add('cadastraPadraoItem',$cadastraPagamentoPadrao);
+
+$rotas->add('receitas', $receitas);
