@@ -13,7 +13,7 @@
                 <div class="col-sm-6 text-right h2">
 
                     <button class="btn btn-primary" data-toggle="modal" data-target="#modal-cadastro">Nova Receita</button>
-                    <a class="btn btn-default" href="/pagamentos"><i class="fa fa-refresh"></i> Atualizar</a>
+                    <a class="btn btn-default" href="/receitas"><i class="fa fa-refresh"></i> Atualizar</a>
                 </div>
             </div>
         </header>
@@ -50,23 +50,25 @@
                 <thead>
                     <tr>
                         {#  <th># ID</th> #}
-                        <th width="20%">Receita</th>
-                        <th>Valor</th>
                         <th>Data de Lançamento</th>
-                        <th>Recebido (?)</th>                    
+                        <th width="40%">Descrição</th>
+                        <th class="actions text-left">Valor</th>
+
+                        <th class="actions text-left">Recebido (?)</th>                    
 
                         <th class="actions text-right">Opções</th>
                     </tr>
                 </thead>
                 <tbody>
 
-                    {% for dado in dados %}
+                    {% for dado in dados  %}
                         <tr>
                             {# <td>{{dado.id_categoria}}</td> #}
+                            <td>{{dado.data_lanc_rec | date("d/m/Y")}}</td>
                             <td>{{dado.tipo_rec | title}}</td>
                             <td>R$ {{dado.valor_rec}}</td>
-                            <td>{{dado.data_lanc_rec}}</td>
-                             <td>{{dado.status_rec}}</td>
+
+                            <td>{{dado.status_rec}}</td>
                             <td class="actions text-right">
                                 {# <a href="view.php?id={{dado.id_categoria}}" class="btn btn-sm btn-success"><i class="fa fa-eye"></i> <spam class="glyphicon glyphicon-eye-open"></spam></a> #}
                                 <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modal-edita-form" 
@@ -102,8 +104,8 @@
 {# MODAL CADASTRO#}
 
 <div class="modal fade" id="modal-cadastro">
-    <form method="POST" action="/cadastraPagamento">
-        <div class="modal-dialog modal-sm">
+    <form method="POST" action="/cadastraReceita">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
@@ -111,12 +113,34 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="txt-nome">Forma de Pagamento</label>
-                        <input type="text" name ="nome" class="form-control" placeholder="Nome da categoria" id="nome">
+                        <label  for="textinput">Descrição</label>  
+                        <input class ="form-control" id="tipo" name="tipo" placeholder="" class="form-control input-md" required="" type="text">
                     </div>
                     <div class="form-group">
-                        <label for="txt-nome">Descrição</label>
-                        <textarea class="form-control" name="descricao" rows="5" id="descricao" placeholder="Opcional"></textarea>
+                        <label for="valor">Valor</label>  
+                        <input id="valor" name="valor" placeholder="" class="form-control input-md" required="" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="valor">Data</label>  
+                        <input name ="data" type="text" id="exemplo" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="status">Situaçao</label>
+                        <div class="form-group">
+                            <div class="radio">
+                                <label for="status-0">
+                                    <input name="status" id="status-0" value="1" checked="checked" type="radio">
+                                    Recebido
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label for="status-1">
+                                    <input width="150" name="status" id="status-1" value="2" type="radio">
+                                    Não Recebido
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -127,6 +151,9 @@
         </div>
     </form>
 </div>
+
+
+
 
 {# MODAL EDITAR#}
 

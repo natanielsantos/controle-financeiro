@@ -39,6 +39,7 @@ $cadastraPagamentoPadrao = new Route('/cadastraPagamentosPadrao', array('_contro
 
 //ROTAS DE RECEITAS
 $receitas = new Route('/receitas', array('_controller' => $C_RECEITAS, '_method' => 'listaItens'));
+$cadastraReceitas = new Route('/cadastraReceita', array('_controller'=>$C_RECEITAS,'_method'=>'cadastraItem'));
 
 // ADICIONA AS ROTAS 
 $rotas->add('home', $home);
@@ -59,3 +60,4 @@ $rotas->add('excluiPagamentos',$excluiPagamentos);
 $rotas->add('cadastraPadraoItem',$cadastraPagamentoPadrao);
 
 $rotas->add('receitas', $receitas);
+$rotas->add('cadastraReceitas',$cadastraReceitas);

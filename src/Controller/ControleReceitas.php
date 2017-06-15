@@ -40,11 +40,17 @@ class ControleReceitas {
 
     function cadastraItem(){
 
-        $fp = new FormaPagamento($this->request->request->get('nome'), $this->request->request->get('descricao'), $this->session->get('id_user'));
-        $modeloFormaPagamento = new ModeloReceitas();
-        $cadastrou = $modeloFormaPagamento->cadastraItem($fp);
+        $receita = new Receitas($this->request->request->get('tipo'), 
+                            $this->request->request->get('valor'), 
+                            $this->request->request->get('data'),
+                            $this->request->request->get('status'),
+                            $this->session->get('id_user'));
 
-        return $this->resposta->setContent($this->twig->render('listaFormaPagamentos.twig', array('titulo' => 'CF | Receitas',
+        
+        $modelo = new ModeloReceitas();
+        $cadastrou = $modelo->cadastraItem($receita);
+       
+        return $this->resposta->setContent($this->twig->render('listaReceitas.twig', array('titulo' => 'CF | Receitas',
                             'dados' => $this->dados,
                             'cadastrou' => $cadastrou)));
     }

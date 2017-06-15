@@ -27,7 +27,7 @@ class ModeloReceitas {
 
     public function listaItem($id_usuario) {
         try {
-            $sql = "SELECT * FROM receita WHERE usuario_id_user = :usuario";
+            $sql = "SELECT * FROM receita WHERE usuario_id_user = :usuario ORDER BY data_lanc_rec";
             $p_sql = Conexao::getInstance()->prepare($sql);
             $p_sql->bindValue(':usuario', $id_usuario);
             $p_sql->execute();
@@ -38,17 +38,21 @@ class ModeloReceitas {
         }
     }
 
-    public function cadastraItem(FormaPagamento $item) {
+    public function cadastraItem(Receitas $item) {
 
         try {
-            $sql = "INSERT INTO forma_pagamento(nome_form_pag, descricao_form_pag,usuario_id_user) values (:nome, :descricao, :usuario)";
+            $sql = "INSERT INTO receita (tipo_rec, valor_rec, data_lanc_rec, status_rec, usuario_id_user)
+                    values (:tipo, :valor, :data, :status, :usuario)";
+            
+
             $psql = Conexao::getInstance()->prepare($sql);
-            $psql->bindValue(':nome', $item->getNome());
-            $psql->bindValue(':descricao', $item->getDescricao());
+            $psql->bindValue(':tipo', $item->getTipo());
+            $psql->bindValue(':valor', $item->getValor());
+            $psql->bindValue(':data', $item->getData());
+            $psql->bindValue(':status', $item->getStatus());
             $psql->bindValue(':usuario', $item->getUsuario());
             $psql->execute();
-
-
+            
             return true;
         } catch (Exception $exc) {
             echo $exc->getTraceAsString();

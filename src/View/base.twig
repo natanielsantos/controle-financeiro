@@ -8,7 +8,8 @@
 
         <!-- Bootstrap -->
         <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-        
+        <link href="css/datepicker.css" rel="stylesheet">
+
         <!-- Estilo de Menu -->
         <style>
             .navbar {
@@ -140,7 +141,18 @@
         </footer>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> 
         <script src="js/bootstrap.min.js"></script>
+        <script src="js/bootstrap-datepicker.js"></script>
         <script src="js/categoria.js"></script>
+
+
+        <script>
+                $(document).ready(function () {
+                    $('#exemplo').datepicker({
+                        format: "yyyy/mm/dd",
+                        language: "pt-BR"
+                    });
+                });
+        </script>
 
     </body>
 </html> 
