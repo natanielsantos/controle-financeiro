@@ -7,11 +7,12 @@
         <title>{% block title %}{% endblock %}</title>
 
         <!-- Bootstrap -->
-        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-        <link href="css/datepicker.css" rel="stylesheet">
+        <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/datepicker.css" rel="stylesheet">
 
         <!-- Estilo de Menu -->
         <style>
+            body { padding-top: 100px; }
             .navbar {
                 background: #0B3861;
                 border-color: #0B3861;
@@ -81,7 +82,7 @@
     </head>
     <body>
 
-        <nav class="navbar navbar-inverse">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="/">CONTROLE FINANCEIRO |</a>
@@ -140,19 +141,18 @@
                 </div>
         </footer>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> 
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/bootstrap-datepicker.js"></script>
-        <script src="js/categoria.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/bootstrap-datepicker.js"></script>
+        <script src="../js/categoria.js"></script>
 
+        <script type="text/javascript">
+            $('#dataRec').datepicker({
+                format: "yyyy/mm/dd",
+                language: "pt-BR",
+                todayHighlight: true
+            });
 
-        <script>
-                $(document).ready(function () {
-                    $('#exemplo').datepicker({
-                        format: "yyyy/mm/dd",
-                        language: "pt-BR"
-                    });
-                });
         </script>
 
-    </body>
+</body>
 </html> 

@@ -1,3 +1,5 @@
+/* global button */
+
 //JS DO MODAL PARA EDITAR CATEGORIA
 $('#modal-edita').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget);// Pega o evento do botao no modal
@@ -66,12 +68,72 @@ $('#modal-exclui-form').on('show.bs.modal', function (event) {
 
 });
 
+//JS DO MODAL PARA EDITAR RECEITAS
+$('#modal-edita-rec').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);// Pega o evento do botao no modal
+    var idEditaRec = button.data('recid');
+    var editaTipo = button.data('rectipo');
+    var editaValor = button.data('recvalor');
+    var editaData = button.data('recdata');
+    //var editaStatus = button.data('rec-status');
+
+    var modal = $(this);
+
+    modal.find('.modal-title').text('Receita: ' + editaTipo);
+    modal.find('.modal-body input[name="tipo"]').val(editaTipo);
+    modal.find('.modal-body input[name="valor"]').val(editaValor);
+    modal.find('.modal-body input[name="data"]').val(editaData);
+    //modal.find('.modal-body input').val(editaStatus);
+
+    $("#formEditaRec").attr("action", '/editaReceita/id=' + idEditaRec);
+
+    $('#dataRecNovo').datepicker({
+        format: "yyyy/mm/dd",
+        language: "pt-BR",
+        todayHighlight: true
+    });
+
+
+});
+
+//JS DO MODAL PARA EXCLUIR RECEITAS
+$('#modal-exclui-rec').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var idexclui = button.data('excidcategoria');
+    var excluiDescricao = button.data('excdescricao');
+    var excluiNome = button.data('excnome');
+
+    var modal = $(this);
+
+    modal.find('.modal-title').text('Pagamento : ' + excluiNome);
+    modal.find('.modal-body input').val(excluiNome);
+    modal.find('.modal-body textarea').val(excluiDescricao);
+
+    $("#formExclui").attr("action", '/excluiPagamento/id=' + idexclui);
+
+
+
+
+
+});
+
+function filtra(id) {
+
+    var mes = id;
+    var ano = $('#ano').val(); // não usar o DOM
+
+   // $("#filtraRec").attr("action", '/editaPagamento/'+mes +'/'+ano);
+    $("#filtraRec").attr("action", '/receitasMesAno/'+mes);
+};
+
 var progressBar = $(".progress-bar");
 
 setInterval(addProgress, 100);
 
 function addProgress() {
-  var width = progressBar.width() + 10;
-  progressBar.width(width);
-  
+    var width = progressBar.width() + 10;
+    progressBar.width(width);
+
 }
+
+

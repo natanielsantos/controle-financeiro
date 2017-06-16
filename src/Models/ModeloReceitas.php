@@ -37,6 +37,21 @@ class ModeloReceitas {
             echo $exc->getTraceAsString();
         }
     }
+    
+        public function listaItemPorMes($mes, $id_usuario) {
+        try {
+            $sql = "SELECT * FROM receita WHERE usuario_id_user = :usuario AND Month(data_lanc_rec) = :mes ORDER BY data_lanc_rec";
+            $p_sql = Conexao::getInstance()->prepare($sql);
+            $p_sql->bindValue(':usuario', $id_usuario);
+             $p_sql->bindValue(':mes', $mes);
+            $p_sql->execute();
+
+            return $p_sql->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+    }
+
 
     public function cadastraItem(Receitas $item) {
 
@@ -46,6 +61,7 @@ class ModeloReceitas {
             
 
             $psql = Conexao::getInstance()->prepare($sql);
+
             $psql->bindValue(':tipo', $item->getTipo());
             $psql->bindValue(':valor', $item->getValor());
             $psql->bindValue(':data', $item->getData());
@@ -59,17 +75,19 @@ class ModeloReceitas {
         }
     }
 
-    public function editaItem(FormaPagamento $item, $id) {
-
-        // print_r($categoria);
-        // print_r($id);
+    public function editaItem(Receitas $item, $id) {
 
         try {
-            $sql = "UPDATE forma_pagamento SET nome_form_pag=:nome, descricao_form_pag = :descricao WHERE id_form_pag = :id";
+            $sql = "UPDATE receita "
+                    . "SET tipo_rec=:tipo, valor_rec = :valor, data_lanc_rec=:data, status_rec=:status "
+                    . "WHERE id_rec = :id AND usuario_id_user = :usuario";
             $psql = Conexao::getInstance()->prepare($sql);
             $psql->bindValue(':id', $id);
-            $psql->bindValue(':nome', $item->getNome());
-            $psql->bindValue(':descricao', $item->getDescricao());
+            $psql->bindValue(':tipo', $item->getTipo());
+            $psql->bindValue(':valor', $item->getValor());
+            $psql->bindValue(':data', $item->getData());
+            $psql->bindValue(':status', $item->getStatus());
+            $psql->bindValue(':usuario', $item->getUsuario());
 
             $psql->execute();
 

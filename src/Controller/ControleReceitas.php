@@ -30,6 +30,20 @@ class ControleReceitas {
 
     function listaItens() {
         $usuario = $this->session->get('nome');
+        // $dados = $this->modelo->listaItemPorMes($mes, $this->session->get('id_user'));
+        $soma = ControleReceitas::calculaTotal();
+
+        if ($usuario != "") {
+            return $this->resposta->setContent($this->twig->render('listaReceitas.twig', array('titulo' => 'CF | Receitas',
+                                'dados' => $this->dados,
+                                'soma' => $soma,
+                                'usuario' => $usuario)));
+        }
+    }
+
+    function listaItensPorMes($mes) {
+        $usuario = $this->session->get('nome');
+        $this->dados = $this->modelo->listaItemPorMes($mes, $this->session->get('id_user'));
         $soma = ControleReceitas::calculaTotal();
 
         if ($usuario != "") {
@@ -57,11 +71,11 @@ class ControleReceitas {
 
         // $categoria = $modeloCategoria->getCategoria($id);
 
-        $novoItem = new Receitas($this->request->request->get('nome'), $this->request->request->get('descricao'), $this->session->get('id_user'));
+        $novoItem = new Receitas($this->request->request->get('tipo'), $this->request->request->get('valor'), $this->request->request->get('data'), $this->request->request->get('status'), $this->session->get('id_user'));
 
-        ModeloFormaPagamento::editaItem($novoItem, $id);
+        ModeloReceitas::editaItem($novoItem, $id);
 
-        $redirect = new RedirectResponse('/pagamentos');
+        $redirect = new RedirectResponse('/receitas');
         $redirect->send();
 
         return true;

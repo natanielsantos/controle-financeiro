@@ -1,4 +1,3 @@
-{# empty Twig template #}
 {% extends 'base.twig' %}
 
 {% block title %}{{titulo}}{% endblock %}
@@ -8,16 +7,65 @@
         <header>
             <div class="row">
                 <div class="col-sm-6">
-                    <h2> Receitas  <span class="badge">Total: R$ {{soma | number_format(2, ',', '.')}}</span></h2>
-                    <span class="glyphicon glyphicon-thumbs-up"></span><small> Cadastre aqui as suas fontes de renda (previstas ou já recebidas). </small>
-                </div>
-                <div class="col-sm-6 text-right h2">
+                    <h2> <strong>Receitas </strong>
+                        <small> 
+                            <a class="navbar-link" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                janeiro/2017
+                            </a>
+                        </small>
+                        <span style="color:green;"> R$ {{soma | number_format(2, ',', '.')}}</span>
+                    </h2>
 
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#modal-cadastro">Nova Receita</button>
-                    <a class="btn btn-default" href="/receitas"><i class="fa fa-refresh"></i> Atualizar</a>
+                </div>
+                <div class="col-sm-3 well-sm" style="background-color: #eee">
+                    <span class="glyphicon glyphicon-comment" style="color:gray;"></span><small> DICA! Cadastre aqui as suas fontes de renda (previstas ou já recebidas). </small>
+                </div>
+                <div class="col-sm-3 text-right h2">
+
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#modal-cadastro"><span class="glyphicon glyphicon-plus"></span></button>
+                    <a class="btn btn-default" href="/receitas"><i class="fa fa-refresh"></i> <span class="glyphicon glyphicon-refresh"></span></a>
                 </div>
             </div>
-        </header>
+
+            <div class="row">
+
+                <div class="collapse" id="collapseExample">
+                    <div class="well">
+                        <form method="POST" id="filtraRec" action="">
+                            <div class="col-sm-2 text-right">
+                                <span> <small> Ano: </small></span>
+
+                                <select name="ano" id="ano">
+                                    {% for ano in 2017..2025 %}
+                                        <option value="{{ ano  }}">{{ ano }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="col-sm-10 text-right">
+
+                                <ul class="nav nav-pills">
+
+                                    <li role="presentation" class="disabled"><a href="#" >Mês: </a></li>
+                                    <li role="presentation"><button class="btn btn-default btn-sm" onclick="filtra(1);" type="submit">JAN</button></li>
+                                    <li role="presentation"><button class="btn btn-default btn-sm" data-target="form" onclick="filtra(2);" type="submit">FEV</button></li>
+                                    <li role="presentation"><button class="btn btn-default btn-sm" data-target="form" onclick="filtra(3);" type="submit">MAR</button></li>
+                                    <li role="presentation"><button class="btn btn-default btn-sm" data-target="form" onclick="filtra(4);" type="submit">ABR</button></li>
+                                    <li role="presentation"><button class="btn btn-default btn-sm" data-target="form" onclick="filtra(5);" type="submit">MAI</button></li>
+                                    <li role="presentation"><button class="btn btn-default btn-sm" data-target="form" onclick="filtra(6);" type="submit">JUN</button></li>
+                                    <li role="presentation"><button class="btn btn-default btn-sm" data-target="form" onclick="filtra(7);" type="submit">JUL</button></li>
+                                    <li role="presentation"><button class="btn btn-default btn-sm" data-target="form" onclick="filtra(8);" type="submit">AGO</button></li>
+                                    <li role="presentation"><button class="btn btn-default btn-sm" data-target="form" onclick="filtra(9);" type="submit">SET</button></li>
+                                    <li role="presentation"><button class="btn btn-default btn-sm" data-target="form" onclick="filtra(10);" type="submit">OUT</button></li>
+                                    <li role="presentation"><button class="btn btn-default btn-sm" data-target="form" onclick="filtra(11);" type="submit">NOV</button></li>
+                                    <li role="presentation"><button class="btn btn-default btn-sm" data-target="form" onclick="filtra(12);" type="submit">DEZ</button></li>
+                                </ul>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </header> {# FIM DO CABEÇALHO #}
         {% if cadastrou %}
             <div class="alert alert-success alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -68,18 +116,20 @@
                             <td>{{dado.data_lanc_rec | date("d/m/Y")}}</td>
                             <td>{{dado.tipo_rec | title}}</td>
                             <td>R$ {{dado.valor_rec}}</td>
-                           
+
                             {% if dado.status_rec == 1 %}
                                 <td><span class="glyphicon glyphicon-ok" style="color:green" ></span></td>
-                            {%else%}
+                                {%else%}
                                 <td><span class="glyphicon glyphicon-remove" style="color:red;"></span></td>
-                            {% endif %}
+                                {% endif %}
                             <td class="actions text-right">
                                 {# <a href="view.php?id={{dado.id_categoria}}" class="btn btn-sm btn-success"><i class="fa fa-eye"></i> <spam class="glyphicon glyphicon-eye-open"></spam></a> #}
-                                <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modal-edita-form" 
-                                        data-editid="{{dado.id_form_pag}}"
-                                        data-editdescricao="{{dado.descricao_form_pag}}" 
-                                        data-editnome="{{dado.nome_form_pag}}">
+                                <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modal-edita-rec" 
+                                        data-recid="{{dado.id_rec}}"
+                                        data-rectipo="{{dado.tipo_rec}}" 
+                                        data-recvalor="{{dado.valor_rec}}"
+                                        data-recdata="{{dado.data_lan_rec}}"
+                                        data-recstatus="{{dado.status_rec}}">
                                     <i class="fa fa-pencil"></i> 
                                     <spam class="glyphicon glyphicon-edit"></spam>
                                 </button>
@@ -110,7 +160,7 @@
 
 <div class="modal fade" id="modal-cadastro">
     <form method="POST" action="/cadastraReceita">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
@@ -125,10 +175,19 @@
                         <label for="valor">Valor</label>  
                         <input id="valor" name="valor" placeholder="" class="form-control input-md" required="" type="text">
                     </div>
+
                     <div class="form-group">
                         <label for="valor">Data</label>  
-                        <input name ="data" type="text" id="exemplo" class="form-control">
+                        <div class='input-group date'>
+                            <input type='text' class="form-control" id='dataRec' name="data" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar">
+                                </span>
+                            </span>
+                        </div>
                     </div>
+
+
 
                     <div class="form-group">
                         <label for="status">Situaçao</label>
@@ -162,7 +221,7 @@
 
 {# MODAL EDITAR#}
 
-<div class="modal fade" id="modal-edita-form">
+<div class="modal fade" id="modal-edita-rec">
 
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
@@ -171,15 +230,38 @@
                 <h4 class="modal-title"></h4>
             </div>
             <div class="modal-body">
-                <form method="POST" id="formEdita" action="">
+                <form method="POST" id="formEditaRec" action="">
 
                     <div class="form-group">
-                        <label for="txt-nome">Nome</label>
-                        <input type="text" name ="nome" class="form-control"  id="nome">
+                        <label  for="textinput">Descrição</label>  
+                        <input class ="form-control" id="tipo" name="tipo" placeholder="" class="form-control input-md" required="" type="text">
                     </div>
                     <div class="form-group">
-                        <label for="txt-nome">Descrição</label>
-                        <textarea class="form-control" name="descricao" rows="5" id="descricao"></textarea>
+                        <label for="valor">Valor</label>  
+                        <input id="valor" name="valor" placeholder="" class="form-control input-md" required="" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="valor">Data</label> 
+
+                        <input name="data" type="text" id="dataRecNovo" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="status">Situaçao</label>
+                        <div class="form-group">
+                            <div class="radio">
+                                <label for="status-0">
+                                    <input name="status" id="status-0" value="1" checked="checked" type="radio">
+                                    Recebido
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label for="status-1">
+                                    <input width="150" name="status" id="status-1" value="2" type="radio">
+                                    Não Recebido
+                                </label>
+                            </div>
+                        </div>
                     </div>
             </div>
             <div class="modal-footer">
