@@ -16,6 +16,7 @@ $C_CATEGORIAS = 'ControleFinanceiro\Controller\ControleCategorias';
 $C_PAGAMENTOS = 'ControleFinanceiro\Controller\ControleFormaPagamento';
 $C_USUARIO = 'ControleFinanceiro\Controller\ControleUsuario';
 $C_RECEITAS = 'ControleFinanceiro\Controller\ControleReceitas';
+$C_DESPESAS = 'ControleFinanceiro\Controller\ControleDespesas';
 
 // ROTAS GERAIS;
 $home = new Route('/home', array('_controller' => $C_HOME, '_method' => 'ver'));
@@ -44,6 +45,13 @@ $cadastraReceitas = new Route('/cadastraReceita', array('_controller'=>$C_RECEIT
 $editaReceitas = new Route('/editaReceita/id={_param}', array('_controller'=>$C_RECEITAS,'_method'=>'editaItem'));
 $excluiReceitas = new Route('/excluiReceita/{_param}', array('_controller'=>$C_RECEITAS,'_method'=>'excluiItem'));
 
+//ROTAS DE DESPESAS
+$despesas = new Route('/despesas ', array('_controller' => $C_DESPESAS , '_method' => 'listaItens'));
+$despesasPorMes = new Route('/despesasMesAno/{_param}', array('_controller' => $C_DESPESAS , '_method' => 'listaItensPorMes'));
+$cadastraDespesas  = new Route('/cadastraDespesa', array('_controller'=>$C_DESPESAS ,'_method'=>'cadastraItem'));
+$editaDespesas = new Route('/editaDespesa/id={_param}', array('_controller'=>$C_DESPESAS ,'_method'=>'editaItem'));
+$excluiDespesas = new Route('/excluiDespesa/{_param}', array('_controller'=>$C_DESPESAS ,'_method'=>'excluiItem'));
+
 // ADICIONA AS ROTAS 
 $rotas->add('home', $home);
 $rotas->add('ajuda', $ajuda);
@@ -67,3 +75,9 @@ $rotas->add('receitasPorMes', $receitasPorMes);
 $rotas->add('cadastraReceitas',$cadastraReceitas);
 $rotas->add('editaReceitas',$editaReceitas);
 $rotas->add('excluiReceitas',$excluiReceitas);
+
+$rotas->add('receitas', $despesas);
+$rotas->add('receitasPorMes', $despesasPorMesPorMes);
+$rotas->add('cadastraReceitas',$cadastraDespesas);
+$rotas->add('editaReceitas',$editaDespesas);
+$rotas->add('excluiReceitas',$excluiDespesas);

@@ -1,0 +1,332 @@
+{% extends 'base.twig' %}
+
+{% block title %}{{titulo}}{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <header>
+            <div class="row">
+                <div class="col-sm-6">
+                    <h2> <strong>Despesas</strong>
+                        <small> 
+                            <a class="navbar-link" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                {{mes}}/{{ano}}
+                            </a>
+                        </small>
+                        <span style="color:green;"> R$ {{soma | number_format(2, ',', '.')}}</span>
+                    </h2>
+
+                </div>
+                <div class="col-sm-3 well-sm" style="background-color: #eee">
+                    <span class="glyphicon glyphicon-comment" style="color:gray;"></span><small> DICA! Cadastre aqui as suas despesas (previstas ou já realizadas). </small>
+                </div>
+                <div class="col-sm-3 text-right h2">
+
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#modal-cadastro"><span class="glyphicon glyphicon-plus"></span></button>
+                    <a class="btn btn-default" href="/receitas"><i class="fa fa-refresh"></i> <span class="glyphicon glyphicon-refresh"></span></a>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="collapse" id="collapseExample">
+                    <div class="well">
+                        <form method="POST" id="filtraRec" action="">
+                            <div class="col-sm-2 text-right">
+                                <span> <small> Ano: </small></span>
+
+                                <select name="ano" id="ano">
+                                    {% for ano in 2017..2025 %}
+                                        <option value="{{ ano  }}">{{ ano }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="col-sm-10 text-right">
+
+                                <ul class="nav nav-pills">
+
+                                    <li role="presentation" class="disabled"><a href="#" >Mês: </a></li>
+                                    <li role="presentation"><button class="btn btn-default btn-sm" onclick="filtra(1);" type="submit">JAN</button></li>
+                                    <li role="presentation"><button class="btn btn-default btn-sm" data-target="form" onclick="filtra(2);" type="submit">FEV</button></li>
+                                    <li role="presentation"><button class="btn btn-default btn-sm" data-target="form" onclick="filtra(3);" type="submit">MAR</button></li>
+                                    <li role="presentation"><button class="btn btn-default btn-sm" data-target="form" onclick="filtra(4);" type="submit">ABR</button></li>
+                                    <li role="presentation"><button class="btn btn-default btn-sm" data-target="form" onclick="filtra(5);" type="submit">MAI</button></li>
+                                    <li role="presentation"><button class="btn btn-default btn-sm" data-target="form" onclick="filtra(6);" type="submit">JUN</button></li>
+                                    <li role="presentation"><button class="btn btn-default btn-sm" data-target="form" onclick="filtra(7);" type="submit">JUL</button></li>
+                                    <li role="presentation"><button class="btn btn-default btn-sm" data-target="form" onclick="filtra(8);" type="submit">AGO</button></li>
+                                    <li role="presentation"><button class="btn btn-default btn-sm" data-target="form" onclick="filtra(9);" type="submit">SET</button></li>
+                                    <li role="presentation"><button class="btn btn-default btn-sm" data-target="form" onclick="filtra(10);" type="submit">OUT</button></li>
+                                    <li role="presentation"><button class="btn btn-default btn-sm" data-target="form" onclick="filtra(11);" type="submit">NOV</button></li>
+                                    <li role="presentation"><button class="btn btn-default btn-sm" data-target="form" onclick="filtra(12);" type="submit">DEZ</button></li>
+                                </ul>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </header> {# FIM DO CABEÇALHO #}
+        {% if cadastrou %}
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Cadastrado!</strong> Atualize a página para visualizar a nova despesa.
+            </div>
+        {% endif %}
+
+        {% if excluiu %}
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Despesa Excluída!</strong> Atualize a página.
+            </div>
+        {% endif %}
+    </div>
+
+    {% if dados %}
+
+        <div class="container-fluid">
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        {#  <th># ID</th> #}
+                        <th>Data da Despesa</th>
+                        <th width="40%">Descrição</th>
+                        <th class="actions text-left">Valor</th>
+                        <th class="actions text-left">Categoria</th>
+                        <th class="actions text-left">Forma de Pagamento</th>
+                        <th class="actions text-left">Pago(?)</th>                    
+
+                        <th class="actions text-right">Opções</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for dado in dados  %}
+                        <tr>
+                            {# <td>{{dado.id_categoria}}</td> #}
+                            <td>{{dado.data_venc_desp | date("d/m/Y")}}</td>
+                            <td>{{dado.tipo_desp | title}}</td>
+                            <td>R$ {{dado.valor_desp | number_format(2, ',', '.')}}</td>
+                            <td>{{dado.categoria_id_categoria | title}}</td>
+                            <td>{{dado.forma_pagamento_id_form_pag | title}}</td>
+                            {% if dado.status_rec == 1 %}
+                                <td><span class="glyphicon glyphicon-ok" style="color:green" ></span></td>
+                                {%else%}
+                                <td><span class="glyphicon glyphicon-remove" style="color:red;"></span></td>
+                                {% endif %}
+                            <td class="actions text-right">
+                                {# <a href="view.php?id={{dado.id_categoria}}" class="btn btn-sm btn-success"><i class="fa fa-eye"></i> <spam class="glyphicon glyphicon-eye-open"></spam></a> #}
+                                <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modal-edita-rec" 
+                                        data-despid="{{dado.id_rec}}"
+                                        data-desptipo="{{dado.tipo_rec}}" 
+                                        data-despvalor="{{dado.valor_rec}}"
+                                        data-despdata="{{dado.data_lan_rec | date("Y/m/d")}}"
+                                        data-despcategoria="{{dado.categoria_id_categoria}}"
+                                        data-desppagamento="{{dado.forma_pagamento_id_form_pag}}"
+                                        data-despstatus="{{dado.status_rec}}">
+                                    <i class="fa fa-pencil"></i> 
+                                    <spam class="glyphicon glyphicon-edit"></spam>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal-exclui-rec" 
+                                        data-despid="{{dado.id_rec}}"
+                                        data-desptipo="{{dado.tipo_rec}}" 
+                                        data-despvalor="{{dado.valor_rec}}"
+                                        data-despdata="{{dado.data_lan_rec | date("Y/m/d")}}"
+                                        data-despcategoria="{{dado.categoria_id_categoria}}"
+                                        data-desppagamento="{{dado.forma_pagamento_id_form_pag}}"
+                                        data-despstatus="{{dado.status_rec}}">
+                                    <i class="fa fa-trash"></i> 
+                                    <spam class="glyphicon glyphicon-trash"></spam>
+                                </button>
+
+                            </td>
+                        </tr>
+                    {%endfor%}
+                {% else %}
+                <div class ="container-fluid">
+                    <td colspan="6"><div class="alert alert-danger">Você não adicionou nenhuma despesa ainda... comece a se planejar agora mesmo!</td></div> 
+
+        </div>
+    {% endif %}
+</tbody>
+</table>
+</div>
+
+
+
+{# MODAL CADASTRO#}
+
+<div class="modal fade" id="modal-cadastro">
+    <form method="POST" action="/cadastraDespesa">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                    <h4 class="modal-title">Cadastrar uma nova Despesa</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label  for="textinput">Descrição</label>  
+                        <input class ="form-control" id="tipo" name="tipo" placeholder="" class="form-control input-md" required="" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="valor">Valor</label>  
+                        <input id="valor" name="valor" placeholder="" class="form-control input-md" required="" type="text">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="valor">Data</label>  
+                        <div class='input-group date'>
+                            <input type='text' class="form-control" id='dataRec' name="data" required="Campo obrigatório"/>
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar">
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    // usar o select
+                    <div class="form-group">
+                        <label for="categoria">Categoria</label>  
+                        <input id="categoria" name="categoria" placeholder="" class="form-control input-md" required="" type="text">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="pagamento">Pagamento</label>  
+                        <input id="pagamento" name="pagamento" placeholder="" class="form-control input-md" required="" type="text">
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="status">Situaçao</label>
+                        <div class="form-group">
+                            <div class="radio">
+                                <label for="status-0">
+                                    <input name="status" id="status-0" value="1" checked="checked" type="radio">
+                                    Pago
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label for="status-1">
+                                    <input width="150" name="status" id="status-1" value="2" type="radio">
+                                    Não Pago
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Cadastrar</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+{# MODAL EDITAR#}
+
+<div class="modal fade" id="modal-edita-rec">
+
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <form method="POST" id="formEditaRec" action="">
+
+                    <div class="form-group">
+                        <label  for="textinput">Descrição</label>  
+                        <input class ="form-control" id="tipo" name="tipo" maxlength="30" placeholder="" class="form-control input-md" required="" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="valor">Valor</label>  
+                        <input id="valor" name="valor" placeholder="" class="form-control input-md" maxlength="7" required="" pattern="[0-9]+$"type="text" title="Apenas números são aceitos" min="1" max="999999">
+                    </div>
+                    <div class="form-group">
+                        <label for="valor">Data</label> 
+
+                        <input name="data" type="text" class="form-control" required="" maxlength="10" pattern="\d{4}\/\d{2}\/\d{2}" title="Use o formato: aaaa/mm/dd">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="status">Situaçao</label>
+                        <div class="form-group">
+                            <div class="radio">
+                                <label for="status-0">
+                                    <input name="status" id="status-0" value="1" checked="checked" type="radio">
+                                    Recebido
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label for="status-1">
+                                    <input width="150" name="status" id="status-1" value="2" type="radio">
+                                    Não Recebido
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-success">Salvar alteração</button>
+            </div>
+        </div>
+    </div>
+</form>
+</div>
+
+{# MODAL EXCLUIR#}
+
+<div class="modal fade" id="modal-exclui-rec">
+
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <form method="POST" id="formExcluiRec" nome="formExcluiRec" action="">
+                    <div class="form-group">
+                        <label  for="textinput">Descrição</label>  
+                        <input class ="form-control" id="tipo" name="tipo" placeholder="" class="form-control input-md" required="" type="text" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="valor">Valor</label>  
+                        <input id="valor" name="valor" placeholder="" class="form-control input-md" required="" type="text" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="valor">Data</label> 
+
+                        <input name="data" type="text" class="form-control" id="dataRec" disabled>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="status">Situaçao</label>
+                        <div class="form-group">
+                            <div class="radio">
+                                <label for="status-0">
+                                    <input name="status" id="status-0" value="1" checked="checked" type="radio" disabled>
+                                    Recebido
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label for="status-1">
+                                    <input width="150" name="status" id="status-1" value="2" type="radio" disabled>
+                                    Não Recebido
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-success">Excluir</button>
+            </div>
+        </div>
+    </div>
+</form>
+</div>
+{% endblock %}
