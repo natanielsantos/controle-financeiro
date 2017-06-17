@@ -105,9 +105,9 @@ class ModeloReceitas {
     public function excluiItem($id) {
         try {
 
-            $sql = "DELETE FROM forma_pagamento WHERE id_form_pag = :id_form_pag";
+            $sql = "DELETE FROM receita WHERE id_rec = :id_rec";
             $psql = Conexao::getInstance()->prepare($sql);
-            $psql->bindValue(':id_form_pag', $id);
+            $psql->bindValue(':id_rec', $id);
             $psql->execute();
 
             return true;

@@ -42,6 +42,7 @@ $receitas = new Route('/receitas', array('_controller' => $C_RECEITAS, '_method'
 $receitasPorMes = new Route('/receitasMesAno/{_param}', array('_controller' => $C_RECEITAS, '_method' => 'listaItensPorMes'));
 $cadastraReceitas = new Route('/cadastraReceita', array('_controller'=>$C_RECEITAS,'_method'=>'cadastraItem'));
 $editaReceitas = new Route('/editaReceita/id={_param}', array('_controller'=>$C_RECEITAS,'_method'=>'editaItem'));
+$excluiReceitas = new Route('/excluiReceita/{_param}', array('_controller'=>$C_RECEITAS,'_method'=>'excluiItem'));
 
 // ADICIONA AS ROTAS 
 $rotas->add('home', $home);
@@ -65,3 +66,4 @@ $rotas->add('receitas', $receitas);
 $rotas->add('receitasPorMes', $receitasPorMes);
 $rotas->add('cadastraReceitas',$cadastraReceitas);
 $rotas->add('editaReceitas',$editaReceitas);
+$rotas->add('excluiReceitas',$excluiReceitas);

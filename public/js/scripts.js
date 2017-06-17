@@ -99,17 +99,21 @@ $('#modal-edita-rec').on('show.bs.modal', function (event) {
 //JS DO MODAL PARA EXCLUIR RECEITAS
 $('#modal-exclui-rec').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget);
-    var idexclui = button.data('excidcategoria');
-    var excluiDescricao = button.data('excdescricao');
-    var excluiNome = button.data('excnome');
+    var idExcluiRec = button.data('recid');
+    var excluiTipo = button.data('rectipo');
+    var excluiValor = button.data('recvalor');
+    var excluiData = button.data('recdata');
+    //var editaStatus = button.data('rec-status');
 
     var modal = $(this);
 
-    modal.find('.modal-title').text('Pagamento : ' + excluiNome);
-    modal.find('.modal-body input').val(excluiNome);
-    modal.find('.modal-body textarea').val(excluiDescricao);
+    modal.find('.modal-title').text('Receita: ' + excluiTipo);
+    modal.find('.modal-body input[name="tipo"]').val(excluiTipo);
+    modal.find('.modal-body input[name="valor"]').val(excluiValor);
+    modal.find('.modal-body input[name="data"]').val(excluiData);
+    //modal.find('.modal-body input').val(editaStatus);
 
-    $("#formExclui").attr("action", '/excluiPagamento/id=' + idexclui);
+    $("#formExcluiRec").attr("action", '/excluiReceita/' + idExcluiRec);
 
 
 

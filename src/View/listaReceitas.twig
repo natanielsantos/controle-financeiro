@@ -133,10 +133,12 @@
                                     <i class="fa fa-pencil"></i> 
                                     <spam class="glyphicon glyphicon-edit"></spam>
                                 </button>
-                                <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal-exclui-form" 
-                                        data-excidcategoria="{{dado.id_form_pag}}" 
-                                        data-excdescricao="{{dado.descricao_form_pag}}" 
-                                        data-excnome="{{dado.nome_form_pag}}">
+                                <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal-exclui-rec" 
+                                        data-recid="{{dado.id_rec}}"
+                                        data-rectipo="{{dado.tipo_rec}}" 
+                                        data-recvalor="{{dado.valor_rec}}"
+                                        data-recdata="{{dado.data_lan_rec}}"
+                                        data-recstatus="{{dado.status_rec}}">
                                     <i class="fa fa-trash"></i> 
                                     <spam class="glyphicon glyphicon-trash"></spam>
                                 </button>
@@ -147,9 +149,9 @@
                 {% else %}
                 <div class ="container-fluid">
                     <td colspan="6"><div class="alert alert-danger">Você não adicionou nenhuma receita ainda... comece a se planejar agora mesmo!</td></div> 
-               
-    </div>
-{% endif %}
+
+        </div>
+    {% endif %}
 </tbody>
 </table>
 </div>
@@ -216,9 +218,6 @@
     </form>
 </div>
 
-
-
-
 {# MODAL EDITAR#}
 
 <div class="modal fade" id="modal-edita-rec">
@@ -243,7 +242,7 @@
                     <div class="form-group">
                         <label for="valor">Data</label> 
 
-                        <input name="data" type="text" id="dataRecNovo" class="form-control">
+                        <input name="data" type="text" class="form-control">
                     </div>
 
                     <div class="form-group">
@@ -275,7 +274,7 @@
 
 {# MODAL EXCLUIR#}
 
-<div class="modal fade" id="modal-exclui-form">
+<div class="modal fade" id="modal-exclui-rec">
 
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
@@ -284,14 +283,37 @@
                 <h4 class="modal-title"></h4>
             </div>
             <div class="modal-body">
-                <form method="POST" id="formExclui" nome="formExclui" action="">
-                    <div class="form-group">
-
-                        <input type="text" name ="nome" class="form-control"  id="nome" disabled>
+                <form method="POST" id="formExcluiRec" nome="formExcluiRec" action="">
+                     <div class="form-group">
+                        <label  for="textinput">Descrição</label>  
+                        <input class ="form-control" id="tipo" name="tipo" placeholder="" class="form-control input-md" required="" type="text" disabled>
                     </div>
                     <div class="form-group">
-                        <label for="txt-nome">Descrição</label>
-                        <textarea class="form-control" name="descricao" rows="5" id="descricao" disabled></textarea>
+                        <label for="valor">Valor</label>  
+                        <input id="valor" name="valor" placeholder="" class="form-control input-md" required="" type="text" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="valor">Data</label> 
+
+                        <input name="data" type="text" class="form-control" disabled>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="status">Situaçao</label>
+                        <div class="form-group">
+                            <div class="radio">
+                                <label for="status-0">
+                                    <input name="status" id="status-0" value="1" checked="checked" type="radio" disabled>
+                                    Recebido
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label for="status-1">
+                                    <input width="150" name="status" id="status-1" value="2" type="radio" disabled>
+                                    Não Recebido
+                                </label>
+                            </div>
+                        </div>
                     </div>
             </div>
             <div class="modal-footer">
