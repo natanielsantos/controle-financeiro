@@ -87,12 +87,6 @@ $('#modal-edita-rec').on('show.bs.modal', function (event) {
 
     $("#formEditaRec").attr("action", '/editaReceita/id=' + idEditaRec);
 
-    $('#dataRecNovo').datepicker({
-        format: "yyyy/mm/dd",
-        language: "pt-BR",
-        todayHighlight: true
-    });
-
 
 });
 
@@ -115,11 +109,9 @@ $('#modal-exclui-rec').on('show.bs.modal', function (event) {
 
     $("#formExcluiRec").attr("action", '/excluiReceita/' + idExcluiRec);
 
-
-
-
-
 });
+
+
 
 function filtra(id) {
 
@@ -127,9 +119,10 @@ function filtra(id) {
     var ano = $('#ano').val(); // não usar o DOM
     var rota = mes + "&" + ano;
 
-  $("#filtraRec").attr("action", '/receitasMesAno/'+rota);
-   // $("#filtraRec").attr("action", '/receitasMesAno/'+mes);
-};
+    $("#filtraRec").attr("action", '/receitasMesAno/' + rota);
+    // $("#filtraRec").attr("action", '/receitasMesAno/'+mes);
+}
+;
 
 var progressBar = $(".progress-bar");
 
