@@ -121,9 +121,10 @@ function filtra(id) {
 
     var mes = id;
     var ano = $('#ano').val(); // não usar o DOM
+    var rota = mes + "&" + ano;
 
-   // $("#filtraRec").attr("action", '/editaPagamento/'+mes +'/'+ano);
-    $("#filtraRec").attr("action", '/receitasMesAno/'+mes);
+  $("#filtraRec").attr("action", '/receitasMesAno/'+rota);
+   // $("#filtraRec").attr("action", '/receitasMesAno/'+mes);
 };
 
 var progressBar = $(".progress-bar");

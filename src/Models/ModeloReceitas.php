@@ -37,13 +37,19 @@ class ModeloReceitas {
             echo $exc->getTraceAsString();
         }
     }
-    
-        public function listaItemPorMes($mes, $id_usuario) {
+
+    public function listaItemPorMes($mes, $ano, $id_usuario) {
         try {
-            $sql = "SELECT * FROM receita WHERE usuario_id_user = :usuario AND Month(data_lanc_rec) = :mes ORDER BY data_lanc_rec";
+            $sql = "SELECT * FROM receita "
+                    . "WHERE usuario_id_user = :usuario "
+                    . "AND Month(data_lanc_rec) = :mes "
+                    . "AND Year(data_lanc_rec) = :ano "
+                    . "ORDER BY data_lanc_rec";
+
             $p_sql = Conexao::getInstance()->prepare($sql);
             $p_sql->bindValue(':usuario', $id_usuario);
-             $p_sql->bindValue(':mes', $mes);
+            $p_sql->bindValue(':mes', $mes);
+            $p_sql->bindValue(':ano', $ano);
             $p_sql->execute();
 
             return $p_sql->fetchAll(PDO::FETCH_ASSOC);
@@ -52,13 +58,12 @@ class ModeloReceitas {
         }
     }
 
-
     public function cadastraItem(Receitas $item) {
 
         try {
             $sql = "INSERT INTO receita (tipo_rec, valor_rec, data_lanc_rec, status_rec, usuario_id_user)
                     values (:tipo, :valor, :data, :status, :usuario)";
-            
+
 
             $psql = Conexao::getInstance()->prepare($sql);
 
@@ -68,7 +73,7 @@ class ModeloReceitas {
             $psql->bindValue(':status', $item->getStatus());
             $psql->bindValue(':usuario', $item->getUsuario());
             $psql->execute();
-            
+
             return true;
         } catch (Exception $exc) {
             echo $exc->getTraceAsString();

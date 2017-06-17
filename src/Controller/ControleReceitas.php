@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use ControleFinanceiro\Models\ModeloReceitas;
 use ControleFinanceiro\Entity\Receitas;
 use ControleFinanceiro\Util\Session;
+use ControleFinanceiro\Util\Funcoes;
 
 class ControleReceitas {
 
@@ -30,27 +31,63 @@ class ControleReceitas {
 
     function listaItens() {
         $usuario = $this->session->get('nome');
-        // $dados = $this->modelo->listaItemPorMes($mes, $this->session->get('id_user'));
+
+
+        $today = getdate();
+        $dia = $today['mday'];
+        $m = $today['mon'];
+        $a = $today['year'];
+
+        $jd = gregoriantojd($m, $dia, $a);
+
+        $v = jdmonthname($jd, 0);
+
+        $dados = $this->modelo->listaItemPorMes($m, $a, $this->session->get('id_user'));
+
         $soma = ControleReceitas::calculaTotal();
 
         if ($usuario != "") {
             return $this->resposta->setContent($this->twig->render('listaReceitas.twig', array('titulo' => 'CF | Receitas',
-                                'dados' => $this->dados,
+                                'dados' => $dados,
                                 'soma' => $soma,
+                                'mes' => $v,
+                                'ano' => $a,
                                 'usuario' => $usuario)));
         }
     }
 
-    function listaItensPorMes($mes) {
+    function listaItensPorMes($rota) {
+
+        //separa o mes e ano
+        $campo = explode('&', $rota);
+        $mesR = Funcoes::retornaMes($campo[0]);
+        $anoR = $campo[1];
+
         $usuario = $this->session->get('nome');
-        $this->dados = $this->modelo->listaItemPorMes($mes, $this->session->get('id_user'));
-        $soma = ControleReceitas::calculaTotal();
+        $this->dados = $this->modelo->listaItemPorMes($campo[0], $anoR, $this->session->get('id_user'));
+
+
+
+        /* pegar o mês atual
+          $today = getdate();
+          $dia = $today['mday'];
+          $m = $today['mon'];
+          $a = $today['year'];
+
+          $jd = gregoriantojd($m,$dia,$a);
+
+          $v = jdmonthname($jd, 0);
+         */
+
+        $soma = Funcoes::calculaTotal($this->dados);
 
         if ($usuario != "") {
             return $this->resposta->setContent($this->twig->render('listaReceitas.twig', array('titulo' => 'CF | Receitas',
                                 'dados' => $this->dados,
                                 'soma' => $soma,
-                                'usuario' => $usuario)));
+                                'usuario' => $usuario,
+                                'mes' => $mesR,
+                                'ano' => $anoR)));
         }
     }
 
@@ -101,17 +138,6 @@ class ControleReceitas {
         $redirect->send();
 
         return true;
-    }
-
-    function calculaTotal() {
-
-        $total = 0;
-
-        foreach ($this->dados as $v) {
-            $total = $v['valor_rec'] + $total;
-        }
-
-        return $total;
     }
 
 }
