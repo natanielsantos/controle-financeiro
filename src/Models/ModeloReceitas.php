@@ -85,7 +85,9 @@ class ModeloReceitas {
         try {
             $sql = "UPDATE receita "
                     . "SET tipo_rec=:tipo, valor_rec = :valor, data_lanc_rec=:data, status_rec=:status "
-                    . "WHERE id_rec = :id AND usuario_id_user = :usuario";
+                    . "WHERE id_rec = :id "
+                    . "AND usuario_id_user = :usuario";
+            
             $psql = Conexao::getInstance()->prepare($sql);
             $psql->bindValue(':id', $id);
             $psql->bindValue(':tipo', $item->getTipo());
@@ -108,35 +110,6 @@ class ModeloReceitas {
             $sql = "DELETE FROM receita WHERE id_rec = :id_rec";
             $psql = Conexao::getInstance()->prepare($sql);
             $psql->bindValue(':id_rec', $id);
-            $psql->execute();
-
-            return true;
-        } catch (Exception $exc) {
-            echo $exc->getTraceAsString();
-        }
-    }
-
-    public function cadastraPadraoItem($usuario) {
-
-        try {
-            $sql = "INSERT INTO forma_pagamento(nome_form_pag, descricao_form_pag,usuario_id_user)"
-                    . " values (:nome, :descricao, :usuario),"
-                    . "(:nome2, :descricao2, :usuario),"
-                    . "(:nome3, :descricao3, :usuario),"
-                    . "(:nome4, :descricao4, :usuario),"
-                    . "(:nome5, :descricao5, :usuario)";
-            $psql = Conexao::getInstance()->prepare($sql);
-            $psql->bindValue(':usuario', $usuario);
-            $psql->bindValue(':nome', "Dinheiro");
-            $psql->bindValue(':descricao', "Moedas, notas...");
-            $psql->bindValue(':nome2', "Cheque");
-            $psql->bindValue(':descricao2', "...");
-            $psql->bindValue(':nome3', "Cartão de Crédito");
-            $psql->bindValue(':descricao3', "...");
-            $psql->bindValue(':nome4', "Débito em Conta");
-            $psql->bindValue(':descricao4', "...");
-            $psql->bindValue(':nome5', "Boleto");
-            $psql->bindValue(':descricao5', "...");
             $psql->execute();
 
             return true;
