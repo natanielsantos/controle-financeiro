@@ -44,7 +44,7 @@ class ControleReceitas {
 
         $dados = $this->modelo->listaItemPorMes($m, $a, $this->session->get('id_user'));
 
-        $soma = Funcoes::calculaTotal($dados);
+        $soma = Funcoes::calculaTotalReceita($dados);
 
         if ($usuario != "") {
             return $this->resposta->setContent($this->twig->render('listaReceitas.twig', array('titulo' => 'CF | Receitas',
@@ -66,7 +66,7 @@ class ControleReceitas {
         $usuario = $this->session->get('nome');
         $this->dados = $this->modelo->listaItemPorMes($campo[0], $anoR, $this->session->get('id_user'));
 
-        $soma = Funcoes::calculaTotal($this->dados);
+        $soma = Funcoes::calculaTotalReceita($this->dados);
 
         if ($usuario != "") {
             return $this->resposta->setContent($this->twig->render('listaReceitas.twig', array('titulo' => 'CF | Receitas',

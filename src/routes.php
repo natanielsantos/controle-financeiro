@@ -76,8 +76,8 @@ $rotas->add('cadastraReceitas',$cadastraReceitas);
 $rotas->add('editaReceitas',$editaReceitas);
 $rotas->add('excluiReceitas',$excluiReceitas);
 
-$rotas->add('receitas', $despesas);
-$rotas->add('receitasPorMes', $despesasPorMesPorMes);
-$rotas->add('cadastraReceitas',$cadastraDespesas);
-$rotas->add('editaReceitas',$editaDespesas);
-$rotas->add('excluiReceitas',$excluiDespesas);
+$rotas->add('despesas', $despesas);
+$rotas->add('despesasPorMes', $despesasPorMes);
+//$rotas->add('cadastraReceitas',$cadastraDespesas);
+//$rotas->add('editaReceitas',$editaDespesas);
+//$rotas->add('excluiReceitas',$excluiDespesas);

@@ -120,7 +120,7 @@ function filtra(id) {
     var rota = mes + "&" + ano;
 
     $("#filtraRec").attr("action", '/receitasMesAno/' + rota);
-    // $("#filtraRec").attr("action", '/receitasMesAno/'+mes);
+    $("#filtraDesp").attr("action", '/despesasMesAno/' + rota);
 }
 ;
 

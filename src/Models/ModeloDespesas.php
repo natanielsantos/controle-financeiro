@@ -6,7 +6,9 @@ use ControleFinanceiro\Util\Conexao;
 use PDO;
 use ControleFinanceiro\Entity\Despesas;
 
-class ModeloReceitas {
+class ModeloDespesas {
+
+    private $qtdColunas;
 
     function __construct() {
         ;
@@ -31,6 +33,8 @@ class ModeloReceitas {
             $p_sql = Conexao::getInstance()->prepare($sql);
             $p_sql->bindValue(':usuario', $id_usuario);
             $p_sql->execute();
+
+            $this->qtdColunas = $p_sql->columnCount();
 
             return $p_sql->fetchAll(PDO::FETCH_ASSOC);
         } catch (Exception $exc) {
@@ -89,7 +93,7 @@ class ModeloReceitas {
                     . "SET tipo_rec=:tipo, valor_rec = :valor, data_lanc_rec=:data, status_rec=:status, categoria_id_categoria=:categoria, forma_pagamento_id_form_pag = :pagamento"
                     . "WHERE id_desp = :id "
                     . "AND usuario_id_user = :usuario";
-            
+
             $psql = Conexao::getInstance()->prepare($sql);
             $psql->bindValue(':id', $id);
             $psql->bindValue(':tipo', $item->getTipo());
@@ -120,6 +124,12 @@ class ModeloReceitas {
         } catch (Exception $exc) {
             echo $exc->getTraceAsString();
         }
+    }
+
+   static function  qtdColunas() {
+
+        $qtdColunas = $this->qtdColunas;
+        return $qtdColunas;
     }
 
 }

@@ -43,8 +43,8 @@ class ControleDespesas {
         $v = jdmonthname($jd, 0);
 
         $dados = $this->modelo->listaItemPorMes($m, $a, $this->session->get('id_user'));
-
-        $soma = Funcoes::calculaTotal($dados);
+        
+        $soma = Funcoes::calculaTotalDespesa($dados);
 
         if ($usuario != "") {
             return $this->resposta->setContent($this->twig->render('listaDespesas.twig', array('titulo' => 'CF | Despesas',
@@ -66,7 +66,7 @@ class ControleDespesas {
         $usuario = $this->session->get('nome');
         $this->dados = $this->modelo->listaItemPorMes($campo[0], $anoR, $this->session->get('id_user'));
 
-        $soma = Funcoes::calculaTotal($this->dados);
+        $soma = Funcoes::calculaTotalDespesa($this->dados);
 
         if ($usuario != "") {
             return $this->resposta->setContent($this->twig->render('listaDespesas.twig', array('titulo' => 'CF | Despesas',

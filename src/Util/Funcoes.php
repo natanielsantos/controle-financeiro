@@ -2,6 +2,11 @@
 
 namespace ControleFinanceiro\Util;
 
+use ControleFinanceiro\Models\ModeloDespesas;
+use ControleFinanceiro\Util\Conexao;
+use PDO;
+use ControleFinanceiro\Entity\Despesas;
+
 class Funcoes {
 
     function retornaMes($num) {
@@ -35,7 +40,20 @@ class Funcoes {
         return $mes;
     }
 
-    function calculaTotal($vetor) {
+    public function contaColunas($vetor) {
+        try {
+            $sql = "show fields from :vetor";
+            $p_sql = Conexao::getInstance()->prepare($sql);
+            $p_sql->bindValue(':vetor', $vetor);
+            $p_sql->execute();
+
+            return $p_sql->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+    }
+
+    function calculaTotalReceita($vetor) {
 
         $total = 0;
 
@@ -46,5 +64,17 @@ class Funcoes {
         return $total;
     }
 
+    function calculaTotalDespesa($vetor) {
+
+        $total = 0;
+
+        foreach ($vetor as $v) {
+            $total = $v['valor_desp'] + $total;
+        }
+
+        return $total;
+    }
+
 }
+
 //
