@@ -40,19 +40,6 @@ class Funcoes {
         return $mes;
     }
 
-    public function contaColunas($vetor) {
-        try {
-            $sql = "show fields from :vetor";
-            $p_sql = Conexao::getInstance()->prepare($sql);
-            $p_sql->bindValue(':vetor', $vetor);
-            $p_sql->execute();
-
-            return $p_sql->fetchAll(PDO::FETCH_ASSOC);
-        } catch (Exception $exc) {
-            echo $exc->getTraceAsString();
-        }
-    }
-
     function calculaTotalReceita($vetor) {
 
         $total = 0;
