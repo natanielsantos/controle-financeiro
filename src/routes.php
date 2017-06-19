@@ -49,7 +49,7 @@ $excluiReceitas = new Route('/excluiReceita/{_param}', array('_controller'=>$C_R
 $despesas = new Route('/despesas ', array('_controller' => $C_DESPESAS , '_method' => 'listaItens'));
 $despesasPorMes = new Route('/despesasMesAno/{_param}', array('_controller' => $C_DESPESAS , '_method' => 'listaItensPorMes'));
 $cadastraDespesas  = new Route('/cadastraDespesa', array('_controller'=>$C_DESPESAS ,'_method'=>'cadastraItem'));
-$editaDespesas = new Route('/editaDespesa/id={_param}', array('_controller'=>$C_DESPESAS ,'_method'=>'editaItem'));
+$editaDespesas = new Route('/editaDespesa/{_param}', array('_controller'=>$C_DESPESAS ,'_method'=>'editaItem'));
 $excluiDespesas = new Route('/excluiDespesa/{_param}', array('_controller'=>$C_DESPESAS ,'_method'=>'excluiItem'));
 
 // ADICIONA AS ROTAS 
@@ -78,6 +78,6 @@ $rotas->add('excluiReceitas',$excluiReceitas);
 
 $rotas->add('despesas', $despesas);
 $rotas->add('despesasPorMes', $despesasPorMes);
-//$rotas->add('cadastraReceitas',$cadastraDespesas);
-//$rotas->add('editaReceitas',$editaDespesas);
-//$rotas->add('excluiReceitas',$excluiDespesas);
+$rotas->add('cadastraDepesa',$cadastraDespesas);
+$rotas->add('editaDespesa',$editaDespesas);
+$rotas->add('excluiDespesa',$excluiDespesas);

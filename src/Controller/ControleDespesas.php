@@ -9,6 +9,8 @@ use ControleFinanceiro\Models\ModeloDespesas;
 use ControleFinanceiro\Entity\Despesas;
 use ControleFinanceiro\Util\Session;
 use ControleFinanceiro\Util\Funcoes;
+use ControleFinanceiro\Models\ModeloCategorias;
+use ControleFinanceiro\Models\ModeloFormaPagamento;
 
 class ControleDespesas {
 
@@ -31,7 +33,9 @@ class ControleDespesas {
 
     function listaItens() {
         $usuario = $this->session->get('nome');
-
+        $id_usuario = $this->session->get('id_user');
+        $categorias = ModeloCategorias::listaCategorias($id_usuario);
+        $pagamentos = ModeloFormaPagamento::listaItem($id_usuario);
 
         $today = getdate();
         $dia = $today['mday'];
@@ -43,7 +47,7 @@ class ControleDespesas {
         $v = jdmonthname($jd, 0);
 
         $dados = $this->modelo->listaItemPorMes($m, $a, $this->session->get('id_user'));
-        
+        $qtdItens = Funcoes::contaItens($dados);
         $soma = Funcoes::calculaTotalDespesa($dados);
 
         if ($usuario != "") {
@@ -52,11 +56,17 @@ class ControleDespesas {
                                 'soma' => $soma,
                                 'mes' => $v,
                                 'ano' => $a,
+                                'qtditens' => $qtdItens,
+                                'categorias' => $categorias,
+                                'pagamentos' => $pagamentos,
                                 'usuario' => $usuario)));
         }
     }
 
     function listaItensPorMes($rota) {
+        $id_usuario = $this->session->get('id_user');
+        $categorias = ModeloCategorias::listaCategorias($id_usuario);
+        $pagamentos = ModeloFormaPagamento::listaItem($id_usuario);
 
         //separa o mes e ano
         $campo = explode('&', $rota);
@@ -65,6 +75,8 @@ class ControleDespesas {
 
         $usuario = $this->session->get('nome');
         $this->dados = $this->modelo->listaItemPorMes($campo[0], $anoR, $this->session->get('id_user'));
+        $qtdItens = Funcoes::contaItens($this->dados);
+
 
         $soma = Funcoes::calculaTotalDespesa($this->dados);
 
@@ -74,40 +86,22 @@ class ControleDespesas {
                                 'soma' => $soma,
                                 'usuario' => $usuario,
                                 'mes' => $mesR,
+                                'qtditens' => $qtdItens,
+                                'categorias' => $categorias,
+                                'pagamentos' => $pagamentos,
                                 'ano' => $anoR)));
         }
     }
 
     function cadastraItem() {
 
-        $receita = new Despesas($this->request->request->get('tipo'), 
-                                $this->request->request->get('valor'), 
-                                $this->request->request->get('data'),
-                                $this->request->request->get('categoria'),
-                                $this->request->request->get('pagamento'),
-                                $this->request->request->get('status'), 
-                                $this->session->get('id_user'));
+        $despesa = new Despesas($this->request->request->get('tipo'), $this->request->request->get('valor'), $this->request->request->get('data'), $this->request->request->get('status'), $this->request->request->get('categoria'), $this->request->request->get('pagamento'), $this->session->get('id_user'));
+
 
 
         $modelo = new ModeloDespesas();
-        $cadastrou = $modelo->cadastraItem($receita);
-
-        return $this->resposta->setContent($this->twig->render('listaDespesas.twig', array('titulo' => 'CF | Despesas',
-                            'dados' => $this->dados,
-                            'cadastrou' => $cadastrou)));
-    }
-
-    function editaItem($id) {
-
-        $novoItem = new Despesas($this->request->request->get('tipo'), 
-                                $this->request->request->get('valor'), 
-                                $this->request->request->get('data'),
-                                $this->request->request->get('categoria'),
-                                $this->request->request->get('pagamento'),
-                                $this->request->request->get('status'), 
-                                $this->session->get('id_user'));
-
-        ModeloDespesas::editaItem($novoItem, $id);
+        $modelo->cadastraItem($despesa);
+        print_r($despesa);
 
         $redirect = new RedirectResponse('/despesas');
         $redirect->send();
@@ -115,9 +109,20 @@ class ControleDespesas {
         return true;
     }
 
+    function editaItem($id) {
+
+        $novoItem = new Despesas($this->request->request->get('tipo'), $this->request->request->get('valor'), $this->request->request->get('data'), $this->request->request->get('status'), $this->request->request->get('categoria'), $this->request->request->get('pagamento'),  $this->session->get('id_user'));
+        print_r($novoItem);
+        ModeloDespesas::editaItem($novoItem, $id);
+
+      $redirect = new RedirectResponse('/despesas');
+      $redirect->send();
+        return true;
+    }
+
     function excluiItem($id) {
 
-        ModeloDespesas:excluiItem($id);
+        ModeloDespesas::excluiItem($id);
 
         $redirect = new RedirectResponse('/despesas');
         $redirect->send();

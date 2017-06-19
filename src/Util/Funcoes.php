@@ -2,11 +2,6 @@
 
 namespace ControleFinanceiro\Util;
 
-use ControleFinanceiro\Models\ModeloDespesas;
-use ControleFinanceiro\Util\Conexao;
-use PDO;
-use ControleFinanceiro\Entity\Despesas;
-
 class Funcoes {
 
     function retornaMes($num) {
@@ -60,6 +55,13 @@ class Funcoes {
         }
 
         return $total;
+    }
+
+    function contaItens($vetor) {
+
+        $qtdItens = count($vetor);
+
+        return $qtdItens;
     }
 
 }

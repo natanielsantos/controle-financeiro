@@ -20,11 +20,19 @@
                 <div class="col-sm-3 well-sm" style="background-color: #eee">
                     <span class="glyphicon glyphicon-comment" style="color:gray;"></span><small> DICA! Cadastre aqui as suas despesas (previstas ou já realizadas). </small>
                 </div>
-                <div class="col-sm-3 text-right h2">
 
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#modal-cadastro"><span class="glyphicon glyphicon-plus"></span></button>
-                    <a class="btn btn-default" href="/receitas"><i class="fa fa-refresh"></i> <span class="glyphicon glyphicon-refresh"></span></a>
-                </div>
+                {% if qtditens >= 60%}
+                    <div class="col-sm-3 text-right">
+                        <span class="glyphicon glyphicon-remove"</span><smal> Limite atingido!</small> 
+                    </div>
+                {% else %}
+                    <div class="col-sm-3 text-right">
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#modal-cadastro"><span class="glyphicon glyphicon-plus"></span></button>
+                        <a class="btn btn-default" href="/receitas"><i class="fa fa-refresh"></i> <span class="glyphicon glyphicon-refresh"></span></a>
+                    </div>
+                {%endif%}
+
+
             </div>
 
             <div class="row">
@@ -36,6 +44,7 @@
                                 <span> <small> Ano: </small></span>
 
                                 <select name="ano" id="ano">
+
                                     {% for ano in 2017..2025 %}
                                         <option value="{{ ano  }}">{{ ano }}</option>
                                     {% endfor %}
@@ -107,34 +116,46 @@
                             <td>{{dado.data_venc_desp | date("d/m/Y")}}</td>
                             <td>{{dado.descricao_desp | title}}</td>
                             <td style="color:red;">R$ {{dado.valor_desp | number_format(2, ',', '.')}}</td>
-                            <td>{{dado.categoria_id_categoria | title}}</td>
-                            <td>{{dado.forma_pagamento_id_form_pag | title}}</td>
+                            {#<td>{{dado.categoria_id_categoria | title}}</td>#}
+                            {% for categoria in categorias %}
+                                {% if categoria.id_categoria == dado.categoria_id_categoria %}
+                                    <td>{{categoria.nome_categoria | title}}</td>
+                                {% endif %}
+                            {% endfor %}
+                            
+                            {% for pagamento in pagamentos %}
+                                {% if pagamento.id_form_pag == dado.forma_pagamento_id_form_pag %}
+                                    <td>{{pagamento.nome_form_pag | title}}</td>
+                                {% endif %}
+                            {% endfor %}
+
                             {% if dado.status_desp == 1 %}
                                 <td><span class="glyphicon glyphicon-ok" style="color:green" ></span></td>
-                                {%else%}
+                                {% else %}
                                 <td><span class="glyphicon glyphicon-remove" style="color:red;"></span></td>
                                 {% endif %}
+
                             <td class="actions text-right">
                                 {# <a href="view.php?id={{dado.id_categoria}}" class="btn btn-sm btn-success"><i class="fa fa-eye"></i> <spam class="glyphicon glyphicon-eye-open"></spam></a> #}
-                                <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modal-edita-rec" 
-                                        data-despid="{{dado.id_rec}}"
-                                        data-desptipo="{{dado.tipo_rec}}" 
-                                        data-despvalor="{{dado.valor_rec}}"
-                                        data-despdata="{{dado.data_lan_rec | date("Y/m/d")}}"
+                                <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modal-edita-desp" 
+                                        data-despid="{{dado.id_desp}}"
+                                        data-desptipo="{{dado.descricao_desp}}" 
+                                        data-despvalor="{{dado.valor_desp}}"
+                                        data-despdata="{{dado.data_venc_desp | date("Y/m/d")}}"
                                         data-despcategoria="{{dado.categoria_id_categoria}}"
                                         data-desppagamento="{{dado.forma_pagamento_id_form_pag}}"
-                                        data-despstatus="{{dado.status_rec}}">
+                                        data-despstatus="{{dado.status_desp}}">
                                     <i class="fa fa-pencil"></i> 
                                     <spam class="glyphicon glyphicon-edit"></spam>
                                 </button>
-                                <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal-exclui-rec" 
-                                        data-despid="{{dado.id_rec}}"
-                                        data-desptipo="{{dado.tipo_rec}}" 
-                                        data-despvalor="{{dado.valor_rec}}"
-                                        data-despdata="{{dado.data_lan_rec | date("Y/m/d")}}"
+                                <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal-exclui-desp" 
+                                        data-despid="{{dado.id_desp}}"
+                                        data-desptipo="{{dado.descricao_desp}}" 
+                                        data-despvalor="{{dado.valor_desp}}"
+                                        data-despdata="{{dado.data_venc_desp | date("Y/m/d")}}"
                                         data-despcategoria="{{dado.categoria_id_categoria}}"
                                         data-desppagamento="{{dado.forma_pagamento_id_form_pag}}"
-                                        data-despstatus="{{dado.status_rec}}">
+                                        data-despstatus="{{dado.status_desp}}">
                                     <i class="fa fa-trash"></i> 
                                     <spam class="glyphicon glyphicon-trash"></spam>
                                 </button>
@@ -184,15 +205,33 @@
                             </span>
                         </div>
                     </div>
-                    // usar o select
                     <div class="form-group">
-                        <label for="categoria">Categoria</label>  
-                        <input id="categoria" name="categoria" placeholder="" class="form-control input-md" required="" type="text">
+                        <label for="categoria">Tipo de despesa </label>
+                        <select name="categoria" id="categoria" style="width: 200px">
+                            {% if categorias %}
+
+                                {% for categoria in categorias %}
+                                    <option value="{{categoria.id_categoria}}">{{ categoria.nome_categoria}}</option>
+                                {% endfor %}
+                            {%else %}
+                                <option value="padrao" disabled>Sem categorias cadastradas...</option>
+                            {% endif %}
+                        </select>
+
                     </div>
-                    
+
                     <div class="form-group">
-                        <label for="pagamento">Pagamento</label>  
-                        <input id="pagamento" name="pagamento" placeholder="" class="form-control input-md" required="" type="text">
+                        <label for="pagamento">Forma de Pagamento</label>
+                        <select name="pagamento" id="pagamento" style="width: 200px">
+                            {% if pagamentos %}
+
+                                {% for pagamento in pagamentos %}
+                                    <option value="{{pagamento.id_form_pag}}">{{ pagamento.nome_form_pag}}</option>
+                                {% endfor %}
+                            {%else %}
+                                <option value="padrao" disabled>Sem pagamentos cadastrados...</option>
+                            {% endif %}
+                        </select>
                     </div>
 
 
@@ -225,7 +264,7 @@
 
 {# MODAL EDITAR#}
 
-<div class="modal fade" id="modal-edita-rec">
+<div class="modal fade" id="modal-edita-desp">
 
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
@@ -234,21 +273,56 @@
                 <h4 class="modal-title"></h4>
             </div>
             <div class="modal-body">
-                <form method="POST" id="formEditaRec" action="">
+                <form method="POST" id="formEditaDesp" action="">
 
-                    <div class="form-group">
-                        <label  for="textinput">Descrição</label>  
-                        <input class ="form-control" id="tipo" name="tipo" maxlength="30" placeholder="" class="form-control input-md" required="" type="text">
+                   <div class="form-group">
+                        <label  for="tipo">Descrição</label>  
+                        <input class ="form-control" id="tipo" name="tipo" placeholder="" class="form-control input-md" required="" type="text">
                     </div>
                     <div class="form-group">
                         <label for="valor">Valor</label>  
-                        <input id="valor" name="valor" placeholder="" class="form-control input-md" maxlength="7" required="" pattern="[0-9]+$"type="text" title="Apenas números são aceitos" min="1" max="999999">
+                        <input id="valor" name="valor" placeholder="" class="form-control input-md" required="" type="text">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="data">Data</label>  
+                        <div class='input-group date'>
+                            <input type='text' class="form-control" id='dataDesp' name="data" required="Campo obrigatório"/>
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar">
+                                </span>
+                            </span>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="valor">Data</label> 
+                        <label for="categoria">Tipo de despesa </label>
+                        <select name="categoria" id="categoria" style="width: 200px">
+                            {% if categorias %}
 
-                        <input name="data" type="text" class="form-control" required="" maxlength="10" pattern="\d{4}\/\d{2}\/\d{2}" title="Use o formato: aaaa/mm/dd">
+                                {% for categoria in categorias %}
+                                    <option value="{{categoria.id_categoria}}">{{ categoria.nome_categoria}}</option>
+                                {% endfor %}
+                            {%else %}
+                                <option value="padrao" disabled>Sem categorias cadastradas...</option>
+                            {% endif %}
+                        </select>
+
                     </div>
+
+                    <div class="form-group">
+                        <label for="pagamento">Forma de Pagamento</label>
+                        <select name="pagamento" id="pagamento" style="width: 200px">
+                            {% if pagamentos %}
+
+                                {% for pagamento in pagamentos %}
+                                    <option value="{{pagamento.id_form_pag}}">{{ pagamento.nome_form_pag}}</option>
+                                {% endfor %}
+                            {%else %}
+                                <option value="padrao" disabled>Sem pagamentos cadastrados...</option>
+                            {% endif %}
+                        </select>
+                    </div>
+
 
                     <div class="form-group">
                         <label for="status">Situaçao</label>
@@ -256,13 +330,13 @@
                             <div class="radio">
                                 <label for="status-0">
                                     <input name="status" id="status-0" value="1" checked="checked" type="radio">
-                                    Recebido
+                                    Pago
                                 </label>
                             </div>
                             <div class="radio">
                                 <label for="status-1">
                                     <input width="150" name="status" id="status-1" value="2" type="radio">
-                                    Não Recebido
+                                    Não Pago
                                 </label>
                             </div>
                         </div>
@@ -279,7 +353,7 @@
 
 {# MODAL EXCLUIR#}
 
-<div class="modal fade" id="modal-exclui-rec">
+<div class="modal fade" id="modal-exclui-desp">
 
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
@@ -288,7 +362,7 @@
                 <h4 class="modal-title"></h4>
             </div>
             <div class="modal-body">
-                <form method="POST" id="formExcluiRec" nome="formExcluiRec" action="">
+                <form method="POST" id="formExcluiDesp" nome="formExcluiDesp" action="">
                     <div class="form-group">
                         <label  for="textinput">Descrição</label>  
                         <input class ="form-control" id="tipo" name="tipo" placeholder="" class="form-control input-md" required="" type="text" disabled>

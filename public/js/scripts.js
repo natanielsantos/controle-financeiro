@@ -111,6 +111,52 @@ $('#modal-exclui-rec').on('show.bs.modal', function (event) {
 
 });
 
+//JS DO MODAL PARA EDITAR DESPESAS
+$('#modal-edita-desp').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var idEditaDesp = button.data('despid');
+    var editaTipo = button.data('desptipo');
+    var editaValor = button.data('despvalor');
+    var editaData = button.data('despdata');
+    var editaCategoria = button.data('categoria');
+    var editaPagamento = button.data('pagamento');
+    //var editaStatus = button.data('rec-status');
+
+    var modal = $(this);
+
+    modal.find('.modal-title').text('Despesa: ' + idEditaDesp);
+    modal.find('.modal-body input[name="tipo"]').val(editaTipo);
+    modal.find('.modal-body input[name="valor"]').val(editaValor);
+    modal.find('.modal-body input[name="data"]').val(editaData);
+   // modal.find('.modal-body select[name="categoria"]').val(editaCategoria);
+   // modal.find('.modal-body select[name="pagamento"]').val(editaPagamento);
+    //modal.find('.modal-body input').val(editaStatus);
+
+    $("#formEditaDesp").attr("action", '/editaDespesa/' + idEditaDesp);
+
+});
+
+//JS DO MODAL PARA EXCLUIR DESPESAS
+$('#modal-exclui-desp').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var idExcluiDesp = button.data('despid');
+    var excluiTipo = button.data('desptipo');
+    var excluiValor = button.data('despvalor');
+    var excluiData = button.data('despdata');
+    //var editaStatus = button.data('rec-status');
+
+    var modal = $(this);
+
+    modal.find('.modal-title').text('Despesa: ' + idExcluiDesp);
+    modal.find('.modal-body input[name="tipo"]').val(excluiTipo);
+    modal.find('.modal-body input[name="valor"]').val(excluiValor);
+    modal.find('.modal-body input[name="data"]').val(excluiData);
+    //modal.find('.modal-body input').val(editaStatus);
+
+    $("#formExcluiDesp").attr("action", '/excluiDespesa/' + idExcluiDesp);
+
+});
+
 
 
 function filtra(id) {

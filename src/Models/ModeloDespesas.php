@@ -65,7 +65,7 @@ class ModeloDespesas {
     public function cadastraItem(Despesas $item) {
 
         try {
-            $sql = "INSERT INTO receita (descricao_desp, valor_desp, data_venc_desp, status_desp, categoria_id_categoria, forma_pagamento_id_form_pag, usuario_id_user)
+            $sql = "INSERT INTO despesa (descricao_desp, valor_desp, data_venc_desp, status_desp, categoria_id_categoria, forma_pagamento_id_form_pag, usuario_id_user)
                        VALUES (:tipo, :valor, :data, :status,:categoria,:pagamento, :usuario)";
 
 
@@ -90,7 +90,7 @@ class ModeloDespesas {
 
         try {
             $sql = "UPDATE despesa "
-                    . "SET tipo_rec=:tipo, valor_rec = :valor, data_lanc_rec=:data, status_rec=:status, categoria_id_categoria=:categoria, forma_pagamento_id_form_pag = :pagamento"
+                    . "SET descricao_desp = :tipo, valor_desp = :valor, data_venc_desp =:data, status_desp =:status, categoria_id_categoria=:categoria, forma_pagamento_id_form_pag = :pagamento "
                     . "WHERE id_desp = :id "
                     . "AND usuario_id_user = :usuario";
 
@@ -103,7 +103,6 @@ class ModeloDespesas {
             $psql->bindValue(':categoria', $item->getCategoria());
             $psql->bindValue(':pagamento', $item->getPagamento());
             $psql->bindValue(':usuario', $item->getUsuario());
-
             $psql->execute();
 
             return true;
