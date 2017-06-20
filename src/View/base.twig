@@ -34,50 +34,6 @@
             }
 
         </style>
-        <!-- Estilo de Menu -->
-
-        <!-- Carregar a API do google -->
-        <!-- <script type="text/javascript" src="https://www.google.com/jsapi"></script> -->
-
-        <!-- Preparar a geracao do grafico -->
-        <script type="text/javascript">
-
-            // Carregar a API de visualizacao e os pacotes necessarios.
-            google.load('visualization', '1.0', {'packages': ['corechart']});
-
-            // Especificar um callback para ser executado quando a API for carregada.
-            google.setOnLoadCallback(desenharGrafico);
-
-            /**
-             * Funcao que preenche os dados do grafico
-             */
-            /*  function desenharGrafico() {
-             // Montar os dados usados pelo grafico
-             var dados = new google.visualization.DataTable();
-             dados.addColumn('string', 'Gênero');
-             dados.addColumn('number', 'Quantidades');
-             dados.addRows([
-             ['Receitas', 2500],
-             ['Despesas', 2180]
-             ]);
-             
-             // Configuracoes do grafico
-             var config = {
-             'title': 'Receitas x Despesas',
-             'width': 450,
-             'height': 300
-             };
-             
-             // Instanciar o objeto de geracao de graficos de pizza,
-             // informando o elemento HTML onde o grafico sera desenhado.
-             var chart = new google.visualization.PieChart(document.getElementById('area_grafico'));
-             
-             // Desenhar o grafico (usando os dados e as configuracoes criadas)
-             chart.draw(dados, config);
-             }
-             */
-
-        </script>
 
     </head>
     <body>
@@ -105,7 +61,7 @@
                             <li><a href="/despesas">Despesas</a></li>
                         </ul>
                     </li>
-                    <li><a href="#">Extrato</a></li>
+                    <li><a href="/visaogeral">Visão Geral</a></li>
                     <li><a href="/ajuda">Ajuda</a></li>
 
 
@@ -146,6 +102,7 @@
         <script src="../js/scripts.js"></script>
         <script src="../js/locales/bootstrap-datepicker.pt-BR.min.js"></script>
 
+
         <script type="text/javascript">
             $('#dataRec').datepicker({
                 format: "yyyy/mm/dd",
@@ -154,6 +111,7 @@
             });
 
         </script>
+    {% block scripts %}{% endblock %}
 
-    </body>
+</body>
 </html> 

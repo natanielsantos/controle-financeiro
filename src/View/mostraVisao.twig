@@ -1,0 +1,242 @@
+{% extends 'base.twig' %}
+
+{% block title %}{{titulo}}{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <header>
+            <div class="row">
+                <div class="col-sm-6">
+                    <h2> <strong>Visão Geral </strong>
+                        <small> 
+                            <a class="navbar-link" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                {{mes}}/{{ano}}
+                            </a>
+                        </small>
+
+                    </h2>
+
+                </div>
+
+                <div class="col-sm-3 text-right h2">
+
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#modal-cadastro"><span class="glyphicon glyphicon-plus"></span></button>
+                    <a class="btn btn-default" href="/receitas"><i class="fa fa-refresh"></i> <span class="glyphicon glyphicon-refresh"></span></a>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="collapse" id="collapseExample">
+                    <div class="well">
+                        <form method="POST" id="filtraVisao" action="">
+                            <div class="col-sm-2 text-right">
+                                <span> <small> Ano: </small></span>
+
+                                <select name="ano" id="ano">
+                                    {% for ano in 2017..2025 %}
+                                        <option value="{{ ano  }}">{{ ano }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="col-sm-10 text-right">
+
+                                <ul class="nav nav-pills">
+
+                                    <li role="presentation" class="disabled"><a href="#" >Mês: </a></li>
+                                    <li role="presentation"><button class="btn btn-default btn-sm" onclick="filtra(1);" type="submit">JAN</button></li>
+                                    <li role="presentation"><button class="btn btn-default btn-sm" data-target="form" onclick="filtra(2);" type="submit">FEV</button></li>
+                                    <li role="presentation"><button class="btn btn-default btn-sm" data-target="form" onclick="filtra(3);" type="submit">MAR</button></li>
+                                    <li role="presentation"><button class="btn btn-default btn-sm" data-target="form" onclick="filtra(4);" type="submit">ABR</button></li>
+                                    <li role="presentation"><button class="btn btn-default btn-sm" data-target="form" onclick="filtra(5);" type="submit">MAI</button></li>
+                                    <li role="presentation"><button class="btn btn-default btn-sm" data-target="form" onclick="filtra(6);" type="submit">JUN</button></li>
+                                    <li role="presentation"><button class="btn btn-default btn-sm" data-target="form" onclick="filtra(7);" type="submit">JUL</button></li>
+                                    <li role="presentation"><button class="btn btn-default btn-sm" data-target="form" onclick="filtra(8);" type="submit">AGO</button></li>
+                                    <li role="presentation"><button class="btn btn-default btn-sm" data-target="form" onclick="filtra(9);" type="submit">SET</button></li>
+                                    <li role="presentation"><button class="btn btn-default btn-sm" data-target="form" onclick="filtra(10);" type="submit">OUT</button></li>
+                                    <li role="presentation"><button class="btn btn-default btn-sm" data-target="form" onclick="filtra(11);" type="submit">NOV</button></li>
+                                    <li role="presentation"><button class="btn btn-default btn-sm" data-target="form" onclick="filtra(12);" type="submit">DEZ</button></li>
+                                </ul>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </header> {# FIM DO CABEÇALHO #}
+        {% if cadastrou %}
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Cadastrado!</strong> Atualize a página para visualizar a nova receita.
+            </div>
+        {% endif %}
+
+        {% if excluiu %}
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Receita Excluída!</strong> Atualize a página.
+            </div>
+        {% endif %}
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-sm-6 col-md-3">           
+                <div id="area"></div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+                <div class="panel panel-primary bg-danger">
+                    <div class="panel-body text-left">
+                        <div>Receita / Mês</div>
+                        <h1><span style="color:green;" > R$ {{somaReceita | number_format(2, ',', '.')}}</span></h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+                <div class="panel panel-primary bg-danger">
+                    <div class="panel-body text-left">
+                        <div>Despesa / Mês</div>
+                        <h1><span style="color:red;" > R$ {{somaDespesa | number_format(2, ',', '.')}}</span></h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+                <div class="panel panel-primary bg-danger">
+                    <div class="panel-body text-left">
+                        <div>Saldo / Mês</div>
+                        <h1><span style="color:gray;" > R$ {% set saldo = somaReceita - somaDespesa%} {{saldo| number_format(2, ',', '.')}}</span></h1>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div id="mychart" style="width: 400px; height: 200px;"></div>
+        </div>
+    </div>
+
+
+    {% if dadosReceita %}
+
+        <div class="container-fluid">
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        {#  <th># ID</th> #}
+                        <th>Data de Lançamento</th>
+                        <th width="40%">Descrição</th>
+                        <th class="actions text-left">Valor</th>
+
+                        <th class="actions text-left">Recebido (?)</th>                    
+
+                        <th class="actions text-right">Opções</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for dado in dadosReceita  %}
+                        <tr>
+                            {# <td>{{dado.id_categoria}}</td> #}
+                            <td>{{dado.data_lanc_rec | date("d/m/Y")}}</td>
+                            <td>{{dado.tipo_rec | title}}</td>
+                            <td>R$ {{dado.valor_rec | number_format(2, ',', '.')}}</td>
+
+                            {% if dado.status_rec == 1 %}
+                                <td><span class="glyphicon glyphicon-ok" style="color:green" ></span></td>
+                                {%else%}
+                                <td><span class="glyphicon glyphicon-remove" style="color:red;"></span></td>
+                                {% endif %}
+                            <td class="actions text-right">
+                                {# <a href="view.php?id={{dado.id_categoria}}" class="btn btn-sm btn-success"><i class="fa fa-eye"></i> <spam class="glyphicon glyphicon-eye-open"></spam></a> #}
+                                <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modal-edita-rec" 
+                                        data-recid="{{dado.id_rec}}"
+                                        data-rectipo="{{dado.tipo_rec}}" 
+                                        data-recvalor="{{dado.valor_rec}}"
+                                        data-recdata="{{dado.data_lan_rec | date("Y/m/d")}}"
+                                        data-recstatus="{{dado.status_rec}}">
+                                    <i class="fa fa-pencil"></i> 
+                                    <spam class="glyphicon glyphicon-edit"></spam>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal-exclui-rec" 
+                                        data-recid="{{dado.id_rec}}"
+                                        data-rectipo="{{dado.tipo_rec}}" 
+                                        data-recvalor="{{dado.valor_rec}}"
+                                        data-recdata="{{dado.data_lan_rec | date("Y/m/d")}}"
+                                        data-recstatus="{{dado.status_rec}}">
+                                    <i class="fa fa-trash"></i> 
+                                    <spam class="glyphicon glyphicon-trash"></spam>
+                                </button>
+
+                            </td>
+                        </tr>
+                    {%endfor%}
+                {% else %}
+                <div class ="container-fluid">
+                    <td colspan="6"><div class="alert alert-danger">Você não adicionou nenhuma receita ainda... comece a se planejar agora mesmo!</td></div> 
+
+        </div>
+
+
+    {% endif %}
+</tbody>
+</table>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+//Recupera a URL atual e complementa para que seja possível
+//obter os dados para montagem do gráfico
+            var url_data = window.location.href + "/dados";
+//Define a variável que irá receber as tarefas a serem exibidas no gráfico
+            var tarefas;
+//Define a variável que irá receber as opções de configuração do gráfico
+            var options;
+
+//Requisição AJAX ao servidor para obtenção dos dados
+            $.ajax({
+                type: 'POST',
+                url: url_data,
+                dataType: 'json',
+                success: function (data) {
+                    tarefas = json2array(data.tarefas);
+                    options = data.opcoes;
+                },
+                error: function () {
+                    alert("Ocorreu um erro ao processar a solicitação.");
+                }
+            });
+
+//Define qual é o pacote de gráficos que será utilizado
+            google.charts.load('current', {'packages': ['corechart']});
+
+//Operações executadas ao iniciar o processamento da biblioteca
+            google.charts.setOnLoadCallback(function () {
+                //Formata os dados para o padrão de exibição do gráfico
+                data = google.visualization.arrayToDataTable(tarefas);
+
+                //Estrutura o gráfico para exibição
+                var chart = new google.visualization.PieChart(document.getElementById('mychart'));
+
+                //Exibe o gráfico na tela
+                chart.draw(data, options);
+            });
+
+        });
+//Função para converter o json para array no padrão da biblioteca Google Charts
+        function json2array(json_data) {
+            var result = [];
+            for (var i in json_data)
+                result.push([i, json_data[i]]);
+
+            return result;
+        }
+    </script>
+{% endblock %}

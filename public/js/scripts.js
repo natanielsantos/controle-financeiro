@@ -1,4 +1,4 @@
-/* global button */
+/* global button, google */
 
 //JS DO MODAL PARA EDITAR CATEGORIA
 $('#modal-edita').on('show.bs.modal', function (event) {
@@ -128,8 +128,8 @@ $('#modal-edita-desp').on('show.bs.modal', function (event) {
     modal.find('.modal-body input[name="tipo"]').val(editaTipo);
     modal.find('.modal-body input[name="valor"]').val(editaValor);
     modal.find('.modal-body input[name="data"]').val(editaData);
-   // modal.find('.modal-body select[name="categoria"]').val(editaCategoria);
-   // modal.find('.modal-body select[name="pagamento"]').val(editaPagamento);
+    // modal.find('.modal-body select[name="categoria"]').val(editaCategoria);
+    // modal.find('.modal-body select[name="pagamento"]').val(editaPagamento);
     //modal.find('.modal-body input').val(editaStatus);
 
     $("#formEditaDesp").attr("action", '/editaDespesa/' + idEditaDesp);
@@ -167,6 +167,7 @@ function filtra(id) {
 
     $("#filtraRec").attr("action", '/receitasMesAno/' + rota);
     $("#filtraDesp").attr("action", '/despesasMesAno/' + rota);
+    $("#filtraVisao").attr("action", '/visaoMesAno/' + rota);
 }
 ;
 
@@ -179,5 +180,7 @@ function addProgress() {
     progressBar.width(width);
 
 }
+
+
 
 
