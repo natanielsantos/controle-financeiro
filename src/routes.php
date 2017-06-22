@@ -27,6 +27,7 @@ $valida_login = new Route('/validaLogin', array('_controller'=>$C_USUARIO,'_meth
 $visaoGeral = new Route('/visaogeral', array('_controller' => $C_VISAO,'_method' => 'listaItens'));
 $visaoPorMes = new Route('/visaoMesAno/{_param}', array('_controller' => $C_VISAO, '_method' => 'listaItensPorMes'));
 $visaoDados = new Route('/visaogeral/dados', array('_controller' => $C_VISAO, '_method' => 'dados'));
+$enviaRelatorioEmail = new Route('/visaogeral/enviarelatorio', array('_controller' => $C_VISAO, '_method' => 'enviaRelatorio'));
 
 //ROTAS DE CATEGORIAS
 $categorias = new Route('/categorias', array('_controller' => $C_CATEGORIAS, '_method' => 'listar'));
@@ -63,6 +64,7 @@ $rotas->add('login',$sessao);
 $rotas->add('validaLogin', $valida_login);
 $rotas->add('visaoGeral', $visaoGeral);
 $rotas->add('visaoDados', $visaoDados);
+$rotas->add('enviaRelatorio', $enviaRelatorioEmail);
 
 $rotas->add('categorias', $categorias);
 $rotas->add('cadastraPadrao',$cadastraPadrao);

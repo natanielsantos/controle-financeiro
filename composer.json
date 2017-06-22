@@ -7,7 +7,11 @@
         "filp/whoops": "^2.1",
         "symfony/http-foundation": "^3.2",
         "symfony/routing": "^3.2",
-        "twig/twig": "^2.3"
+        "twig/twig": "^2.3",
+        "mailgun/mailgun-php": "^2.3",
+        "php-http/message": "^1.5",
+        "guzzlehttp/psr7": "^1.4",
+        "php-http/guzzle6-adapter": "^1.1"
     },
     "autoload":{
         "psr-4": {

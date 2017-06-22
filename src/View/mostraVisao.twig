@@ -3,6 +3,7 @@
 {% block title %}{{titulo}}{% endblock %}
 
 {% block body %}
+      <link href="../css/w3.css" rel="stylesheet" type="text/css"/>
     <div class="container-fluid">
         <header>
             <div class="row">
@@ -10,7 +11,7 @@
                     <h2> <strong>Visão Geral </strong>
                         <small> 
                             <a class="navbar-link" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                {{mes}}/{{ano}}
+                                {{mes}}/{{ano}} <span class="caret"></span>
                             </a>
                         </small>
 
@@ -18,10 +19,11 @@
 
                 </div>
 
-                <div class="col-sm-3 text-right h2">
-
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#modal-cadastro"><span class="glyphicon glyphicon-plus"></span></button>
-                    <a class="btn btn-default" href="/receitas"><i class="fa fa-refresh"></i> <span class="glyphicon glyphicon-refresh"></span></a>
+                <div class="col-sm-6 text-right h2">
+                    <span class="text-success"> <small>Outras versões -></small></span>
+                    <button class="btn btn-default" data-toggle="modal" data-target="#modal-envia-email"><span class="glyphicon glyphicon-envelope"></span></button>
+                    <button class="btn btn-default" data-toggle="modal" data-target="#modal-cadastro"><span class="glyphicon glyphicon-download-alt"></span></button>
+                    <a class="btn btn-default" href="/receitas"><i class="fa fa-refresh"></i> <span class="glyphicon glyphicon-print"></span></a>
                 </div>
             </div>
 
@@ -82,18 +84,18 @@
         <div class="row">
 
             <div class="col-sm-6 col-md-3">           
-                <div id="area"></div>
+                <div id="mychart" style="width: 300px; height: 150px;" class="w3-hover-shadow"></div>
             </div>
             <div class="col-sm-6 col-md-3">
                 <div class="panel panel-primary bg-danger">
-                    <div class="panel-body text-left">
-                        <div>Receita / Mês</div>
+                    <div class="panel-body text-left w3-hover-shadow" >
+                        <div>Receita / Mês</div> 
                         <h1><span style="color:green;" > R$ {{somaReceita | number_format(2, ',', '.')}}</span></h1>
                     </div>
                 </div>
             </div>
             <div class="col-sm-6 col-md-3">
-                <div class="panel panel-primary bg-danger">
+                <div class="panel panel-primary bg-danger w3-hover-shadow">
                     <div class="panel-body text-left">
                         <div>Despesa / Mês</div>
                         <h1><span style="color:red;" > R$ {{somaDespesa | number_format(2, ',', '.')}}</span></h1>
@@ -101,7 +103,7 @@
                 </div>
             </div>
             <div class="col-sm-6 col-md-3">
-                <div class="panel panel-primary bg-danger">
+                <div class="panel panel-primary bg-danger w3-hover-shadow">
                     <div class="panel-body text-left">
                         <div>Saldo / Mês</div>
                         <h1><span style="color:gray;" > R$ {% set saldo = somaReceita - somaDespesa%} {{saldo| number_format(2, ',', '.')}}</span></h1>
@@ -113,7 +115,7 @@
 
         <div class="row">
 
-            <div id="mychart" style="width: 400px; height: 200px;"></div>
+            
         </div>
     </div>
 
@@ -185,9 +187,28 @@
 </table>
 </div>
 
+<div class="modal fade" tabindex="-1" role="dialog" id="modal-envia-email">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Extrato por Email</h4>
+      </div>
+      <div class="modal-body">
+        <p>Deseja enviar o relatório de extrato para o seu email</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
+        <a href="/visaogeral/enviarelatorio" type="button" class="btn btn-primary">Sim</a>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 {% endblock %}
 
 {% block scripts %}
+    
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
