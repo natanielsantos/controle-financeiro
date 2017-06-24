@@ -20,33 +20,30 @@ class ControleHome {
         $this->twig = $twig;
         $this->request = $request;
         $this->session = $session;
-        
-        
     }
 
     function ver() {
-        
+
         $usuario = $this->session->get('nome');
-        
-         if ($usuario != ""){
-            return $this->resposta->setContent($this->twig->render('home.twig', array('titulo' => 'CF | Home','usuario'=>$usuario)));
-    } else {
-              $redirect = new RedirectResponse('/');
-               $redirect->send();
-         }
-    }
-    
-        function verAjuda() {
-        
-        $usuario = $this->session->get('nome');
-        
-         if ($usuario != ""){
-            return $this->resposta->setContent($this->twig->render('ajuda.twig', array('titulo' => 'CF | Ajuda','usuario'=>$usuario)));
-    } else {
-              $redirect = new RedirectResponse('/');
-               $redirect->send();
-         }
+
+        if ($usuario != "") {
+            return $this->resposta->setContent($this->twig->render('home.twig', array('titulo' => 'CF | Home', 'usuario' => $usuario)));
+        } else {
+            $redirect = new RedirectResponse('/');
+            $redirect->send();
+        }
     }
 
+    function verAjuda() {
+
+        $usuario = $this->session->get('nome');
+
+        if ($usuario != "") {
+            return $this->resposta->setContent($this->twig->render('ajuda.twig', array('titulo' => 'CF | Ajuda', 'usuario' => $usuario)));
+        } else {
+            $redirect = new RedirectResponse('/');
+            $redirect->send();
+        }
+    }
 
 }

@@ -4,6 +4,7 @@ namespace ControleFinanceiro\Util;
 
 class Funcoes {
 
+    // funcão para gerar os meses na barra de filtro
     function retornaMes($num) {
         switch ($num) {
             case "1": $mes = "jan";
@@ -35,6 +36,7 @@ class Funcoes {
         return $mes;
     }
 
+    // funcao para calcular o total da receita para aparecer na visão geral
     function calculaTotalReceita($vetor) {
 
         $total = 0;
@@ -46,6 +48,7 @@ class Funcoes {
         return $total;
     }
 
+    // funcao para calcular o total da despesa para aparecer na visão geral
     function calculaTotalDespesa($vetor) {
 
         $total = 0;
@@ -57,6 +60,7 @@ class Funcoes {
         return $total;
     }
 
+    // funcao para contar quantos itens possui um vetor
     function contaItens($vetor) {
 
         $qtdItens = count($vetor);
