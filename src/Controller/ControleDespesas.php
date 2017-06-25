@@ -32,10 +32,14 @@ class ControleDespesas {
     }
 
     function listaItens() {
+
+        $modCategoria = new ModeloCategorias();
+        $modPagamento = new ModeloFormaPagamento();
+
         $usuario = $this->session->get('nome');
         $id_usuario = $this->session->get('id_user');
-        $categorias = ModeloCategorias::listaCategorias($id_usuario);
-        $pagamentos = ModeloFormaPagamento::listaItem($id_usuario);
+        $categorias = $modCategoria->listaCategorias($id_usuario);
+        $pagamentos = $modPagamento->listaItem($id_usuario);
 
         $today = getdate();
         $dia = $today['mday'];
@@ -64,9 +68,13 @@ class ControleDespesas {
     }
 
     function listaItensPorMes($rota) {
+
+        $modCategoria = new ModeloCategorias();
+        $modPagamento = new ModeloFormaPagamento();
+
         $id_usuario = $this->session->get('id_user');
-        $categorias = ModeloCategorias::listaCategorias($id_usuario);
-        $pagamentos = ModeloFormaPagamento::listaItem($id_usuario);
+        $categorias = $modCategoria->listaCategorias($id_usuario);
+        $pagamentos = $modPagamento->listaItem($id_usuario);
 
         //separa o mes e ano
         $campo = explode('&', $rota);
@@ -111,18 +119,19 @@ class ControleDespesas {
 
     function editaItem($id) {
 
-        $novoItem = new Despesas($this->request->request->get('tipo'), $this->request->request->get('valor'), $this->request->request->get('data'), $this->request->request->get('status'), $this->request->request->get('categoria'), $this->request->request->get('pagamento'),  $this->session->get('id_user'));
-        print_r($novoItem);
-        ModeloDespesas::editaItem($novoItem, $id);
+        $modDespesas = new ModeloDespesas();
 
-      $redirect = new RedirectResponse('/despesas');
-      $redirect->send();
+        $novoItem = new Despesas($this->request->request->get('tipo'), $this->request->request->get('valor'), $this->request->request->get('data'), $this->request->request->get('status'), $this->request->request->get('categoria'), $this->request->request->get('pagamento'), $this->session->get('id_user'));
+        $modDespesas->editaItem($novoItem, $id);
+
+        $redirect = new RedirectResponse('/despesas');
+        $redirect->send();
         return true;
     }
 
     function excluiItem($id) {
-
-        ModeloDespesas::excluiItem($id);
+        $modDespesas = new ModeloDespesas();
+        $modDespesas->excluiItem($id);
 
         $redirect = new RedirectResponse('/despesas');
         $redirect->send();

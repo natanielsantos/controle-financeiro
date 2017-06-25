@@ -97,7 +97,6 @@ class ControleVisao {
         $somaDespesa = Funcoes::calculaTotalReceita($dadosReceita);
         
         
-
         if ($usuario != "") {
             return $this->resposta->setContent($this->twig->render('mostraVisao.twig', array('titulo' => 'CF | Visão Geral',
                                 'dadosReceita' => $dadosReceita,
