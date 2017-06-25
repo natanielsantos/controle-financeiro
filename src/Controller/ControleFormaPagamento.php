@@ -55,7 +55,7 @@ class ControleFormaPagamento {
        
         $novoItem = new FormaPagamento($this->request->request->get('nome'), $this->request->request->get('descricao'), $this->session->get('id_user'));
         
-        ModeloFormaPagamento::editaItem($novoItem, $id);
+        $this->modelo->editaItem($novoItem, $id);
 
         $redirect = new RedirectResponse('/pagamentos');
         $redirect->send();
@@ -65,7 +65,7 @@ class ControleFormaPagamento {
     
     function excluiItem($id){
         
-        ModeloFormaPagamento::excluiItem($id);
+        $this->modelo->excluiItem($id);
         
         $redirect = new RedirectResponse('/pagamentos');
         $redirect->send();
