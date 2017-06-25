@@ -109,7 +109,6 @@ class ControleDespesas {
 
         $modelo = new ModeloDespesas();
         $modelo->cadastraItem($despesa);
-        print_r($despesa);
 
         $redirect = new RedirectResponse('/despesas');
         $redirect->send();

@@ -97,7 +97,7 @@ class ControleReceitas {
 
         $novoItem = new Receitas($this->request->request->get('tipo'), $this->request->request->get('valor'), $this->request->request->get('data'), $this->request->request->get('status'), $this->session->get('id_user'));
 
-        ModeloReceitas::editaItem($novoItem, $id);
+        $this->modelo->editaItem($novoItem, $id);
 
         $redirect = new RedirectResponse('/receitas');
         $redirect->send();
@@ -107,7 +107,7 @@ class ControleReceitas {
 
     function excluiItem($id) {
 
-        ModeloReceitas::excluiItem($id);
+        $this->modelo->excluiItem($id);
 
         $redirect = new RedirectResponse('/receitas');
         $redirect->send();
