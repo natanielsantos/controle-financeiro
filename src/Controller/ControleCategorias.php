@@ -56,7 +56,7 @@ class ControleCategorias {
        
         $novaCategoria = new Categoria($this->request->request->get('nome'), $this->request->request->get('descricao'), $this->session->get('id_user'));
         
-        ModeloCategorias::editar($novaCategoria, $id);
+        $this->modelo->editar($novaCategoria, $id);
 
         $redirect = new RedirectResponse('/categorias');
         $redirect->send();
@@ -66,7 +66,7 @@ class ControleCategorias {
     
     function excluirCategoria($id){
         
-        ModeloCategorias::excluir($id);
+        $this->modelo->excluir($id);
         
         $redirect = new RedirectResponse('/categorias');
         $redirect->send();
