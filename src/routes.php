@@ -24,6 +24,7 @@ $home = new Route('/home', array('_controller' => $C_HOME, '_method' => 'ver'));
 $ajuda = new Route('/ajuda', array('_controller' => $C_HOME, '_method' => 'verAjuda'));
 $sessao = new Route('/', array('_controller'=>$C_USUARIO,'_method'=>'exibeLogin'));
 $valida_login = new Route('/validaLogin', array('_controller'=>$C_USUARIO,'_method'=>'validaLogin'));
+$cadastroUsuario = new Route('/cadastro', array('_controller'=>$C_USUARIO,'_method'=>'cadastraUsuario'));
 $visaoGeral = new Route('/visaogeral', array('_controller' => $C_VISAO,'_method' => 'listaItens'));
 $visaoPorMes = new Route('/visaoMesAno/{_param}', array('_controller' => $C_VISAO, '_method' => 'listaItensPorMes'));
 $visaoDados = new Route('/visaogeral/dados', array('_controller' => $C_VISAO, '_method' => 'dados'));
@@ -67,6 +68,7 @@ $rotas->add('visaoGeral', $visaoGeral);
 $rotas->add('visaoDados', $visaoDados);
 $rotas->add('enviaRelatorio', $enviaRelatorioEmail);
 $rotas->add('geraPdf', $geraPdf);
+$rotas->add('cadastro', $cadastroUsuario);
 
 $rotas->add('categorias', $categorias);
 $rotas->add('cadastraPadrao',$cadastraPadrao);

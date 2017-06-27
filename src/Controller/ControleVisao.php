@@ -14,6 +14,7 @@ use ControleFinanceiro\Entity\Receitas;
 use ControleFinanceiro\Util\Session;
 use ControleFinanceiro\Util\Funcoes;
 use PHPMailer;
+
 class ControleVisao {
 
     private $resposta;
@@ -44,6 +45,7 @@ class ControleVisao {
 
 
         $usuario = $this->session->get('nome');
+
 
         $today = getdate();
         $dia = $today['mday'];
@@ -86,6 +88,7 @@ class ControleVisao {
         $mesR = Funcoes::retornaMes($campo[0]);
         $anoR = $campo[1];
         $usuario = $this->session->get('nome');
+        $email = $this->session->get('email');
 
         $dadosReceita = $this->modeloReceita->listaItemPorMes($campo[0], $anoR, $this->session->get('id_user'));
         $dadosDespesa = $this->modeloDespesa->listaItemPorMes($campo[0], $anoR, $this->session->get('id_user'));
@@ -128,6 +131,7 @@ class ControleVisao {
     }
 
     function enviaRelatorio() {
+
         $mail = new PHPMailer();
 
         //$mail->SMTPDebug = 2;                               // Enable verbose debug output
@@ -141,14 +145,14 @@ class ControleVisao {
         $mail->Port = 587;                                    // TCP port to connect to
 
         $mail->setFrom('controlei.trabalho@gmail.com', 'Controlei.pe.hu');
-        $mail->addAddress('natanielsa@gmail.com', 'Nataniel');     // Add a recipient
-        
-        /* $mail->addAddress('pauliran@gmail.com');               // Name is optional
-        $mail->addReplyTo('arquivosnatax@gmail.com', 'Informação');
-        $mail->addCC('cc@example.com');
-        $mail->addBCC('bcc@example.com');*/
+        $mail->addAddress('natanielsa@gmail.com', 'Nataniel');    // Add a recipient
 
-        $mail->addAttachment('/var/tmp/teste.pdf',"Relatorio Financeiro");         // Add attachments
+        /* $mail->addAddress('pauliran@gmail.com');               // Name is optional
+          $mail->addReplyTo('arquivosnatax@gmail.com', 'Informação');
+          $mail->addCC('cc@example.com');
+          $mail->addBCC('bcc@example.com'); */
+
+        $mail->addAttachment('/var/tmp/teste.pdf', "Relatorio Financeiro");         // Add attachments
         $mail->isHTML(true);                                  // Set email format to HTML
 
         $mail->Subject = 'Meu Relatorio Financeiro';
@@ -171,27 +175,38 @@ class ControleVisao {
         $despesa = $this->session->get('somad');
         $saldo = $receita - $despesa;
 
-        $html = "<html>"
-                . "<head>"
-                . "<link type='text/cs' href='../css/estilos.css' rel='stylesheet' />"
-                . "</head>"
-                . "<body>"
-                . "<h1 class='teste'> Situação Financeira de " . $usuario . "</h1> <br> Gerado em: xxxxx"
-                . "<hr>"
-                . "Receita: " . $receita . "<br>"
-                . "Despesa: " . $despesa . "<br>"
-                . "Saldo: " . $saldo . "."
-                . "<h2 class='alert alert-success'>Receitas</h2>"
+        header("Content-Type: text/html; charset=ISO-8859-1", true);
+        date_default_timezone_set('America/Sao_Paulo');
+        setlocale(LC_ALL, "pt-BR");
+
+        $mes = strftime("%B");
+        $data = strftime("%d de " . ucfirst($mes) . " de %Y, %H:%M");
+
+        $html = "<hr>"
+                . "<table border='0' width='100%'><tr><td id='receita'>Receita<br> <h2> R$ " . $receita . "</h2></td> <td id='despesa'> "
+                . "Despesa<br> <h2'> R$ " . $despesa . "</h2></td>  <td id='saldo'> Saldo<br><h2> R$ " . $saldo . "</h2></td> </tr></table>"
+                . "<br> <hr><h3>Receitas</h3>"
                 . "xxxxxxxxx"
-                . "<h2>Despesas</h2>"
+                . "<h3>Despesas</h3>"
                 . "xxxxxxxxxxxxx"
                 . "<hr>"
-                . "Gerado por Controle Financeiro - 2017<br>"
-                . "Ajudando você a ser mais livre..."
-                . "</body>"
-                . "</html>";
+        ;
 
-        Funcoes::geraPdf($html);
+        $documentTemplate = '<!doctype html> <html> <head> <link rel="stylesheet" type="text/css" href="css/estilo-pdf.css"> </head> <body> '
+                . ' <div id="cabecalho">'
+                . '<h1> Situação Financeira de ' . $usuario . '</h1>Gerado em ' . $data . ''
+                . '</div> '
+                . '<div>'
+                . '  ' . $html . ' '
+                . '</div>'
+                . '<div id="footer"> Gerado por Controle Financeiro - 2017<br>'
+                . 'Ajudando você a ser mais livre...'
+                . '</div>'
+                . '</body>'
+                . '</html>';
+
+
+        Funcoes::geraPdf($documentTemplate);
     }
 
 }

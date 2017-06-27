@@ -34,6 +34,13 @@ class ControleUsuario {
         $this->session->destroy();
         return $this->resposta->setContent($this->twig->render('login.html'));
     }
+    
+    function cadastraUsuario(){
+        $this->session->destroy();
+        return $this->resposta->setContent($this->twig->render('cadastro.twig'));
+    }
+    
+    
 
     function validaLogin() {
 
