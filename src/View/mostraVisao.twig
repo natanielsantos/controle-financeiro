@@ -22,8 +22,7 @@
                 <div class="col-sm-6 text-right h2">
                     <span class="text-success"> <small>Outras versões -></small></span>
                     <button class="btn btn-default" data-toggle="modal" data-target="#modal-envia-email"><span class="glyphicon glyphicon-envelope"></span></button>
-                    <button class="btn btn-default" data-toggle="modal" data-target="#modal-cadastro"><span class="glyphicon glyphicon-download-alt"></span></button>
-                    <a class="btn btn-default" href="/receitas"><i class="fa fa-refresh"></i> <span class="glyphicon glyphicon-print"></span></a>
+                    <a class="btn btn-default" href="/visaogeral/gerapdf"><i class="fa fa-refresh"></i> <span class="glyphicon glyphicon-download-alt"></span></a>
                 </div>
             </div>
 
@@ -84,7 +83,7 @@
         <div class="row">
 
             <div class="col-sm-6 col-md-3">           
-                <div id="mychart" style="width: 300px; height: 150px;" class="w3-hover-shadow"></div>
+                <div id="grafico" style="width: 300px; height: 150px;" class="w3-hover-shadow"></div>
             </div>
             <div class="col-sm-6 col-md-3">
                 <div class="panel panel-primary bg-danger">
@@ -209,7 +208,7 @@
 
 {% block scripts %}
     
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="../js/loader.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
 
@@ -229,6 +228,8 @@
                 success: function (data) {
                     tarefas = json2array(data.tarefas);
                     options = data.opcoes;
+                    
+                    
                 },
                 error: function () {
                     alert("Ocorreu um erro ao processar a solicitação.");
@@ -237,15 +238,15 @@
 
 //Define qual é o pacote de gráficos que será utilizado
             google.charts.load('current', {'packages': ['corechart']});
-
+           //alert("Chegou aqui");
 //Operações executadas ao iniciar o processamento da biblioteca
             google.charts.setOnLoadCallback(function () {
                 //Formata os dados para o padrão de exibição do gráfico
                 data = google.visualization.arrayToDataTable(tarefas);
 
                 //Estrutura o gráfico para exibição
-                var chart = new google.visualization.PieChart(document.getElementById('mychart'));
-
+                var chart = new google.visualization.PieChart(document.getElementById('grafico'));
+                 
                 //Exibe o gráfico na tela
                 chart.draw(data, options);
             });

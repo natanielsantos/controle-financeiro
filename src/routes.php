@@ -28,6 +28,7 @@ $visaoGeral = new Route('/visaogeral', array('_controller' => $C_VISAO,'_method'
 $visaoPorMes = new Route('/visaoMesAno/{_param}', array('_controller' => $C_VISAO, '_method' => 'listaItensPorMes'));
 $visaoDados = new Route('/visaogeral/dados', array('_controller' => $C_VISAO, '_method' => 'dados'));
 $enviaRelatorioEmail = new Route('/visaogeral/enviarelatorio', array('_controller' => $C_VISAO, '_method' => 'enviaRelatorio'));
+$geraPdf = new Route('/visaogeral/gerapdf', array('_controller' => $C_VISAO, '_method' => 'geraPdf'));
 
 //ROTAS DE CATEGORIAS
 $categorias = new Route('/categorias', array('_controller' => $C_CATEGORIAS, '_method' => 'listar'));
@@ -65,6 +66,7 @@ $rotas->add('validaLogin', $valida_login);
 $rotas->add('visaoGeral', $visaoGeral);
 $rotas->add('visaoDados', $visaoDados);
 $rotas->add('enviaRelatorio', $enviaRelatorioEmail);
+$rotas->add('geraPdf', $geraPdf);
 
 $rotas->add('categorias', $categorias);
 $rotas->add('cadastraPadrao',$cadastraPadrao);

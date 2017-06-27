@@ -11,7 +11,9 @@
         "mailgun/mailgun-php": "^2.3",
         "php-http/message": "^1.5",
         "guzzlehttp/psr7": "^1.4",
-        "php-http/guzzle6-adapter": "^1.1"
+        "php-http/guzzle6-adapter": "^1.1",
+        "dompdf/dompdf": "^0.8.0",
+        "phpmailer/phpmailer": "^5.2"
     },
     "autoload":{
         "psr-4": {

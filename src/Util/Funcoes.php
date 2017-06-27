@@ -2,6 +2,8 @@
 
 namespace ControleFinanceiro\Util;
 
+use Dompdf\Dompdf;
+
 class Funcoes {
 
     // funcão para gerar os meses na barra de filtro
@@ -66,6 +68,23 @@ class Funcoes {
         $qtdItens = count($vetor);
 
         return $qtdItens;
+    }
+
+    public static function geraPdf($html) {
+        // instantiate and use the dompdf class
+        $dompdf = new Dompdf();
+        $dompdf->set_option('defaultFont', 'Courier');
+        $dompdf->loadHtml($html);
+
+// (Optional) Setup the paper size and orientation
+        $dompdf->setPaper('A4', 'landscape');
+
+// Render the HTML as PDF
+        $dompdf->render();
+        $dompdf->set_base_path('controlefinanceiro/css/estilos.css');
+
+// Output the generated PDF to Browser
+        $dompdf->stream('teste.pdf');
     }
 
 }

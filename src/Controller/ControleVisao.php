@@ -13,7 +13,7 @@ use ControleFinanceiro\Models\ModeloFormaPagamento;
 use ControleFinanceiro\Entity\Receitas;
 use ControleFinanceiro\Util\Session;
 use ControleFinanceiro\Util\Funcoes;
-
+use PHPMailer;
 class ControleVisao {
 
     private $resposta;
@@ -26,7 +26,6 @@ class ControleVisao {
     private $modeloPagamento;
     private $somaReceita;
     private $somaDespesa;
-    
 
     function __construct(Response $resposta, Request $request, \Twig_Environment $twig, Session $session) {
 
@@ -66,7 +65,7 @@ class ControleVisao {
 
         $this->session->add('somar', $somaReceita);
         $this->session->add('somad', $somaDespesa);
-        
+
         if ($usuario != "") {
             return $this->resposta->setContent($this->twig->render('mostraVisao.twig', array('titulo' => 'CF | Visao Geral',
                                 'dadosReceita' => $dadosReceita,
@@ -95,8 +94,8 @@ class ControleVisao {
 
         $somaReceita = Funcoes::calculaTotalReceita($dadosReceita);
         $somaDespesa = Funcoes::calculaTotalReceita($dadosReceita);
-        
-        
+
+
         if ($usuario != "") {
             return $this->resposta->setContent($this->twig->render('mostraVisao.twig', array('titulo' => 'CF | Visão Geral',
                                 'dadosReceita' => $dadosReceita,
@@ -112,7 +111,7 @@ class ControleVisao {
     }
 
     public function dados() {
-        
+
         $receita = $this->session->get('somar');
         $despesa = $this->session->get('somad');
 
@@ -129,26 +128,70 @@ class ControleVisao {
     }
 
     function enviaRelatorio() {
+        $mail = new PHPMailer();
 
-        try {
+        //$mail->SMTPDebug = 2;                               // Enable verbose debug output
 
-            // Instantiate the client.
-            $mgClient = new Mailgun('key-711f7da54fa9ad45f0311930e7d5493d');
-            $domain = "sandboxa605aaf06b054717a60a21e28892a8fc.mailgun.org";
+        $mail->isSMTP();                                      // Set mailer to use SMTP
+        $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+        $mail->SMTPAuth = true;                               // Enable SMTP authentication
+        $mail->Username = 'controlei.trabalho@gmail.com';                 // SMTP username
+        $mail->Password = '943491el!!';                           // SMTP password
+        $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+        $mail->Port = 587;                                    // TCP port to connect to
 
-            // Make the call to the client.
-            $mgClient->sendMessage($domain, array(
-                'from' => 'Controle Financeiro - Relatório<postmaster@sandboxa605aaf06b054717a60a21e28892a8fc.mailgun.org>',
-                'to' => 'natanielsa@gmail.com',
-                'subject' => 'Relatório de Extrato mensal',
-                'text' => 'Tudo',
-                'html' => '<html>Você está recebendo um arquivo de texto.</html>'
-            ));
-            echo "foi";
+        $mail->setFrom('controlei.trabalho@gmail.com', 'Controlei.pe.hu');
+        $mail->addAddress('natanielsa@gmail.com', 'Nataniel');     // Add a recipient
+        
+        /* $mail->addAddress('pauliran@gmail.com');               // Name is optional
+        $mail->addReplyTo('arquivosnatax@gmail.com', 'Informação');
+        $mail->addCC('cc@example.com');
+        $mail->addBCC('bcc@example.com');*/
 
-        } catch (Exception $ex) {
-            echo "Mensagem não enviada!";
+        $mail->addAttachment('/var/tmp/teste.pdf',"Relatorio Financeiro");         // Add attachments
+        $mail->isHTML(true);                                  // Set email format to HTML
+
+        $mail->Subject = 'Meu Relatorio Financeiro';
+        $mail->Body = 'Você está recebendo um relatório gerado pelo site  <b> Controlei.pe.hu!</b>'
+                . '<br> Qualquer dúvida entre em contato.';
+        $mail->AltBody = 'Você recebeu um relatório com os seus dados financeiros.';
+
+        if (!$mail->send()) {
+            echo 'Erro ao enviar.';
+            echo 'Mailer Error: ' . $mail->ErrorInfo;
+        } else {
+            echo 'Mensagem enviada com sucesso';
         }
+    }
+
+    function geraPdf() {
+
+        $usuario = $this->session->get('nome');
+        $receita = $this->session->get('somar');
+        $despesa = $this->session->get('somad');
+        $saldo = $receita - $despesa;
+
+        $html = "<html>"
+                . "<head>"
+                . "<link type='text/cs' href='../css/estilos.css' rel='stylesheet' />"
+                . "</head>"
+                . "<body>"
+                . "<h1 class='teste'> Situação Financeira de " . $usuario . "</h1> <br> Gerado em: xxxxx"
+                . "<hr>"
+                . "Receita: " . $receita . "<br>"
+                . "Despesa: " . $despesa . "<br>"
+                . "Saldo: " . $saldo . "."
+                . "<h2 class='alert alert-success'>Receitas</h2>"
+                . "xxxxxxxxx"
+                . "<h2>Despesas</h2>"
+                . "xxxxxxxxxxxxx"
+                . "<hr>"
+                . "Gerado por Controle Financeiro - 2017<br>"
+                . "Ajudando você a ser mais livre..."
+                . "</body>"
+                . "</html>";
+
+        Funcoes::geraPdf($html);
     }
 
 }
