@@ -175,6 +175,12 @@ class ControleVisao {
         $despesa = $this->session->get('somad');
         $saldo = $receita - $despesa;
 
+        $today = getdate();
+        $dia = $today['mday'];
+        $m = $today['mon'];
+        $a = $today['year'];
+        $usuario = $this->session->get('nome');
+
         header("Content-Type: text/html; charset=ISO-8859-1", true);
         date_default_timezone_set('America/Sao_Paulo');
         setlocale(LC_ALL, "pt-BR");
@@ -182,31 +188,78 @@ class ControleVisao {
         $mes = strftime("%B");
         $data = strftime("%d de " . ucfirst($mes) . " de %Y, %H:%M");
 
-        $html = "<hr>"
-                . "<table border='0' width='100%'><tr><td id='receita'>Receita<br> <h2> R$ " . $receita . "</h2></td> <td id='despesa'> "
-                . "Despesa<br> <h2'> R$ " . $despesa . "</h2></td>  <td id='saldo'> Saldo<br><h2> R$ " . $saldo . "</h2></td> </tr></table>"
-                . "<br> <hr><h3>Receitas</h3>"
-                . "xxxxxxxxx"
-                . "<h3>Despesas</h3>"
-                . "xxxxxxxxxxxxx"
-                . "<hr>"
-        ;
+        $resumo = "<hr>"
+                . "<table border='0' width='100%'><tr><td id='receita'>Receita<br> <h2> R$ " . number_format($receita,2,',','.') . "</h2></td> <td id='despesa'> "
+                . "Despesa<br> <h2'> R$ " . number_format($despesa,2,',','.'). "</h2></td>  <td id='saldo'> Saldo<br><h2> R$ " . number_format($saldo,2,',','.'). "</h2></td> </tr></table>";
 
-        $documentTemplate = '<!doctype html> <html> <head> <link rel="stylesheet" type="text/css" href="css/estilo-pdf.css"> </head> <body> '
+
+        $receita_pdf = '<table border="1" width="100%">';
+        $receita_pdf .= '<thead>';
+        $receita_pdf .= '<tr>';
+        $receita_pdf .= '<th>Receitas</th>';
+        $receita_pdf .= '<th>Valor</th>';
+        $receita_pdf .= '<th>Data de lançamento</th>';
+        $receita_pdf .= '</tr>';
+        $receita_pdf .= '</thead>';
+        $receita_pdf .= '<tbody>';
+
+        $dadosReceita = $this->modeloReceita->listaItemPorMes($m, $a, $this->session->get('id_user'));
+
+        foreach ($dadosReceita as $d_receita) {
+             $d = new \DateTime($d_receita['data_lanc_rec']);
+            $receita_pdf .= '<tr><td>' . $d_receita['tipo_rec'] . "</td>";
+            $receita_pdf .= '<td>R$ ' .  number_format($d_receita['valor_rec'],2,',','.') . "</td>";
+            $receita_pdf .= '<td>' . $d->format('d/m/Y') . "</td>";
+
+        }
+        $receita_pdf .= '</tbody>';
+        $receita_pdf .= '</table> <br>';
+        
+        
+        
+        $despesa_pdf = '<table border="1" width="100%">';
+        $despesa_pdf .= '<thead>';
+        $despesa_pdf .= '<tr>';
+        $despesa_pdf .= '<th>Despesas</th>';
+        $despesa_pdf .= '<th>Valor</th>';
+        $despesa_pdf .= '<th>Data de vencimento</th>';
+        $despesa_pdf .= '</tr>';
+        $despesa_pdf .= '</thead>';
+        $despesa_pdf .= '<tbody>';
+
+        $dadosDespesaPdf = $this->modeloDespesa->listaItemPorMes($m, $a, $this->session->get('id_user'));
+
+        foreach ($dadosDespesaPdf as $d_despesa) {
+            $d = new \DateTime($d_despesa['data_venc_desp']);
+            $despesa_pdf .= '<tr><td>' . $d_despesa['descricao_desp'] . "</td>";
+           $despesa_pdf .= '<td>R$ ' . number_format($d_despesa['valor_desp'],2,',','.') . "</td>";
+            $despesa_pdf.= '<td>' . $d->format('d/m/Y') . "</td>";
+
+        }
+       $despesa_pdf .= '</tbody>';
+        $despesa_pdf .= '</table>';
+
+
+        $paginaCompleta = '<!doctype html> <html> <head> <link rel="stylesheet" type="text/css" href="css/estilo-pdf.css"> </head> <body> '
                 . ' <div id="cabecalho">'
                 . '<h1> Situação Financeira de ' . $usuario . '</h1>Gerado em ' . $data . ''
                 . '</div> '
                 . '<div>'
-                . '  ' . $html . ' '
+                . ' ' . $resumo . ' '
                 . '</div>'
-                . '<div id="footer"> Gerado por Controle Financeiro - 2017<br>'
+                . '<div>'
+                . ''.$receita_pdf.''
+                . '</div>'
+                  . '<div>'
+                . ''.$despesa_pdf.''
+                . '</div>'
+                . '<br><br><div id="footer"> Gerado por Controle Financeiro - 2017<br>'
                 . 'Ajudando você a ser mais livre...'
                 . '</div>'
                 . '</body>'
                 . '</html>';
 
-
-        Funcoes::geraPdf($documentTemplate);
+        Funcoes::geraPdf($paginaCompleta);
     }
 
 }

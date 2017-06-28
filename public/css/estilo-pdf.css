@@ -50,7 +50,13 @@ h2 {
 table{
     padding: 2px;
 }
-th, td {
-    padding: 10px;
+td {
+    padding: 5px;
     text-align: left;
+}
+
+th{
+    padding: 5px;
+    text-align: left;
+    background-color: #a29d9d;
 }

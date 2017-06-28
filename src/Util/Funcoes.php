@@ -81,7 +81,6 @@ class Funcoes {
 
 // Render the HTML as PDF
         $dompdf->render();
-        $dompdf->set_base_path('controlefinanceiro/css/estilos.css');
 
 // Output the generated PDF to Browser
         $dompdf->stream('teste.pdf');
