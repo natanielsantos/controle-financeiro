@@ -86,9 +86,10 @@ class ControleReceitas {
         $modelo = new ModeloReceitas();
         $cadastrou = $modelo->cadastraItem($receita);
 
-        return $this->resposta->setContent($this->twig->render('listaReceitas.twig', array('titulo' => 'CF | Receitas',
-                            'dados' => $this->dados,
-                            'cadastrou' => $cadastrou)));
+        $redirect = new RedirectResponse('/receitas');
+        $redirect->send();
+        
+        return true;
     }
 
     function editaItem($id) {

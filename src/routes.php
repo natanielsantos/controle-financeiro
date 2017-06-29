@@ -25,6 +25,7 @@ $ajuda = new Route('/ajuda', array('_controller' => $C_HOME, '_method' => 'verAj
 $sessao = new Route('/', array('_controller'=>$C_USUARIO,'_method'=>'exibeLogin'));
 $valida_login = new Route('/validaLogin', array('_controller'=>$C_USUARIO,'_method'=>'validaLogin'));
 $cadastroUsuario = new Route('/cadastro', array('_controller'=>$C_USUARIO,'_method'=>'cadastraUsuario'));
+$login= new Route('/login', array('_controller'=>$C_USUARIO,'_method'=>'verLogin'));
 $visaoGeral = new Route('/visaogeral', array('_controller' => $C_VISAO,'_method' => 'listaItens'));
 $visaoPorMes = new Route('/visaoMesAno/{_param}', array('_controller' => $C_VISAO, '_method' => 'listaItensPorMes'));
 $visaoDados = new Route('/visaogeral/dados', array('_controller' => $C_VISAO, '_method' => 'dados'));
@@ -62,13 +63,14 @@ $excluiDespesas = new Route('/excluiDespesa/{_param}', array('_controller'=>$C_D
 // ADICIONA AS ROTAS 
 $rotas->add('home', $home);
 $rotas->add('ajuda', $ajuda);
-$rotas->add('login',$sessao);
+$rotas->add('sessao',$sessao);
 $rotas->add('validaLogin', $valida_login);
 $rotas->add('visaoGeral', $visaoGeral);
 $rotas->add('visaoDados', $visaoDados);
 $rotas->add('enviaRelatorio', $enviaRelatorioEmail);
 $rotas->add('geraPdf', $geraPdf);
 $rotas->add('cadastro', $cadastroUsuario);
+$rotas->add('login', $login);
 
 $rotas->add('categorias', $categorias);
 $rotas->add('cadastraPadrao',$cadastraPadrao);
