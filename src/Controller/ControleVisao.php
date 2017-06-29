@@ -155,7 +155,7 @@ class ControleVisao {
         $mail->addAttachment('/var/tmp/teste.pdf', "Relatorio Financeiro");         // Add attachments
         $mail->isHTML(true);                                  // Set email format to HTML
 
-        $mail->Subject = 'Meu Relatorio Financeiro';
+        $mail->Subject = 'Controlei - Seu Relatorio Financeiro';
         $mail->Body = 'Você está recebendo um relatório gerado pelo site  <b> Controlei.pe.hu!</b>'
                 . '<br> Qualquer dúvida entre em contato.';
         $mail->AltBody = 'Você recebeu um relatório com os seus dados financeiros.';

@@ -32,7 +32,7 @@ class ControleUsuario {
 
     function exibeLogin() {
         $this->session->destroy();
-        return $this->resposta->setContent($this->twig->render('login.html'));
+        return $this->resposta->setContent($this->twig->render('index.html'));
     }
 
     function cadastraUsuario() {

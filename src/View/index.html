@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Controlei | Organizando suas finanças</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="../css/business-frontpage.css" rel="stylesheet">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        
+        <style>
+            body {padding: 100px}
+            .navbar {
+                background: #0B3861;
+                border-color: #0B3861;
+                border-radius: 0px;
+            }
+
+            .nano {
+                background: #444;
+            }
+
+            .bg-4 { 
+                background-color: #2f2f2f;
+                color: #ffffff;
+            }
+
+            .container-nav {
+                padding: 20px;
+            }
+
+        </style>
+
+    </head>
+
+    <body>
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container-nav">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Controlei</a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="#sobre">Sobre</a>
+                        </li>
+                        <li>
+                            <a href="#recursos">Recursos</a>
+                        </li>
+                        <li>
+                            <a href="#">Contato</a>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="/cadastro"><span class="glyphicon glyphicon-user">
+                                </span> Registre-se
+                            </a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="/login"><span class="glyphicon glyphicon-user">
+                                </span> Login
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container -->
+        </nav>
+
+        <!-- Image Background Page Header -->
+        <!-- Note: The background image is set within the business-casual.css file. -->
+        <header class="business-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="tagline">Tenha controle sobre seu dinheiro</h1>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Page Content -->
+        <div class="container">
+            <span id="sobre" ></span>
+            <hr>
+
+            <div class="row">
+                <div class="col-sm-8">
+                    <h2>O que oferecemos</h2>
+                    <p>O <b>CONTROLEI</b> é um sistema web totalmente gratuito que permitirá que você registre suas receitas e despesas e faça o acompanhamento de seus gastos.</p>
+                    <p>Por que usar lápis e papel se você pode ter tudo online a hora que quiser, rápido, seguro e muito, muito simples. Experimente agora mesmo!</p>
+                    <p>
+                        <a class="btn btn-primary btn-lg" href="/cadastro">Cadastre-se agora &raquo;</a>
+                    </p>
+                </div>
+                <div class="col-sm-4">
+                    <h2>Contato</h2>
+                    <address>
+                        <strong>Controlei</strong>
+                        <br>Rua Amélia G. Leite
+                        <br>Novo Horizonte, Paracatu - MG
+                        <br>
+                    </address>
+                    <address>
+                        <abbr title="Phone">Fone:</abbr>(38) 36713984
+                        <br>
+                        <abbr title="Email">Eemail:</abbr> <a href="mailto:#">controlei.trabalho@gmail.com</a>
+                    </address>
+                </div>
+            </div>
+            <!-- /.row -->
+
+            <hr>
+
+            <div id="recursos" class="row">
+                <div class="col-sm-4">
+                    <img class="img-circle img-responsive img-center" src="../img/receitas.png" alt="">
+                    <h2>Gerencie as receitas</h2>
+                    <p class="text-justify">Despois de cadastrar categorias e formas de pagamento você já pode começar a informar sua renda no mês. Com isso será possível calcular o seu saldo no fim do mês e verificar como anda sua saúde financeiro. Ah, você pode planejar os meses futuros também. Experimente!</p>
+                </div>
+                <div class="col-sm-4">
+                    <img class="img-circle img-responsive img-center" src="../img/despesas.jpg" alt="">
+                    <h2>Gerencie as despesas</h2>
+                    <p class="text-justify">Não tem jeito, se quiser ter controle das suas finanças precisa registrar tudo o que gasta. Com esse recurso você pode cadastras suas despesas, categorizá-las e ainda classific=a-las por forma de pagamento. Começe hoje mesmo a garantir seu futuro.</p>
+                </div>
+                <div class="col-sm-4">
+                    <img class="img-circle img-responsive img-center" src="../img/saldo.jpg" alt="">
+                    <h2>Visualize seu saldo</h2>
+                    <p class="text-justify">Com suas despesas e receitas registradas agora você ver como anda suas finaças, Visualize listas, compares depesas, veja gráficos e gere relatórios para imprimir e acompanhar sua saúde financeira.</p>
+                </div>
+            </div>
+            <!-- /.row -->
+
+            <hr>
+
+            <!-- Footer -->
+            <footer>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <p>Copyright &copy; Controlei - 2017</p>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </footer>
+
+        </div>
+        <!-- /.container -->
+
+        <!-- jQuery -->
+        <script src="js/jquery.js"></script>
+
+        <!-- Bootstrap Core JavaScript -->
+        <script src="js/bootstrap.min.js"></script>
+
+    </body>
+
+</html>

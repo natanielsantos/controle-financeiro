@@ -37,11 +37,11 @@
 
     </head>
     <body>
-
+        {% if usuario %}
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="/home">controle! |</a>
+                    <a class="navbar-brand" href="/home">CONTROLEI |</a>
                 </div>
                 <ul class="nav navbar-nav">
                     <li><a href="/home">Painel</a></li>
@@ -73,7 +73,6 @@
                             <span class="caret"></spam>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Alterar dados</a></li>
                             <li><a href="#">Configurações</a></li>
                              <li><a href="/"> Sair</a></li>
                         </ul>
@@ -82,6 +81,20 @@
                 </ul>
             </div>
         </nav>
+        {% else %}
+            <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/home">CONTROLEI |</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li><a href="#">Organizando suas finanças</a></li>
+
+                </ul>
+                
+            </div>
+        </nav>
+        {% endif %}
 
         <div id="content">
             {% block body %} 
