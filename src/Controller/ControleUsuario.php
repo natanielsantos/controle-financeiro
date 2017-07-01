@@ -35,9 +35,28 @@ class ControleUsuario {
         return $this->resposta->setContent($this->twig->render('index.html'));
     }
 
-    function cadastraUsuario() {
+    function exibeCadastroUsuario() {
         $this->session->destroy();
         return $this->resposta->setContent($this->twig->render('cadastro.twig'));
+    }
+
+    function cadastraUsuario() {
+        
+        $cad_nome = $this->request->get('nome');
+        $cad_email = $this->request->get('email');
+        $cad_senha = $this->request->get('senha');
+        
+        $dataCadastro = getdate();
+        
+        $usuario = new Usuario();
+        $usuario->setEmail($cad_email);
+        $usuario->setSenha($cad_senha);
+        $usuario->setLogin($cad_nome);
+        $usuario->setStatus(0);
+        
+        $mensagem = $this->modelo->cadastrar($usuario);
+        
+        print_r($mensagem);
     }
 
     function verLogin() {
@@ -46,7 +65,6 @@ class ControleUsuario {
     }
 
     function validaLogin() {
-
 
         $log_nome = $this->request->get('nome');
         $log_senha = $this->request->get('senha');

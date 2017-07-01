@@ -24,8 +24,8 @@ $home = new Route('/home', array('_controller' => $C_HOME, '_method' => 'ver'));
 $ajuda = new Route('/ajuda', array('_controller' => $C_HOME, '_method' => 'verAjuda'));
 $sessao = new Route('/', array('_controller'=>$C_USUARIO,'_method'=>'exibeLogin'));
 $valida_login = new Route('/validaLogin', array('_controller'=>$C_USUARIO,'_method'=>'validaLogin'));
-$cadastroUsuario = new Route('/cadastro', array('_controller'=>$C_USUARIO,'_method'=>'cadastraUsuario'));
-$login= new Route('/login', array('_controller'=>$C_USUARIO,'_method'=>'verLogin'));
+$exibeCadastroUsuario = new Route('/cadastro', array('_controller'=>$C_USUARIO,'_method'=>'exibeCadastroUsuario'));
+$login= new Route('/login', array('_controller'=>$C_USUARIO,'_method'=>'verLogin')); 
 $visaoGeral = new Route('/visaogeral', array('_controller' => $C_VISAO,'_method' => 'listaItens'));
 $visaoPorMes = new Route('/visaoMesAno/{_param}', array('_controller' => $C_VISAO, '_method' => 'listaItensPorMes'));
 $visaoDados = new Route('/visaogeral/dados', array('_controller' => $C_VISAO, '_method' => 'dados'));
@@ -60,6 +60,9 @@ $cadastraDespesas  = new Route('/cadastraDespesa', array('_controller'=>$C_DESPE
 $editaDespesas = new Route('/editaDespesa/{_param}', array('_controller'=>$C_DESPESAS ,'_method'=>'editaItem'));
 $excluiDespesas = new Route('/excluiDespesa/{_param}', array('_controller'=>$C_DESPESAS ,'_method'=>'excluiItem'));
 
+//rotas usuario
+$cadastraUsuario = new Route('/cadastraUsuario', array('_controller'=>$C_USUARIO,'_method'=>'cadastraUsuario'));
+
 // ADICIONA AS ROTAS 
 $rotas->add('home', $home);
 $rotas->add('ajuda', $ajuda);
@@ -69,7 +72,7 @@ $rotas->add('visaoGeral', $visaoGeral);
 $rotas->add('visaoDados', $visaoDados);
 $rotas->add('enviaRelatorio', $enviaRelatorioEmail);
 $rotas->add('geraPdf', $geraPdf);
-$rotas->add('cadastro', $cadastroUsuario);
+$rotas->add('cadastro', $exibeCadastroUsuario);
 $rotas->add('login', $login);
 
 $rotas->add('categorias', $categorias);
@@ -95,3 +98,5 @@ $rotas->add('despesasPorMes', $despesasPorMes);
 $rotas->add('cadastraDepesa',$cadastraDespesas);
 $rotas->add('editaDespesa',$editaDespesas);
 $rotas->add('excluiDespesa',$excluiDespesas);
+
+$rotas->add('usuario', $cadastraUsuario);

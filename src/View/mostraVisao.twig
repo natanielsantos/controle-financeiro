@@ -65,19 +65,7 @@
                 </div>
             </div>
         </header> {# FIM DO CABEÇALHO #}
-        {% if cadastrou %}
-            <div class="alert alert-success alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Cadastrado!</strong> Atualize a página para visualizar a nova receita.
-            </div>
-        {% endif %}
 
-        {% if excluiu %}
-            <div class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Receita Excluída!</strong> Atualize a página.
-            </div>
-        {% endif %}
     </div>
     <div class="container-fluid">
         <div class="row">

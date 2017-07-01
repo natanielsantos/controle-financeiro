@@ -145,7 +145,7 @@ class ControleVisao {
         $mail->Port = 587;                                    // TCP port to connect to
 
         $mail->setFrom('controlei.trabalho@gmail.com', 'Controlei.pe.hu');
-        $mail->addAddress('natanielsa@gmail.com', 'Nataniel');    // Add a recipient
+        $mail->addAddress('eddiesaliba@yahoo.com', 'Nataniel');    // Add a recipient
 
         /* $mail->addAddress('pauliran@gmail.com');               // Name is optional
           $mail->addReplyTo('arquivosnatax@gmail.com', 'Informação');
