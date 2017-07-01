@@ -107,7 +107,7 @@ class ControleVisao {
                                 'dadosPagamento' => $dadosPagamento,
                                 'somaReceita' => $somaReceita,
                                 'somaDespesa' => $somaDespesa,
-                                'usu rio' => $usuario,
+                                'usuario' => $usuario,
                                 'mes' => $mesR,
                                 'ano' => $anoR)));
         }

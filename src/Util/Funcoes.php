@@ -3,6 +3,7 @@
 namespace ControleFinanceiro\Util;
 
 use Dompdf\Dompdf;
+use PHPMailer;
 
 class Funcoes {
 
@@ -84,6 +85,44 @@ class Funcoes {
 
 // Output the generated PDF to Browser
         $dompdf->stream('teste.pdf');
+    }
+    
+    function enviaHash(Array $dados) {
+
+        $mail = new PHPMailer();
+        $hash = $dados['hash']['hash'];
+        $idHash = $dados['hash']['id_usuario'];
+
+        //$mail->SMTPDebug = 2;                               // Enable verbose debug output
+
+        $mail->isSMTP();                                      // Set mailer to use SMTP
+        $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+        $mail->SMTPAuth = true;                               // Enable SMTP authentication
+        $mail->Username = 'controlei.trabalho@gmail.com';                 // SMTP username
+        $mail->Password = '943491el!!';                           // SMTP password
+        $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+        $mail->Port = 587;                                    // TCP port to connect to
+
+        $mail->setFrom('controlei.trabalho@gmail.com', 'Controlei.pe.hu');
+        $mail->addAddress('natanielsa@gmail.com', 'Nataniel');    // Add a recipient
+
+        /* $mail->addAddress('pauliran@gmail.com');               // Name is optional
+          $mail->addReplyTo('arquivosnatax@gmail.com', 'Informação');
+          $mail->addCC('cc@example.com');
+          $mail->addBCC('bcc@example.com'); */
+        $mail->isHTML(true);                                  // Set email format to HTML
+
+        $mail->Subject = 'Controlei - Chave de ativacao';
+        $mail->Body = 'Você está recebendo uma chave de ativação para o seu usuário'
+                . '<br><a href="controlefinanceiro.com.br/codigo='.$hash.'">Clique aqui para ativar sua conta</a>';
+        $mail->AltBody = 'Seja bem vindo ao Controlei!.';
+
+        if (!$mail->send()) {
+            echo 'Erro ao enviar.';
+            echo 'Mailer Error: ' . $mail->ErrorInfo;
+        } else {
+            echo 'Mensagem enviada com sucesso';
+        }
     }
 
 }

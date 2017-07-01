@@ -16,12 +16,11 @@ class ModeloHash {
 
         $dados = array();
 
-        $query = "INSERT INTO {$this->tabela} (hash, status, id_usuario, data_cadastro) VALUES (?, ?, ?, ?)";
-        $stmt = $this->conexao->prepare($query);
+        $query = "INSERT INTO hash (hash, status, id_usuario, data_cadastro) VALUES (?, ?, ?, now())";
+        $stmt = Conexao::getInstance()->prepare($query);
         $stmt->bindValue(1, $hash->getHash());
         $stmt->bindValue(2, $hash->getStatus());
         $stmt->bindValue(3, $hash->getIdUsuario());
-        $stmt->bindValue(4, $hash->getDataCadastro());
 
         $resultado = $stmt->execute();
 
@@ -39,9 +38,9 @@ class ModeloHash {
 
         $dados = array();
 
-        $query = "SELECT id, hash, id_usuario, data_cadastro FROM {$this->tabela} 
+        $query = "SELECT id, hash, id_usuario, data_cadastro FROM hash
           WHERE hash = ? ORDER BY id DESC LIMIT 1";
-        $stmt = $this->conexao->prepare($query);
+        $stmt = Conexao::getInstance()->prepare($query);
         $stmt->bindValue(1, $hash);
 
         $resultado = $stmt->execute();

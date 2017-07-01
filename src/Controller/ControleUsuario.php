@@ -6,8 +6,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use ControleFinanceiro\Util\Session;
+use ControleFinanceiro\Util\Funcoes;
 use ControleFinanceiro\Entity\Usuario;
+use ControleFinanceiro\Entity\Hash;
 use ControleFinanceiro\Models\ModeloUsuario;
+use ControleFinanceiro\Models\ModeloHash;
 
 class ControleUsuario {
 
@@ -55,6 +58,34 @@ class ControleUsuario {
         $usuario->setStatus(0);
         
         $mensagem = $this->modelo->cadastrar($usuario);
+        
+        if($mensagem['status']=='sucesso'){
+            
+            $modeloHash = new ModeloHash();
+            $hashGerado = sha1($usuario->getEmail());
+            
+            $hash = new Hash();
+            $hash->setHash($hashGerado);
+            $hash->setStatus(0);
+            $hash->setIdUsuario($mensagem['idusuario']);
+            
+            $mensagem = $modeloHash->cadastrar($hash);
+            
+            if($mensagem['status']=='sucesso'){
+                
+                $envia = new Funcoes();
+                $retorno = $modeloHash->retornaHash($hashGerado);
+                $mensagem = $envia->enviaHash($retorno);
+                
+            }else{
+                
+            }
+            
+            
+            
+        } else {
+            
+        }
         
         print_r($mensagem);
     }
