@@ -21,13 +21,15 @@ class ModeloUsuario {
             $p_sql->execute();
 
             if ($p_sql->rowCount() == 1) {
-                return $p_sql->fetch(PDO::FETCH_OBJ);
+                $usuario = $p_sql->fetch(PDO::FETCH_ASSOC);
             } else {
-                return false;
+                $usuario = false;
             }
         } catch (Exception $exc) {
             echo $exc->getTraceAsString();
         }
+        
+        return $usuario;
     }
 
     public function cadastrar(Usuario $usuario) {
@@ -84,11 +86,14 @@ class ModeloUsuario {
 
         $dados = array();
 
-        $query = "UPDATE {$this->tabela} SET status = 1 WHERE id = ?";
+        $query = "UPDATE usuario SET status = 1 WHERE id_user = ?";
         $stmt = Conexao::getInstance()->prepare($query);
         $stmt->bindValue(1, $idusuario);
 
         $resultado = $stmt->execute();
+        
+        echo '<br><br>';
+        print_r($resultado);
 
         if ($resultado) {
             $dados['status'] = 'sucesso';

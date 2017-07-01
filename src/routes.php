@@ -62,6 +62,7 @@ $excluiDespesas = new Route('/excluiDespesa/{_param}', array('_controller'=>$C_D
 
 //rotas usuario
 $cadastraUsuario = new Route('/cadastraUsuario', array('_controller'=>$C_USUARIO,'_method'=>'cadastraUsuario'));
+$validaCodigo = new Route('/codigo={_param}', array('_controller'=>$C_USUARIO,'_method'=>'validaHash'));
 
 // ADICIONA AS ROTAS 
 $rotas->add('home', $home);
@@ -100,3 +101,4 @@ $rotas->add('editaDespesa',$editaDespesas);
 $rotas->add('excluiDespesa',$excluiDespesas);
 
 $rotas->add('usuario', $cadastraUsuario);
+$rotas->add('validaHash', $validaCodigo);

@@ -63,13 +63,13 @@ class ModeloHash {
         return $dados;
     }
 
-    public function ativar($id) {
+    public function ativar($hash) {
 
         $dados = array();
 
-        $query = "UPDATE {$this->tabela} SET status = 1 WHERE id = ? LIMIT 1";
-        $stmt = $this->conexao->prepare($query);
-        $stmt->bindValue(1, $id);
+        $query = "UPDATE hash SET status = 1 WHERE hash = ? LIMIT 1";
+        $stmt = Conexao::getInstance()->prepare($query);
+        $stmt->bindValue(1, $hash);
 
         $resultado = $stmt->execute();
 

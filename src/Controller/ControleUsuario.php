@@ -89,6 +89,32 @@ class ControleUsuario {
         
         print_r($mensagem);
     }
+    
+    function validaHash($hash){
+        $modeloHash = new ModeloHash();
+        
+        $mensagem = $modeloHash->ativar($hash);
+        
+         if($mensagem['status']=='sucesso'){
+             
+             $retorno = $modeloHash->retornaHash($hash);
+             print_r($retorno);
+             echo '<br>';
+             $idusuario = $retorno['hash']['id_usuario'];
+             print_r($idusuario);
+              echo '<br>';
+             $usuario = new ModeloUsuario();
+             
+             $mensagem = $usuario->ativar($idusuario);
+             print_r($mensagem);
+             
+         } else {
+             
+             echo 'não foi';
+         }
+        
+        return $mensagem;
+    }
 
     function verLogin() {
         $this->session->destroy();
@@ -103,13 +129,17 @@ class ControleUsuario {
         $existe = $this->modelo->validaLogin($log_nome, $log_senha);
 
         if ($existe) {
-
+            
+          if($existe['status'] == 1){  
             $this->session->add('nome', $log_nome);
             $this->session->add('senha', $log_senha);
-            $this->session->add('id_user', $existe->id_user);
+            $this->session->add('id_user', $existe['id_user']);
 
             $destino = "/home";
             $this->redireciona($destino);
+          } else {
+            echo 'Usuário não ativado';
+          }
         } else {
             ControleUsuario::exibeLogin();
         }
