@@ -118,11 +118,13 @@ class Funcoes {
         $mail->AltBody = 'Seja bem vindo ao Controlei!.';
 
         if (!$mail->send()) {
-            echo 'Erro ao enviar.';
-            echo 'Mailer Error: ' . $mail->ErrorInfo;
+            $mensagem = 'Erro ao enviar.';
+            $mensagem .= 'Mailer Error: ' . $mail->ErrorInfo;
         } else {
-            echo 'Mensagem enviada com sucesso';
+            $mensagem = 'Chave gerada e enviada com sucesso. Verifique o seu email e clique no link de ativação para acessar o sistema';
         }
+        
+        return $mensagem;
     }
 
 }

@@ -154,7 +154,7 @@ $('#modal-exclui-desp').on('show.bs.modal', function (event) {
     //modal.find('.modal-body input').val(editaStatus);
 
     $("#formExcluiDesp").attr("action", '/excluiDespesa/' + idExcluiDesp);
-   
+
 });
 
 

@@ -3,9 +3,17 @@
 {% block title %}{{titulo}}{% endblock %}
 
 {% block body %}
+
+
+
     <div class="container-fluid"> 
 
-        <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2">                    
+        <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2">     
+            {% if mensagem %}
+                <div class="panel-heading">
+                    <div class="alert alert-danger text-center ">{{ mensagem }} </div>
+                </div>
+            {%endif%}
             <div class="panel panel-info" >
                 <div class="panel-heading">
                     <div class="panel-title">Controlei | Login</div>
@@ -55,6 +63,7 @@
             </div>  
         </div>
     </div>
+
 {% endblock %}
 {%block script %}
     <script src="js/usuario.js"></script>

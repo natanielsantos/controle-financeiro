@@ -78,16 +78,15 @@ class ControleUsuario {
                 $mensagem = $envia->enviaHash($retorno);
                 
             }else{
-                
+                $mensagem = $mensagem['mensagem'];
             }
             
-            
-            
         } else {
-            
+            $mensagem = $mensagem['mensagem'];
         }
         
-        print_r($mensagem);
+        return $this->resposta->setContent($this->twig->render('cadastro.twig', array('titulo' => 'CF | Cadastro',
+                                'mensagem' => $mensagem )));
     }
     
     function validaHash($hash){
@@ -98,22 +97,21 @@ class ControleUsuario {
          if($mensagem['status']=='sucesso'){
              
              $retorno = $modeloHash->retornaHash($hash);
-             print_r($retorno);
              echo '<br>';
              $idusuario = $retorno['hash']['id_usuario'];
-             print_r($idusuario);
               echo '<br>';
              $usuario = new ModeloUsuario();
              
-             $mensagem = $usuario->ativar($idusuario);
-             print_r($mensagem);
+             
+             $msg = $usuario->ativar($idusuario);
+             $mensagem = $msg['mensagem'];
              
          } else {
-             
-             echo 'não foi';
+             $mensagem = $mensagem['mensagem'];
          }
         
-        return $mensagem;
+        return $this->resposta->setContent($this->twig->render('cadastro.twig', array('titulo' => 'CF | Login',
+                                'mensagem' => $mensagem )));
     }
 
     function verLogin() {
@@ -138,11 +136,14 @@ class ControleUsuario {
             $destino = "/home";
             $this->redireciona($destino);
           } else {
-            echo 'Usuário não ativado';
+            $mensagem = 'Usuário não ativado. Cheque seu email.';
           }
         } else {
-            ControleUsuario::exibeLogin();
+            $mensagem = 'Este usuário não existe. Cadastre-se!';
         }
+        
+         return $this->resposta->setContent($this->twig->render('login.twig', array('titulo' => 'CF | Login',
+                                'mensagem' => $mensagem )));
     }
 
     public function redireciona($destino) {

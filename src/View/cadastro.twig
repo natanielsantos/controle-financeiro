@@ -3,79 +3,79 @@
 {% block title %}{{titulo}}{% endblock %}
 
 {% block body %}
-    <div class="container-fluid"> 
 
-        <div id="signupbox" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <div class="panel-title">Criar Login</div>
-                </div>  
-                <div class="panel-body" >
-                    <form action="/cadastraUsuario" method="POST" id="signupform" class="form-horizontal" role="form">
-
-                        <div id="signupalert" style="display:none" class="alert alert-danger">
-                            <p>Erro:</p>
-                            <span></span>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label for="lastname" class="col-md-3 control-label">Login</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control" name="nome" required value="" placeholder="Informe um nome para usuário" pattern="^[a-zA-Zà-úÀ-Ú ]{2,30}$" autocomplete="off" title="Somente letras e acentos são permitidos. Até 30 caracteres.">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email" class="col-md-3 control-label">E-mail</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control" name="email" required value="" title = "Email invalido  " placeholder="exemplo@gmail.com" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="password" class="col-md-3 control-label">Senha</label>
-                            <div class="col-md-9">
-                                <input type="password" id="txtSenha" class="form-control" required value="" name="senha" placeholder="">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="password" class="col-md-3 control-label">Repita a Senha</label>
-                            <div class="col-md-9">
-                                <input type="password" class="form-control" required value="" name="senha2" placeholder="" oninput="validaSenha(this)">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <!-- Button -->                                        
-                            <div class="col-md-offset-3 col-md-9">
-                                <button id="btn-signup" type="submit" class="btn btn-info"><i class="icon-hand-right"></i> Cadastrar</button>
-                            </div>
-                        </div>
-
-                        <div style="border-top: 1px solid #999; padding-top:20px"  class="form-group">
-
-                            <!--<div class="col-md-offset-3 col-md-9">
-                                <button id="btn-fbsignup" type="button" class="btn btn-primary"><i class="icon-facebook"></i>   Cadastre-se com o Facebook</button>
-                            </div>-->
-                            <div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink" href="/login">Já sou cadastrado <<<</a></div>                                           
-
-                        </div>         
-                    </form>
+    {% if mensagem %}
+        <div class="container-fluid">
+            <div class="panel-body" >
+                <div class="alert alert-info text-center "><h2><b>{{ mensagem }}</b></h2><br><h2>Obrigado por utilizar o nosso sistema!</h2><br>
+                    <a href="/cadastro"> Registre-se</a> ou <a href="/login"> Acesse o sistema</a>
                 </div>
-            </div>
-        </div> 
-    </div>
-{% endblock %}
-{%block script %}
-    <script type="text/javascript">
+             </div>
+        </div>
+    {% else %}
+        <div class="container-fluid"> 
 
-        function validaSenha(input) {
-            if (input.value != document.getElementById('txtSenha').value) {
-                input.setCustomValidity('Repita a senha corretamente');
-            } else {
-                input.setCustomValidity('');
-            }
-        }
+            <div id="signupbox" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <div class="panel-title">Criar Login</div>
+                    </div>  
+                    <div class="panel-body" >
+                        <form action="/cadastraUsuario" method="GET"  onsubmit="return verificarSenha()" id="signupform" class="form-horizontal" role="form">
+                            <div id="mensagem"></div>
+                            <div id="signupalert" style="display:none" class="alert alert-danger">
+                                <p>Erro:</p>
+                                <span></span>
+                            </div>
 
-    </script>
+
+                            <div class="form-group">
+                                <label for="lastname" class="col-md-3 control-label">Login</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" name="nome" required value="" placeholder="Informe um nome para usuário" pattern="^[a-zA-Zà-úÀ-Ú ]{2,30}$" autocomplete="off" title="Somente letras e acentos são permitidos. Até 30 caracteres.">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email" class="col-md-3 control-label">E-mail</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" name="email" required value="" title = "Email invalido  " placeholder="exemplo@gmail.com" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="col-md-3 control-label">Senha</label>
+                                <div class="col-md-9">
+                                    <input type="password" id="seha" class="form-control" required value="" name="senha" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="col-md-3 control-label">Repita a Senha</label>
+                                <div class="col-md-9">
+                                    <input type="password" class="form-control" required value="" name="confirmasenha" id="confirmasenha" placeholder="" oninput="validaSenha(this)">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <!-- Button -->                                        
+                                <div class="col-md-offset-3 col-md-9">
+                                    <button id="btn-signup" type="submit" class="btn btn-info"><i class="icon-hand-right"></i> Cadastrar</button>
+                                </div>
+                            </div>
+
+                            <div style="border-top: 1px solid #999; padding-top:20px"  class="form-group">
+
+                                <!--<div class="col-md-offset-3 col-md-9">
+                                    <button id="btn-fbsignup" type="button" class="btn btn-primary"><i class="icon-facebook"></i>   Cadastre-se com o Facebook</button>
+                                </div>-->
+                                <div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink" href="/login">Já sou cadastrado <<<</a></div>                                           
+
+                            </div>         
+                        </form>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    {% endif %}
+
+
 {% endblock %}

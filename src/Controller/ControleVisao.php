@@ -134,26 +134,22 @@ class ControleVisao {
 
         $mail = new PHPMailer();
 
-        //$mail->SMTPDebug = 2;                               // Enable verbose debug output
+        //$mail->SMTPDebug = 2;                               
 
-        $mail->isSMTP();                                      // Set mailer to use SMTP
-        $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
-        $mail->SMTPAuth = true;                               // Enable SMTP authentication
-        $mail->Username = 'controlei.trabalho@gmail.com';                 // SMTP username
-        $mail->Password = '943491el!!';                           // SMTP password
-        $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-        $mail->Port = 587;                                    // TCP port to connect to
+        $mail->isSMTP();                                      
+        $mail->Host = 'smtp.gmail.com';  
+        $mail->SMTPAuth = true;                               
+        $mail->Username = 'controlei.trabalho@gmail.com';              
+        $mail->Password = '943491el!!';                          
+        $mail->SMTPSecure = 'tls';                            
+        $mail->Port = 587;                                    
 
         $mail->setFrom('controlei.trabalho@gmail.com', 'Controlei.pe.hu');
-        $mail->addAddress('eddiesaliba@yahoo.com', 'Nataniel');    // Add a recipient
+        $mail->addAddress('natanielsa@gmail.com', 'Nataniel'); 
 
-        /* $mail->addAddress('pauliran@gmail.com');               // Name is optional
-          $mail->addReplyTo('arquivosnatax@gmail.com', 'Informação');
-          $mail->addCC('cc@example.com');
-          $mail->addBCC('bcc@example.com'); */
 
-        $mail->addAttachment('/var/tmp/teste.pdf', "Relatorio Financeiro");         // Add attachments
-        $mail->isHTML(true);                                  // Set email format to HTML
+        $mail->addAttachment('/var/tmp/teste.pdf', "Relatorio Financeiro");        
+        $mail->isHTML(true);                                 
 
         $mail->Subject = 'Controlei - Seu Relatorio Financeiro';
         $mail->Body = 'Você está recebendo um relatório gerado pelo site  <b> Controlei.pe.hu!</b>'
