@@ -46,7 +46,7 @@ class ControleVisao {
 
 
         $usuario = $this->session->get('nome');
-       
+
 
 
         $today = getdate();
@@ -136,29 +136,28 @@ class ControleVisao {
 
         $mail = new PHPMailer();
         $id = $this->session->get('id_user');
-        
+
         $modeloUsuario = new ModeloUsuario();
-        
+
         $usuario = $modeloUsuario->getUsuario($id);
         $email = $usuario['email'];
         $user = $usuario['usuario'];
-        
+
         //$mail->SMTPDebug = 2;                               
 
-        $mail->isSMTP();                                      
-        $mail->Host = 'smtp.gmail.com';  
-        $mail->SMTPAuth = true;                               
-        $mail->Username = 'controlei.trabalho@gmail.com';              
-        $mail->Password = '943491el!!';                          
-        $mail->SMTPSecure = 'tls';                            
-        $mail->Port = 587;                                    
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'controlei.trabalho@gmail.com';
+        $mail->Password = '943491el!!';
+        $mail->SMTPSecure = 'tls';
+        $mail->Port = 587;
 
         $mail->setFrom('controlei.trabalho@gmail.com', 'Controlei.pe.hu');
-        $mail->addAddress($email, $user); 
+        $mail->addAddress($email, $user);
 
-
-        $mail->addAttachment('/var/tmp/teste.pdf', "Relatorio Financeiro");        
-        $mail->isHTML(true);                                 
+        $mail->addAttachment('/var/tmp/teste.pdf', "Relatorio Financeiro");
+        $mail->isHTML(true);
 
         $mail->Subject = 'Controlei - Seu Relatorio Financeiro';
         $mail->Body = 'Você está recebendo um relatório gerado pelo site  <b> Controlei.pe.hu!</b>'
@@ -167,13 +166,13 @@ class ControleVisao {
 
         if (!$mail->send()) {
             $mensagem = 'Erro ao enviar. ';
-           $mensagem .='Mailer Error: ' . $mail->ErrorInfo;
+            $mensagem .= 'Mailer Error: ' . $mail->ErrorInfo;
         } else {
-            $mensagem = 'Relatório enviado para '.$email.'.';
+            $mensagem = 'Relatório enviado para ' . $email . '.';
         }
-        
-         return $this->resposta->setContent($this->twig->render('cadastro.twig', array('titulo' => 'CF | Envio',
-                                'mensagem' => $mensagem )));
+
+        return $this->resposta->setContent($this->twig->render('cadastro.twig', array('titulo' => 'CF | Envio',
+                            'mensagem' => $mensagem)));
     }
 
     function geraPdf() {
@@ -197,8 +196,8 @@ class ControleVisao {
         $data = strftime("%d de " . ucfirst($mes) . " de %Y, %H:%M");
 
         $resumo = "<hr>"
-                . "<table border='0' width='100%'><tr><td id='receita'>Receita<br> <h2> R$ " . number_format($receita,2,',','.') . "</h2></td> <td id='despesa'> "
-                . "Despesa<br> <h2'> R$ " . number_format($despesa,2,',','.'). "</h2></td>  <td id='saldo'> Saldo<br><h2> R$ " . number_format($saldo,2,',','.'). "</h2></td> </tr></table>";
+                . "<table border='0' width='100%'><tr><td id='receita'>Receita<br> <h2> R$ " . number_format($receita, 2, ',', '.') . "</h2></td> <td id='despesa'> "
+                . "Despesa<br> <h2'> R$ " . number_format($despesa, 2, ',', '.') . "</h2></td>  <td id='saldo'> Saldo<br><h2> R$ " . number_format($saldo, 2, ',', '.') . "</h2></td> </tr></table>";
 
 
         $receita_pdf = '<table border="1" width="100%">';
@@ -214,17 +213,16 @@ class ControleVisao {
         $dadosReceita = $this->modeloReceita->listaItemPorMes($m, $a, $this->session->get('id_user'));
 
         foreach ($dadosReceita as $d_receita) {
-             $d = new \DateTime($d_receita['data_lanc_rec']);
+            $d = new \DateTime($d_receita['data_lanc_rec']);
             $receita_pdf .= '<tr><td>' . $d_receita['tipo_rec'] . "</td>";
-            $receita_pdf .= '<td>R$ ' .  number_format($d_receita['valor_rec'],2,',','.') . "</td>";
+            $receita_pdf .= '<td>R$ ' . number_format($d_receita['valor_rec'], 2, ',', '.') . "</td>";
             $receita_pdf .= '<td>' . $d->format('d/m/Y') . "</td>";
-
         }
         $receita_pdf .= '</tbody>';
         $receita_pdf .= '</table> <br>';
-        
-        
-        
+
+
+
         $despesa_pdf = '<table border="1" width="100%">';
         $despesa_pdf .= '<thead>';
         $despesa_pdf .= '<tr>';
@@ -240,11 +238,10 @@ class ControleVisao {
         foreach ($dadosDespesaPdf as $d_despesa) {
             $d = new \DateTime($d_despesa['data_venc_desp']);
             $despesa_pdf .= '<tr><td>' . $d_despesa['descricao_desp'] . "</td>";
-           $despesa_pdf .= '<td>R$ ' . number_format($d_despesa['valor_desp'],2,',','.') . "</td>";
-            $despesa_pdf.= '<td>' . $d->format('d/m/Y') . "</td>";
-
+            $despesa_pdf .= '<td>R$ ' . number_format($d_despesa['valor_desp'], 2, ',', '.') . "</td>";
+            $despesa_pdf .= '<td>' . $d->format('d/m/Y') . "</td>";
         }
-       $despesa_pdf .= '</tbody>';
+        $despesa_pdf .= '</tbody>';
         $despesa_pdf .= '</table>';
 
 
@@ -256,10 +253,10 @@ class ControleVisao {
                 . ' ' . $resumo . ' '
                 . '</div>'
                 . '<div>'
-                . ''.$receita_pdf.''
+                . '' . $receita_pdf . ''
                 . '</div>'
-                  . '<div>'
-                . ''.$despesa_pdf.''
+                . '<div>'
+                . '' . $despesa_pdf . ''
                 . '</div>'
                 . '<br><br><div id="footer"> Gerado por Controle Financeiro - 2017<br>'
                 . 'Ajudando você a ser mais livre...'

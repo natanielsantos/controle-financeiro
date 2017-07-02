@@ -12,7 +12,7 @@
 
         <!-- Estilo de Menu -->
         <style>
-            body { padding-top: 100px; }
+
             .navbar {
                 background: #0B3861;
                 border-color: #0B3861;
@@ -38,62 +38,70 @@
     </head>
     <body>
         {% if usuario or mensagem %}
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="/home">CONTROLEI |</a>
-                </div>
-                <ul class="nav navbar-nav">
-                    <li><a href="/home">Painel</a></li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Cadastrar
-                            <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/categorias">Categorias</a></li>
-                            <li><a href="/pagamentos">Formas de Pagamento</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Lançamentos
-                            <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/receitas">Receitas</a></li>
-                            <li><a href="/despesas">Despesas</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="/visaogeral">Visão Geral</a></li>
-                    <li><a href="/ajuda">Ajuda</a></li>
+            <nav class="navbar navbar-inverse navbar-static-top">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+                        <a class="navbar-brand" href="/home">CONTROLEI |</a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li><a href="/home">Painel</a></li>
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Cadastrar
+                                    <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/categorias">Categorias</a></li>
+                                    <li><a href="/pagamentos">Formas de Pagamento</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Lançamentos
+                                    <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/receitas">Receitas</a></li>
+                                    <li><a href="/despesas">Despesas</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="/visaogeral">Visão Geral</a></li>
+                            <li><a href="/ajuda">Ajuda</a></li>
 
 
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user">
-                            </span> {{usuario | title}}     
-                            <span class="caret"></spam>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Configurações</a></li>
-                             <li><a href="/login"> Sair</a></li>
                         </ul>
-                    </li>
-                    
-                </ul>
-            </div>
-        </nav>
-        {% else %}
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user">
+                                    </span> {{usuario | title}}     
+                                    <span class="caret"></spam>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/login"> Sair</a></li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>           </nav>
+            {% else %}
             <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="/home">CONTROLEI |</a>
-                </div>
-                <ul class="nav navbar-nav">
-                    <li><a href="#">Organizando suas finanças</a></li>
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="/home">CONTROLEI |</a>
+                    </div>
+                    <ul class="nav navbar-nav">
+                        <li><a href="#">Organizando suas finanças</a></li>
 
-                </ul>
-                
-            </div>
-        </nav>
+                    </ul>
+
+                </div>
+            </nav>
         {% endif %}
 
         <div id="content">
@@ -114,7 +122,7 @@
         <script src="../js/bootstrap.min.js"></script>
         <script src="../js/bootstrap-datepicker.js"></script>
         <script src="../js/scripts.js"></script>
-        
+
         <script src="../js/locales/bootstrap-datepicker.pt-BR.min.js"></script>
 
 
@@ -126,10 +134,10 @@
             });
 
         </script>
-        
-    {% block scripts %}
-         <script type="text/javascript" src="../js/usuario.js"></script>
-    {% endblock %}
 
-</body>
+        {% block scripts %}
+            <script type="text/javascript" src="../js/usuario.js"></script>
+        {% endblock %}
+
+    </body>
 </html> 
