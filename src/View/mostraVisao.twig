@@ -3,15 +3,15 @@
 {% block title %}{{titulo}}{% endblock %}
 
 {% block body %}
-      <link href="../css/w3.css" rel="stylesheet" type="text/css"/>
+    <link href="../css/w3.css" rel="stylesheet" type="text/css"/>
     <div class="container-fluid">
         <header>
             <div class="row">
                 <div class="col-sm-6">
                     <h2> <strong>Visão Geral </strong>
                         <small> 
-                          
-                                {{mes}}/{{ano}}
+
+                            {{mes}}/{{ano}}
 
                         </small>
 
@@ -21,7 +21,7 @@
 
                 <div class="col-sm-6 text-right h2">
                     <span class="text-info"> <small>Baixar relatório -></small></span>
-                   {# <button class="btn btn-default" data-toggle="modal" data-target="#modal-envia-email"><span class="glyphicon glyphicon-envelope"></span></button> #}
+                    {# <button class="btn btn-default" data-toggle="modal" data-target="#modal-envia-email"><span class="glyphicon glyphicon-envelope"></span></button> #}
                     <a class="btn btn-default" href="/visaogeral/gerapdf"><i class="fa fa-refresh"></i> <span class="glyphicon glyphicon-download-alt"></span></a>
                 </div>
             </div>
@@ -102,7 +102,7 @@
 
         <div class="row">
 
-            
+
         </div>
     </div>
 
@@ -141,7 +141,7 @@
 
                         </tr>
                     {%endfor%}
-                    
+
                 {% else %}
                 <div class ="container-fluid">
                     <td colspan="6"><div class="alert alert-danger">Você não adicionou nenhuma receita ainda... comece a se planejar agora mesmo!</td></div> 
@@ -153,40 +153,35 @@
 </div>
 
 <div class="modal fade" tabindex="-1" role="dialog" id="modal-envia-email">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Extrato por Email</h4>
-      </div>
-      <div class="modal-body">
-        <p>Deseja enviar o relatório de extrato para o seu email</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
-        <a href="/visaogeral/enviarelatorio" type="button" class="btn btn-primary">Sim</a>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Extrato por Email</h4>
+            </div>
+            <div class="modal-body">
+                <p>Deseja enviar o relatório de extrato para o seu email</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
+                <a href="/visaogeral/enviarelatorio" type="button" class="btn btn-primary">Sim</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
 
 {% block scripts %}
-    
+
     <script type="text/javascript" src="../js/loader.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
 
-//Recupera a URL atual e complementa para que seja possível
-//obter os dados para montagem do gráfico
             var url_data = window.location.href + "/dados";
-//Define a variável que irá receber as tarefas a serem exibidas no gráfico
             var tarefas;
-//Define a variável que irá receber as opções de configuração do gráfico
             var options;
 
-//Requisição AJAX ao servidor para obtenção dos dados
             $.ajax({
                 type: 'POST',
                 url: url_data,
@@ -194,31 +189,29 @@
                 success: function (data) {
                     tarefas = json2array(data.tarefas);
                     options = data.opcoes;
-                    
-                    
+
+
                 },
                 error: function () {
                     alert("Ocorreu um erro ao processar a solicitação.");
                 }
             });
 
-//Define qual é o pacote de gráficos que será utilizado
+
             google.charts.load('current', {'packages': ['corechart']});
-           //alert("Chegou aqui");
-//Operações executadas ao iniciar o processamento da biblioteca
+
             google.charts.setOnLoadCallback(function () {
-                //Formata os dados para o padrão de exibição do gráfico
+
                 data = google.visualization.arrayToDataTable(tarefas);
 
-                //Estrutura o gráfico para exibição
                 var chart = new google.visualization.PieChart(document.getElementById('grafico'));
-                 
-                //Exibe o gráfico na tela
+
                 chart.draw(data, options);
             });
 
         });
-//Função para converter o json para array no padrão da biblioteca Google Charts
+
+
         function json2array(json_data) {
             var result = [];
             for (var i in json_data)

@@ -30,7 +30,6 @@ class ControleUsuario {
         $this->modelo = new ModeloUsuario();
         $this->session = $session;
 
-        // $this->dados = $this->modelo->validaLogin($nome, $senha);
     }
     
     function getUsuario($id){

@@ -94,8 +94,6 @@ class ControleReceitas {
 
     function editaItem($id) {
 
-        // $categoria = $modeloCategoria->getCategoria($id);
-
         $novoItem = new Receitas($this->request->request->get('tipo'), $this->request->request->get('valor'), $this->request->request->get('data'), $this->request->request->get('status'), $this->session->get('id_user'));
 
         $this->modelo->editaItem($novoItem, $id);

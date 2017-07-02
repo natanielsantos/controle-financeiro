@@ -100,24 +100,20 @@ class Funcoes {
         $email = $usuario['email'];
         $user = $usuario['usuario'];
         
-        //$mail->SMTPDebug = 2;                               // Enable verbose debug output
+        //$mail->SMTPDebug = 2;                            
 
-        $mail->isSMTP();                                      // Set mailer to use SMTP
-        $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
-        $mail->SMTPAuth = true;                               // Enable SMTP authentication
-        $mail->Username = 'controlei.trabalho@gmail.com';                 // SMTP username
-        $mail->Password = '943491el!!';                           // SMTP password
-        $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-        $mail->Port = 587;                                    // TCP port to connect to
+        $mail->isSMTP();                                      
+        $mail->Host = 'smtp.gmail.com'; 
+        $mail->SMTPAuth = true;                               
+        $mail->Username = 'controlei.trabalho@gmail.com';                
+        $mail->Password = '943491el!!';                          
+        $mail->SMTPSecure = 'tls';                         
+        $mail->Port = 587;                                   
 
         $mail->setFrom('controlei.trabalho@gmail.com', 'Controlei.pe.hu');
-        $mail->addAddress($email, $user);    // Add a recipient
+        $mail->addAddress($email, $user);    
 
-        /* $mail->addAddress('pauliran@gmail.com');               // Name is optional
-          $mail->addReplyTo('arquivosnatax@gmail.com', 'Informação');
-          $mail->addCC('cc@example.com');
-          $mail->addBCC('bcc@example.com'); */
-        $mail->isHTML(true);                                  // Set email format to HTML
+        $mail->isHTML(true);                                
 
         $mail->Subject = 'Controlei - Chave de ativacao';
         $mail->Body = 'Você está recebendo uma chave de ativação para o seu usuário'

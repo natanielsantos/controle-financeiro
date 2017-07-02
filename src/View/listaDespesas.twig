@@ -97,7 +97,6 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        {#  <th># ID</th> #}
                         <th>Data da Despesa</th>
                         <th>Descrição</th>
                         <th class="actions text-left">Valor</th>
@@ -112,11 +111,9 @@
 
                     {% for dado in dados  %}
                         <tr>
-                            {# <td>{{dado.id_categoria}}</td> #}
                             <td>{{dado.data_venc_desp | date("d/m/Y")}}</td>
                             <td>{{dado.descricao_desp | title}}</td>
                             <td style="color:red;">R$ {{dado.valor_desp | number_format(2, ',', '.')}}</td>
-                            {#<td>{{dado.categoria_id_categoria | title}}</td>#}
                             {% for categoria in categorias %}
                                 {% if categoria.id_categoria == dado.categoria_id_categoria %}
                                     <td>{{categoria.nome_categoria | title}}</td>
@@ -136,7 +133,7 @@
                                 {% endif %}
 
                             <td class="actions text-right">
-                                {# <a href="view.php?id={{dado.id_categoria}}" class="btn btn-sm btn-success"><i class="fa fa-eye"></i> <spam class="glyphicon glyphicon-eye-open"></spam></a> #}
+                              
                                 <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modal-edita-desp" 
                                         data-despid="{{dado.id_desp}}"
                                         data-desptipo="{{dado.descricao_desp}}" 
