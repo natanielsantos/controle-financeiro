@@ -32,6 +32,10 @@ class ControleUsuario {
 
         // $this->dados = $this->modelo->validaLogin($nome, $senha);
     }
+    
+    function getUsuario($id){
+       return $this->modelo->getUsuario($id);
+    }
 
     function exibeLogin() {
         $this->session->destroy();

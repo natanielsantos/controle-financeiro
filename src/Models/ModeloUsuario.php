@@ -11,6 +11,25 @@ class ModeloUsuario {
     function __construct() {
         ;
     }
+    
+    public function getUsuario($id) {
+        try {
+            $sql = "SELECT * FROM usuario WHERE id_user = :id";
+            $p_sql = Conexao::getInstance()->prepare($sql);
+            $p_sql->bindValue(':id', $id);
+            $p_sql->execute();
+
+            if ($p_sql->rowCount() == 1) {
+                $usuario = $p_sql->fetch(PDO::FETCH_ASSOC);
+            } else {
+                $usuario = false;
+            }
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        
+        return $usuario;
+    }
 
     public function validaLogin($nome, $senha) {
         try {

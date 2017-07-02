@@ -10,6 +10,7 @@ use ControleFinanceiro\Models\ModeloReceitas;
 use ControleFinanceiro\Models\ModeloDespesas;
 use ControleFinanceiro\Models\ModeloCategorias;
 use ControleFinanceiro\Models\ModeloFormaPagamento;
+use ControleFinanceiro\Models\ModeloUsuario;
 use ControleFinanceiro\Entity\Receitas;
 use ControleFinanceiro\Util\Session;
 use ControleFinanceiro\Util\Funcoes;
@@ -45,6 +46,7 @@ class ControleVisao {
 
 
         $usuario = $this->session->get('nome');
+       
 
 
         $today = getdate();
@@ -133,7 +135,14 @@ class ControleVisao {
     function enviaRelatorio() {
 
         $mail = new PHPMailer();
-
+        $id = $this->session->get('id_user');
+        
+        $modeloUsuario = new ModeloUsuario();
+        
+        $usuario = $modeloUsuario->getUsuario($id);
+        $email = $usuario['email'];
+        $user = $usuario['usuario'];
+        
         //$mail->SMTPDebug = 2;                               
 
         $mail->isSMTP();                                      
@@ -145,7 +154,7 @@ class ControleVisao {
         $mail->Port = 587;                                    
 
         $mail->setFrom('controlei.trabalho@gmail.com', 'Controlei.pe.hu');
-        $mail->addAddress('natanielsa@gmail.com', 'Nataniel'); 
+        $mail->addAddress($email, $user); 
 
 
         $mail->addAttachment('/var/tmp/teste.pdf', "Relatorio Financeiro");        
@@ -157,11 +166,14 @@ class ControleVisao {
         $mail->AltBody = 'Você recebeu um relatório com os seus dados financeiros.';
 
         if (!$mail->send()) {
-            echo 'Erro ao enviar.';
-            echo 'Mailer Error: ' . $mail->ErrorInfo;
+            $mensagem = 'Erro ao enviar. ';
+           $mensagem .='Mailer Error: ' . $mail->ErrorInfo;
         } else {
-            echo 'Mensagem enviada com sucesso';
+            $mensagem = 'Relatório enviado para '.$email.'.';
         }
+        
+         return $this->resposta->setContent($this->twig->render('cadastro.twig', array('titulo' => 'CF | Envio',
+                                'mensagem' => $mensagem )));
     }
 
     function geraPdf() {

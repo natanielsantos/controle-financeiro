@@ -4,6 +4,7 @@ namespace ControleFinanceiro\Util;
 
 use Dompdf\Dompdf;
 use PHPMailer;
+use ControleFinanceiro\Models\ModeloUsuario;
 
 class Funcoes {
 
@@ -90,9 +91,15 @@ class Funcoes {
     function enviaHash(Array $dados) {
 
         $mail = new PHPMailer();
+        $modeloUsuario = new ModeloUsuario();
+        
         $hash = $dados['hash']['hash'];
-        $idHash = $dados['hash']['id_usuario'];
-
+        $idUsuario = $dados['hash']['id_usuario'];
+        
+        $usuario = $modeloUsuario->getUsuario($idUsuario);
+        $email = $usuario['email'];
+        $user = $usuario['usuario'];
+        
         //$mail->SMTPDebug = 2;                               // Enable verbose debug output
 
         $mail->isSMTP();                                      // Set mailer to use SMTP
@@ -104,7 +111,7 @@ class Funcoes {
         $mail->Port = 587;                                    // TCP port to connect to
 
         $mail->setFrom('controlei.trabalho@gmail.com', 'Controlei.pe.hu');
-        $mail->addAddress('natanielsa@gmail.com', 'Nataniel');    // Add a recipient
+        $mail->addAddress($email, $user);    // Add a recipient
 
         /* $mail->addAddress('pauliran@gmail.com');               // Name is optional
           $mail->addReplyTo('arquivosnatax@gmail.com', 'Informação');
@@ -121,7 +128,7 @@ class Funcoes {
             $mensagem = 'Erro ao enviar.';
             $mensagem .= 'Mailer Error: ' . $mail->ErrorInfo;
         } else {
-            $mensagem = 'Chave gerada e enviada com sucesso. Verifique o seu email e clique no link de ativação para acessar o sistema';
+            $mensagem = 'Chave gerada e enviada com sucesso. Verifique o seu email e clique no link de ativação para liberar seu acesso.';
         }
         
         return $mensagem;

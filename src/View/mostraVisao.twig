@@ -10,9 +10,9 @@
                 <div class="col-sm-6">
                     <h2> <strong>Visão Geral </strong>
                         <small> 
-                            <a class="navbar-link" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                {{mes}}/{{ano}} <span class="caret"></span>
-                            </a>
+                          
+                                {{mes}}/{{ano}}
+
                         </small>
 
                     </h2>
@@ -109,7 +109,7 @@
 
     {% if dadosReceita %}
 
-        <div class="container-fluid">
+        <div class="container-fluid ">
 
             <table class="table table-hover">
                 <thead>
@@ -119,9 +119,6 @@
                         <th width="40%">Descrição</th>
                         <th class="actions text-left">Valor</th>
 
-                        <th class="actions text-left">Recebido (?)</th>                    
-
-                        <th class="actions text-right">Opções</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -131,44 +128,25 @@
                             {# <td>{{dado.id_categoria}}</td> #}
                             <td>{{dado.data_lanc_rec | date("d/m/Y")}}</td>
                             <td>{{dado.tipo_rec | title}}</td>
-                            <td>R$ {{dado.valor_rec | number_format(2, ',', '.')}}</td>
+                            <td style="color:green;">R$ {{dado.valor_rec | number_format(2, ',', '.')}}</td>
 
-                            {% if dado.status_rec == 1 %}
-                                <td><span class="glyphicon glyphicon-ok" style="color:green" ></span></td>
-                                {%else%}
-                                <td><span class="glyphicon glyphicon-remove" style="color:red;"></span></td>
-                                {% endif %}
-                            <td class="actions text-right">
-                                {# <a href="view.php?id={{dado.id_categoria}}" class="btn btn-sm btn-success"><i class="fa fa-eye"></i> <spam class="glyphicon glyphicon-eye-open"></spam></a> #}
-                                <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modal-edita-rec" 
-                                        data-recid="{{dado.id_rec}}"
-                                        data-rectipo="{{dado.tipo_rec}}" 
-                                        data-recvalor="{{dado.valor_rec}}"
-                                        data-recdata="{{dado.data_lan_rec | date("Y/m/d")}}"
-                                        data-recstatus="{{dado.status_rec}}">
-                                    <i class="fa fa-pencil"></i> 
-                                    <spam class="glyphicon glyphicon-edit"></spam>
-                                </button>
-                                <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal-exclui-rec" 
-                                        data-recid="{{dado.id_rec}}"
-                                        data-rectipo="{{dado.tipo_rec}}" 
-                                        data-recvalor="{{dado.valor_rec}}"
-                                        data-recdata="{{dado.data_lan_rec | date("Y/m/d")}}"
-                                        data-recstatus="{{dado.status_rec}}">
-                                    <i class="fa fa-trash"></i> 
-                                    <spam class="glyphicon glyphicon-trash"></spam>
-                                </button>
-
-                            </td>
                         </tr>
                     {%endfor%}
+                    {% for dado in dadosDespesa %}
+                        <tr>
+                            {# <td>{{dado.id_categoria}}</td> #}
+                            <td>{{dado.data_venc_desp | date("d/m/Y")}}</td>
+                            <td>{{dado.descricao_desp | title}}</td>
+                            <td style="color:red;">R$ {{dado.valor_desp | number_format(2, ',', '.')}}</td>
+
+                        </tr>
+                    {%endfor%}
+                    
                 {% else %}
                 <div class ="container-fluid">
                     <td colspan="6"><div class="alert alert-danger">Você não adicionou nenhuma receita ainda... comece a se planejar agora mesmo!</td></div> 
 
         </div>
-
-
     {% endif %}
 </tbody>
 </table>

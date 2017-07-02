@@ -4,38 +4,55 @@
 
 {% block body %}
     <div class="container-fluid">
-        <div class="jumbotron">
-            <div class="row">
-                <div class="col-sm-2">      <a href="/categorias">
-                        <button type="button" class="btn btn-primary btn-lg" >
-                            <span class="glyphicon glyphicon-tags" aria-hidden="true"></span> <br>Categorias <br>de Custo
-                        </button>
-                    </a></div>
-                <div class="col-sm-2">
-                    <button type="button" class="btn btn-success btn-lg">
-                        <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> <br>Cadastrar <br>Receitas
-                    </button>
+        <div class="panel panel-default">
+            <div class="panel-heading">PAINEL DE ADMINISTRAÇÃO</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading"> <span class="glyphicon glyphicon-tags" aria-hidden="true"></span> Categorias de custo</div>
+                            <div class="panel-body"> Uma categoria de custo é uma maneira eficaz de classificar suas despesas para poder analisá-las melhor. Alimentação ou saúde são exemplos de categorias </div>
+                            <div class="container-fluid text-center"><a href="/categorias" class="btn btn-success" type="button"> Cadastrar Categorias</a></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading"><span class="glyphicon glyphicon-usd" aria-hidden="true"></span>  Formas de Pagamento</div>
+                            <div class="panel-body">A forma de pagamento define como você pagará as suas despesas. Pode ser usando dinheiro, cartão ou outra forma que desejar cadastrar.</div>
+                             <div class="container-fluid text-center"><a href="/pagamentos" class="btn btn-success" type="button"> Cadastrar Formas de Pagamento</a></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="panel panel-title">
+                            <div class="panel-heading">Receitas</div>
+                            <div class="panel-body">Você pode informar todos os seus ganhos previstos ou futuros. Eles serão comparados com suas despesas e você poderá criar relatórios baseados neles</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-sm-2">
-                    <button type="button" class="btn btn-danger btn-lg">
-                        <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span> <br>Cadastrar <br>despesas
-                    </button>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">Informe seus ganhos</div>
+                            <div class="panel-body">Você pode informar todos os seus ganhos previstos ou futuros. Eles serão comparados com suas despesas e você poderá criar relatórios baseados neles</div>
+                        <div class="container-fluid text-center"><a href="/receitas" class="btn btn-success" type="button"> Cadastrar Receitas</a></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">Informe suas despesas</div>
+                            <div class="panel-body">Para controlar melhor, registre todas as suas despesas utilizando das categorias e forma de pagamento para melhor organizá-las. As informações estarão no relatório</div>
+                        <div class="container-fluid text-center"><a href="/despesas" class="btn btn-success" type="button"> Cadastrar Despesas</a></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="panel panel-warning">
+                            <div class="panel-heading">Panel Heading</div>
+                            <div class="panel-body">Panel Content</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-sm-2">
-                    <button type="button" class="btn btn-info btn-lg">
-                        <span class="glyphicon glyphicon-usd" aria-hidden="true"></span> <br>Visualizar <br>Extrato
-                    </button>
-                </div>
-                <div class="col-sm-4">
-                    <button type="button" class="btn btn-default btn-lg">
-                        <span class="glyphicon glyphicon-signal" aria-hidden="true"></span> <br>Balanço <br>Patrimonial
-                    </button>
-                </div>
-
             </div>
-
-
         </div>
-        <div id="area_grafico"></div>
+
     </div>
 {% endblock %}
